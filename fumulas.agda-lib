@@ -1,0 +1,4 @@
+name: fumulas
+depend: standard-library
+include: src
+flags: --safe --cubical-compatible --postfix-projections
