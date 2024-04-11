@@ -9,5 +9,4 @@ module Algebra.Properties.Fumula where
 open import Algebra.Core.Fumula
 open import Algebra.Definitions.Fumula
 open import Algebra.Structures.Fumula
-open import Algebra.Bundles.Raw.Fumula
-open import Algebra.Bundles.Fumula
+open import Algebra.Fumula.Convert
