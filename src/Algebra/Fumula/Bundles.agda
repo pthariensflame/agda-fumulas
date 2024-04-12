@@ -4,13 +4,13 @@
 
 -- The contents of this module should be accessed via `Algebra.Fumula`.
 
-module Algebra.Bundles.Fumula where
+module Algebra.Fumula.Bundles where
 
 open import Level using (suc; _⊔_)
 open import Relation.Binary.Core using (Rel)
-open import Algebra.Core.Fumula
-open import Algebra.Structures.Fumula
-open import Algebra.Bundles.Raw.Fumula
+open import Algebra.Fumula.Core
+open import Algebra.Fumula.Structures
+open import Algebra.Fumula.Bundles.Raw
 
 record AlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
   infixl 7 _⤙_⤚_

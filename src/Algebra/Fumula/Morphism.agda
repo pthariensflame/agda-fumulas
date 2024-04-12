@@ -4,14 +4,14 @@
 
 -- The contents of this module should be accessed via `Algebra.Fumula`.
 
-module Algebra.Morphism.Fumula where
+module Algebra.Fumula.Morphism where
 
 open import Level using (_⊔_)
 open import Function.Definitions
 open import Relation.Binary.Core using (Rel)
 open import Relation.Binary.Morphism.Structures
-open import Algebra.Core.Fumula
-open import Algebra.Bundles.Raw.Fumula
+open import Algebra.Fumula.Core
+open import Algebra.Fumula.Bundles.Raw
 
 module MorphismDefinitions {a b ℓ} (A : Set a) (B : Set b) (_≈_ : Rel B ℓ) where
 

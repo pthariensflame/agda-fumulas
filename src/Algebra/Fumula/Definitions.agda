@@ -8,9 +8,9 @@
 
 open import Level using (Level)
 open import Relation.Binary.Core using (Rel)
-open import Algebra.Core.Fumula
+open import Algebra.Fumula.Core
 
-module Algebra.Definitions.Fumula
+module Algebra.Fumula.Definitions
   {a ℓ} {A : Set a}   -- The underlying set
   (_≈_ : Rel A ℓ)     -- The underlying equality
   (_⤙_⤚_ : Op₃ A)   -- The core ternary operator

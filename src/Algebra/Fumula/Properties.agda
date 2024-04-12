@@ -4,9 +4,9 @@
 
 -- The contents of this module should be accessed via `Algebra.Fumula`.
 
-open import Algebra.Bundles.Fumula using (Fumula)
+open import Algebra.Fumula.Bundles using (Fumula)
 
-module Algebra.Properties.Fumula {c ℓ} (F : Fumula c ℓ) where
+module Algebra.Fumula.Properties {c ℓ} (F : Fumula c ℓ) where
 
 open Fumula F
 open import Relation.Binary.Reasoning.Setoid setoid

@@ -7,9 +7,9 @@
 -- operator.
 
 open import Relation.Binary.Core using (Rel)
-open import Algebra.Core.Fumula using (Op₃)
+open import Algebra.Fumula.Core using (Op₃)
 
-module Algebra.Structures.Fumula
+module Algebra.Fumula.Structures
   {a ℓ} {A : Set a}  -- The underlying set
   (_≈_ : Rel A ℓ)    -- The underlying equality relation
   (_⤙_⤚_ : Op₃ A)   -- The core ternary operator
@@ -19,8 +19,8 @@ open import Data.Product.Base using (_×_; _,_; proj₁; proj₂)
 open import Level using (_⊔_)
 open import Relation.Binary.Structures using (IsEquivalence)
 open import Relation.Binary.Bundles using (Setoid)
-open import Algebra.Definitions.Fumula _≈_ _⤙_⤚_
-open import Algebra.Bundles.Raw.Fumula
+open import Algebra.Fumula.Definitions _≈_ _⤙_⤚_
+open import Algebra.Fumula.Bundles.Raw
 
 record IsAlmostFumula : Set (a ⊔ ℓ) where
   field

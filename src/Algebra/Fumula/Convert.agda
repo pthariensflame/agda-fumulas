@@ -13,11 +13,11 @@ import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open import Algebra
 open import Algebra.Morphism
 import Algebra.Properties.Ring as RingProperties
-import Algebra.Properties.Fumula as FumulaProperties
-open import Algebra.Structures.Fumula
-open import Algebra.Bundles.Raw.Fumula
-open import Algebra.Bundles.Fumula
-open import Algebra.Morphism.Fumula
+import Algebra.Fumula.Properties as FumulaProperties
+open import Algebra.Fumula.Structures
+open import Algebra.Fumula.Bundles.Raw
+open import Algebra.Fumula.Bundles
+open import Algebra.Fumula.Morphism
 
 module RingHelpers (R : Ring c ℓ) where
   private

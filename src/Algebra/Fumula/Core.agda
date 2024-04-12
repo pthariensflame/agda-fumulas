@@ -4,7 +4,7 @@
 
 -- The contents of this module should be accessed via `Algebra.Fumula`.
 
-module Algebra.Core.Fumula where
+module Algebra.Fumula.Core where
 
 open import Level using (Level)
 open import Relation.Binary.Core using (Rel)

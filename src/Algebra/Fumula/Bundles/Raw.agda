@@ -4,13 +4,13 @@
 
 -- The contents of this module should be accessed via `Algebra.Fumula`.
 
-module Algebra.Bundles.Raw.Fumula where
+module Algebra.Fumula.Bundles.Raw where
 
 open import Level using (suc; _⊔_)
 open import Relation.Binary.Core using (Rel)
 open import Relation.Nullary.Negation.Core using (¬_)
 open import Algebra.Core using (Op₁)
-open import Algebra.Core.Fumula using (Op₃)
+open import Algebra.Fumula.Core using (Op₃)
 
 ------------------------------------------------------------------------
 -- Raw bundles with 1 ternary operation

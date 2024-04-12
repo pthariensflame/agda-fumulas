@@ -1,14 +1,14 @@
 ------------------------------------------------------------------------
--- Everything about fumulas (top-level convenience import).
+-- Everything about fumulas (top-level import).
 ------------------------------------------------------------------------
 
 module Algebra.Fumula where
 
-open import Algebra.Core.Fumula public
-open import Algebra.Definitions.Fumula public
-open import Algebra.Structures.Fumula public
-open import Algebra.Bundles.Raw.Fumula public
-open import Algebra.Bundles.Fumula public
-open import Algebra.Morphism.Fumula public
-open import Algebra.Properties.Fumula public
+open import Algebra.Fumula.Core public
+open import Algebra.Fumula.Definitions public
+open import Algebra.Fumula.Structures public
+open import Algebra.Fumula.Bundles.Raw public
+open import Algebra.Fumula.Bundles public
+open import Algebra.Fumula.Morphism public
+open import Algebra.Fumula.Properties public
 open import Algebra.Fumula.Convert public
