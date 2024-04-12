@@ -9,5 +9,6 @@ open import Algebra.Definitions.Fumula public
 open import Algebra.Structures.Fumula public
 open import Algebra.Bundles.Raw.Fumula public
 open import Algebra.Bundles.Fumula public
+open import Algebra.Morphism.Fumula public
 open import Algebra.Properties.Fumula public
 open import Algebra.Fumula.Convert public

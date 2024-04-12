@@ -28,10 +28,10 @@ OuterCommutative : Set _
 OuterCommutative = ∀ y → _OuterCommutativeWith_ y
 
 _LeftInnerCommutativeWith_ : A → Set _
-_LeftInnerCommutativeWith_ e = ∀ x y → (x ⤙ e ⤚ y) ≈ (e ⤙ x ⤚ y)
+_LeftInnerCommutativeWith_ e = ∀ x y → (x ⤙ y ⤚ e) ≈ (y ⤙ x ⤚ e)
 
 _RightInnerCommutativeWith_ : A → Set _
-_RightInnerCommutativeWith_ e = ∀ x y → (x ⤙ e ⤚ y) ≈ (x ⤙ y ⤚ e)
+_RightInnerCommutativeWith_ e = ∀ x y → (e ⤙ x ⤚ y) ≈ (e ⤙ y ⤚ x)
 
 _InnerCommutativeWith_ : A → Set _
 _InnerCommutativeWith_ e = _LeftInnerCommutativeWith_ e × _RightInnerCommutativeWith_ e
