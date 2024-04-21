@@ -57,17 +57,14 @@ record RawFumula c ℓ : Set (suc (c ⊔ ℓ)) where
 
   infix 8 _↓′
   _↓′ : Op₁ Carrier
-  x ↓′ = ● ⤙ x ⤚ ●
+  x ↓′ = ● ⤙ x ⤚ ■
 
   infix 8 _↑′
   _↑′ : Op₁ Carrier
-  x ↑′ = ● ⤙ x ⤚ ■
+  x ↑′ = ● ⤙ x ⤚ ●
 
   invert : Op₁ Carrier
   invert x = ■ ⤙ ◆ ⤚ x
-
-  invert′ : Op₁ Carrier
-  invert′ x = ■ ⤙ ◆ ⤚ x
 
   rawAlmostFumula : RawAlmostFumula c ℓ
   rawAlmostFumula = record

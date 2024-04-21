@@ -64,7 +64,6 @@ record Fumula c ℓ : Set (suc (c ⊔ ℓ)) where
           ; invert
           ; _↑′
           ; _↓′
-          ; invert′
           )
 
   almostFumula : AlmostFumula c ℓ
@@ -91,7 +90,6 @@ record ReversibleFumula c ℓ : Set (suc (c ⊔ ℓ)) where
           ; invert
           ; _↑′
           ; _↓′
-          ; invert′
           )
 
   fumula : Fumula c ℓ
