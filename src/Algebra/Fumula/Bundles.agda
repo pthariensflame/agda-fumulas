@@ -26,6 +26,23 @@ record AlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
   open RawAlmostFumula rawAlmostFumula public
     using (_≉_)
 
+record ReversibleAlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
+  infixl 7 _⤙_⤚_
+  infix  4 _≈_
+  field
+    Carrier        : Set c
+    _≈_            : Rel Carrier ℓ
+    _⤙_⤚_          : Op₃ Carrier
+    isReversibleAlmostFumula : IsReversibleAlmostFumula _≈_ _⤙_⤚_
+
+  open IsReversibleAlmostFumula isReversibleAlmostFumula public
+
+  open RawAlmostFumula rawAlmostFumula public
+    using (_≉_)
+
+  almostFumula : AlmostFumula c ℓ
+  almostFumula = record { isAlmostFumula = isAlmostFumula }
+
 record Fumula c ℓ : Set (suc (c ⊔ ℓ)) where
   infixl 7 _⤙_⤚_
   infix  4 _≈_
@@ -49,3 +66,39 @@ record Fumula c ℓ : Set (suc (c ⊔ ℓ)) where
           ; _↓′
           ; invert′
           )
+
+  almostFumula : AlmostFumula c ℓ
+  almostFumula = record { isAlmostFumula = isAlmostFumula }
+
+record ReversibleFumula c ℓ : Set (suc (c ⊔ ℓ)) where
+  infixl 7 _⤙_⤚_
+  infix  4 _≈_
+  field
+    Carrier        : Set c
+    _≈_            : Rel Carrier ℓ
+    _⤙_⤚_          : Op₃ Carrier
+    ■              : Carrier
+    isReversibleFumula : IsReversibleFumula _≈_ _⤙_⤚_ ■
+
+  open IsReversibleFumula isReversibleFumula public
+
+  open RawFumula rawFumula public
+    using ( _≉_
+          ; ◆
+          ; ●
+          ; _↑
+          ; _↓
+          ; invert
+          ; _↑′
+          ; _↓′
+          ; invert′
+          )
+
+  fumula : Fumula c ℓ
+  fumula = record { isFumula = isFumula }
+
+  open Fumula fumula public
+    using (almostFumula)
+
+  reversibleAlmostFumula : ReversibleAlmostFumula c ℓ
+  reversibleAlmostFumula = record { isReversibleAlmostFumula = isReversibleAlmostFumula }

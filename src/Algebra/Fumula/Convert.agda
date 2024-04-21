@@ -172,16 +172,24 @@ module FromRing where
       open SetoidReasoning setoid
 
   fumula : ∀{c ℓ} → Ring c ℓ → Fumula c ℓ
-  fumula ring = record
-    { _⤙_⤚_ = λ x z y → x * y + z
-    ; ■ = - 1#
-    ; isFumula = isFumula rawRing isRing
+  fumula R = record { isFumula = isFumula rawRing isRing }
+    where open Ring R
+
+  isReversibleFumula : ∀{c ℓ} → (R : RawRing c ℓ) → IsCommutativeRing (RawRing._≈_ R) (RawRing._+_ R) (RawRing._*_ R) (RawRing.-_ R) (RawRing.0# R) (RawRing.1# R)
+                     → (let F = rawFumula R) → IsReversibleFumula (RawFumula._≈_ F) (RawFumula._⤙_⤚_ F) (RawFumula.■ F)
+  isReversibleFumula R isCommutativeRing = record
+    { isFumula = isFumula R isRing
+    ; outer-commute = λ y x _ → +-congʳ (*-comm x y)
     }
-    where open Ring ring
+    where open IsCommutativeRing isCommutativeRing
+
+  reversibleFumula : ∀{c ℓ} → CommutativeRing c ℓ → ReversibleFumula c ℓ
+  reversibleFumula R = record { isReversibleFumula = isReversibleFumula rawRing isCommutativeRing }
+    where open CommutativeRing R
 
   isFumulaHomomorphism : ∀{c₁ ℓ₁ c₂ ℓ₂} {R₁ : RawRing c₁ ℓ₁} (R₂ : Ring c₂ ℓ₂) {morph : RawRing.Carrier R₁ → Ring.Carrier R₂} → IsRingHomomorphism R₁ (Ring.rawRing R₂) morph
                        → (let F₁ = rawFumula R₁) → (let F₂ = rawFumula (Ring.rawRing R₂)) → IsFumulaHomomorphism F₁ F₂ morph
-  isFumulaHomomorphism {R₁ = R₁} R₂ {morph = morph} isRingHomo = record
+  isFumulaHomomorphism {R₁ = R₁} R₂ {morph = morph} isRingHomomorphism = record
     { isAlmostFumulaHomomorphism = record
       { isRelHomomorphism = isRelHomomorphism
       ; homo = λ x y z → begin
@@ -203,7 +211,7 @@ module FromRing where
       module R₂ = Ring R₂
       module F₁ = RawFumula (rawFumula R₁)
       module F₂ = RawFumula (rawFumula (Ring.rawRing R₂))
-      open IsRingHomomorphism isRingHomo
+      open IsRingHomomorphism isRingHomomorphism
       open SetoidReasoning R₂.setoid
 
   isFumulaMonomorphism : ∀{c₁ ℓ₁ c₂ ℓ₂} {R₁ : RawRing c₁ ℓ₁} (R₂ : Ring c₂ ℓ₂) {morph : RawRing.Carrier R₁ → Ring.Carrier R₂} → IsRingMonomorphism R₁ (Ring.rawRing R₂) morph
@@ -297,19 +305,24 @@ module FromFumula where
       open SetoidReasoning setoid
 
   ring : ∀{c ℓ} → Fumula c ℓ → Ring c ℓ
-  ring fumula = record
-    { _+_ = λ x y → ● ⤙ x ⤚ y
-    ; _*_ = λ x y → x ⤙ ◆ ⤚ y
-    ; -_ = invert
-    ; 0# = ◆
-    ; 1# = ●
-    ; isRing = isRing rawFumula isFumula
+  ring F = record { isRing = isRing rawFumula isFumula }
+    where open Fumula F
+
+  isCommutativeRing : ∀{c ℓ} → (F : RawFumula c ℓ) → IsReversibleFumula (RawFumula._≈_ F) (RawFumula._⤙_⤚_ F) (RawFumula.■ F)
+                    → (let R = rawRing F) → IsCommutativeRing (RawRing._≈_ R) (RawRing._+_ R) (RawRing._*_ R) (RawRing.-_ R) (RawRing.0# R) (RawRing.1# R)
+  isCommutativeRing F isReversibleFumula = record
+    { isRing = isRing F isFumula
+    ; *-comm = λ x y → outer-commute y x (RawFumula.◆ F)
     }
-    where open Fumula fumula
+    where open IsReversibleFumula isReversibleFumula
+
+  commutativeRing : ∀{c ℓ} → ReversibleFumula c ℓ → CommutativeRing c ℓ
+  commutativeRing F = record { isCommutativeRing = isCommutativeRing rawFumula isReversibleFumula }
+    where open ReversibleFumula F
 
   isRingHomomorphism : ∀{c₁ ℓ₁ c₂ ℓ₂} {F₁ : RawFumula c₁ ℓ₁} (F₂ : Fumula c₂ ℓ₂) {morph : RawFumula.Carrier F₁ → Fumula.Carrier F₂} → IsFumulaHomomorphism F₁ (Fumula.rawFumula F₂) morph
                        → (let R₁ = rawRing F₁) → (let R₂ = rawRing (Fumula.rawFumula F₂)) → IsRingHomomorphism R₁ R₂ morph
-  isRingHomomorphism {F₁ = F₁} F₂ {morph = morph} isFumulaHomo = record
+  isRingHomomorphism {F₁ = F₁} F₂ {morph = morph} isFumulaHomomorphism = record
     { isSemiringHomomorphism = record
       { isNearSemiringHomomorphism = record
         { +-isMonoidHomomorphism = record
@@ -345,7 +358,7 @@ module FromFumula where
       module F₂ = Fumula F₂
       module R₁ = RawRing (rawRing F₁)
       module R₂ = RawRing (rawRing (Fumula.rawFumula F₂))
-      open IsFumulaHomomorphism isFumulaHomo
+      open IsFumulaHomomorphism isFumulaHomomorphism
       open SetoidReasoning F₂.setoid
 
       ◆-homo : morph F₁.◆ F₂.≈ F₂.◆
