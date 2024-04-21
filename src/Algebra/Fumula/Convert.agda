@@ -68,7 +68,7 @@ module FromRing where
   isFumula R isRing = record
     { isAlmostFumula = record
       { isEquivalence = isEquivalence
-      ; cong = λ x≈y u≈v n≈m → +-cong (*-cong x≈y n≈m) u≈v
+      ; ⤙⤚-cong = λ x≈y u≈v n≈m → +-cong (*-cong x≈y n≈m) u≈v
       ; double-exchange = λ v w x y z → begin
         v * w + (x * y + z) ≈⟨ sym (+-assoc (v * w) (x * y) z) ⟩
         (v * w + x * y) + z ≈⟨ +-congʳ (+-comm (v * w) (x * y)) ⟩
@@ -252,11 +252,11 @@ module FromFumula where
           { isSemigroup = record
             { isMagma = record
               { isEquivalence = isEquivalence
-              ; ∙-cong = λ x≈y u≈v → cong refl x≈y u≈v
+              ; ∙-cong = λ x≈y u≈v → ⤙⤚-cong refl x≈y u≈v
               }
             ; assoc = λ x y z → begin
-              ● ⤙ ● ⤙ x ⤚ y ⤚ z ≈⟨ cong refl (●-inner-commuteʳ x y) refl ⟩
-              ● ⤙ ● ⤙ y ⤚ x ⤚ z ≈⟨ cong refl (sym (●-outer-commute x y)) refl ⟩
+              ● ⤙ ● ⤙ x ⤚ y ⤚ z ≈⟨ ⤙⤚-cong refl (●-inner-commuteʳ x y) refl ⟩
+              ● ⤙ ● ⤙ y ⤚ x ⤚ z ≈⟨ ⤙⤚-cong refl (sym (●-outer-commute x y)) refl ⟩
               ● ⤙ x ⤙ y ⤚ ● ⤚ z ≈⟨ double-exchange ● z x ● y ⟩
               x ⤙ ● ⤙ y ⤚ z ⤚ ● ≈⟨ ●-inner-commuteˡ x (● ⤙ y ⤚ z) ⟩
               (● ⤙ y ⤚ z) ⤙ x ⤚ ● ≈⟨ ●-outer-commute (● ⤙ y ⤚ z) x ⟩
@@ -270,31 +270,31 @@ module FromFumula where
         ; inverse =
           (λ x → begin
             ● ⤙ ■ ⤙ ◆ ⤚ x ⤚ x ≈⟨ double-exchange ● x ■ x ◆ ⟩
-            ■ ⤙ ● ⤙ ◆ ⤚ x ⤚ x ≈⟨ cong refl (●-◆-collapse-sideˡ x) refl ⟩
+            ■ ⤙ ● ⤙ ◆ ⤚ x ⤚ x ≈⟨ ⤙⤚-cong refl (●-◆-collapse-sideˡ x) refl ⟩
             ■ ⤙ x ⤚ x ≈⟨ ■-collapse-dupˡ x ⟩
             ◆ ∎) ,
           (λ x → begin
             ● ⤙ x ⤚ (■ ⤙ ◆ ⤚ x) ≈⟨ ●-inner-commuteʳ x (■ ⤙ ◆ ⤚ x) ⟩
             ● ⤙ ■ ⤙ ◆ ⤚ x ⤚ x ≈⟨ double-exchange ● x ■ x ◆ ⟩
-            ■ ⤙ ● ⤙ ◆ ⤚ x ⤚ x ≈⟨ cong refl (●-◆-collapse-sideˡ x) refl ⟩
+            ■ ⤙ ● ⤙ ◆ ⤚ x ⤚ x ≈⟨ ⤙⤚-cong refl (●-◆-collapse-sideˡ x) refl ⟩
             ■ ⤙ x ⤚ x ≈⟨ ■-collapse-dupˡ x ⟩
             ◆ ∎)
-        ; ⁻¹-cong = λ x≈y → cong refl refl x≈y
+        ; ⁻¹-cong = invert-cong
         }
       ; comm = ●-inner-commuteʳ
       }
-    ; *-cong = λ x≈y u≈v → cong x≈y refl u≈v
+    ; *-cong = λ x≈y u≈v → ⤙⤚-cong x≈y refl u≈v
     ; *-assoc = λ x y z → ◆-outer-associate x y z ◆
     ; *-identity = ●-◆-collapse-sideˡ , ●-◆-collapse-sideʳ
     ; distrib =
       (λ x y z → begin
         x ⤙ ◆ ⤚ (● ⤙ y ⤚ z) ≈⟨ ◆-pulloutʳ ◆ x ● z y ⟩
-        x ⤙ x ⤙ ◆ ⤚ y ⤚ (● ⤙ ◆ ⤚ z) ≈⟨ cong refl refl (●-◆-collapse-sideˡ z) ⟩
+        x ⤙ x ⤙ ◆ ⤚ y ⤚ (● ⤙ ◆ ⤚ z) ≈⟨ ⤙⤚-cong refl refl (●-◆-collapse-sideˡ z) ⟩
         (x ⤙ x ⤙ ◆ ⤚ y ⤚ z) ≈⟨ sym (●-◆-pull-apartʳ x z (x ⤙ ◆ ⤚ y)) ⟩
         ● ⤙ x ⤙ ◆ ⤚ y ⤚ (x ⤙ ◆ ⤚ z) ∎) ,
       (λ x y z → begin
         ● ⤙ y ⤚ z ⤙ ◆ ⤚ x ≈⟨ ◆-pulloutˡ y ● z x ◆ ⟩
-        ● ⤙ ◆ ⤚ z ⤙ y ⤙ ◆ ⤚ x ⤚ x ≈⟨ cong (●-◆-collapse-sideˡ z) refl refl ⟩
+        ● ⤙ ◆ ⤚ z ⤙ y ⤙ ◆ ⤚ x ⤚ x ≈⟨ ⤙⤚-cong (●-◆-collapse-sideˡ z) refl refl ⟩
         (z ⤙ y ⤙ ◆ ⤚ x ⤚ x) ≈⟨ sym (●-◆-pull-apartʳ z x (y ⤙ ◆ ⤚ x)) ⟩
         ● ⤙ y ⤙ ◆ ⤚ x ⤚ (z ⤙ ◆ ⤚ x) ∎)
     }
@@ -331,7 +331,7 @@ module FromFumula where
             ; homo = λ x y → begin
               morph (x R₁.+ y) ≡⟨⟩
               morph (F₁.● F₁.⤙ x ⤚ y) ≈⟨ ⤙⤚-homo F₁.● x y ⟩
-              morph F₁.● F₂.⤙ morph x ⤚ morph y ≈⟨ F₂.cong ●-homo F₂.refl F₂.refl ⟩
+              morph F₁.● F₂.⤙ morph x ⤚ morph y ≈⟨ F₂.⤙⤚-cong ●-homo F₂.refl F₂.refl ⟩
               F₂.● F₂.⤙ morph x ⤚ morph y ≡⟨⟩
               morph x R₂.+ morph y ∎
             }
@@ -340,7 +340,7 @@ module FromFumula where
         ; *-homo = λ x y → begin
           morph (x R₁.* y) ≡⟨⟩
           morph (x F₁.⤙ F₁.◆ ⤚ y) ≈⟨ ⤙⤚-homo x F₁.◆ y ⟩
-          morph x F₂.⤙ morph F₁.◆ ⤚ morph y ≈⟨ F₂.cong F₂.refl ◆-homo F₂.refl ⟩
+          morph x F₂.⤙ morph F₁.◆ ⤚ morph y ≈⟨ F₂.⤙⤚-cong F₂.refl ◆-homo F₂.refl ⟩
           morph x F₂.⤙ F₂.◆ ⤚ morph y ≡⟨⟩
           morph x R₂.* morph y ∎
         }
@@ -349,7 +349,7 @@ module FromFumula where
     ; -‿homo = λ x → begin
       morph (R₁.- x) ≡⟨⟩
       morph (F₁.■ F₁.⤙ F₁.◆ ⤚ x) ≈⟨ ⤙⤚-homo F₁.■ F₁.◆ x ⟩
-      morph F₁.■ F₂.⤙ morph F₁.◆ ⤚ morph x ≈⟨ F₂.cong ■-homo ◆-homo F₂.refl ⟩
+      morph F₁.■ F₂.⤙ morph F₁.◆ ⤚ morph x ≈⟨ F₂.⤙⤚-cong ■-homo ◆-homo F₂.refl ⟩
       F₂.■ F₂.⤙ F₂.◆ ⤚ morph x ≡⟨⟩
       R₂.- morph x ∎
     }
@@ -365,7 +365,7 @@ module FromFumula where
       ◆-homo = begin
         morph F₁.◆ ≡⟨⟩
         morph (F₁.■ F₁.⤙ F₁.■ ⤚ F₁.■) ≈⟨ ⤙⤚-homo F₁.■ F₁.■ F₁.■ ⟩
-        morph F₁.■ F₂.⤙ morph F₁.■ ⤚ morph F₁.■ ≈⟨ F₂.cong ■-homo ■-homo ■-homo ⟩
+        morph F₁.■ F₂.⤙ morph F₁.■ ⤚ morph F₁.■ ≈⟨ F₂.⤙⤚-cong ■-homo ■-homo ■-homo ⟩
         F₂.■ F₂.⤙ F₂.■ ⤚ F₂.■ ≡⟨⟩
         F₂.◆ ∎
 
@@ -373,7 +373,7 @@ module FromFumula where
       ●-homo = begin
         morph F₁.● ≡⟨⟩
         morph (F₁.■ F₁.⤙ F₁.◆ ⤚ F₁.■) ≈⟨ ⤙⤚-homo F₁.■ F₁.◆ F₁.■ ⟩
-        morph F₁.■ F₂.⤙ morph F₁.◆ ⤚ morph F₁.■ ≈⟨ F₂.cong ■-homo ◆-homo ■-homo ⟩
+        morph F₁.■ F₂.⤙ morph F₁.◆ ⤚ morph F₁.■ ≈⟨ F₂.⤙⤚-cong ■-homo ◆-homo ■-homo ⟩
         F₂.■ F₂.⤙ F₂.◆ ⤚ F₂.■ ≡⟨⟩
         F₂.● ∎
 

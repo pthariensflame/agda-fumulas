@@ -6,6 +6,7 @@
 -- you want to parameterise it via the equality relation and/or the ternary
 -- operator.
 
+open import Function.Definitions using (Congruent)
 open import Relation.Binary.Core using (Rel)
 open import Algebra.Fumula.Core using (Op₃)
 
@@ -25,7 +26,7 @@ open import Algebra.Fumula.Bundles.Raw
 record IsAlmostFumula : Set (a ⊔ ℓ) where
   field
     isEquivalence      : IsEquivalence _≈_
-    cong            : Congruent₃
+    ⤙⤚-cong            : Congruent₃
     double-exchange : MiddleNestedDoubleExchange
     
 
@@ -61,7 +62,22 @@ record IsFumula (■ : A) : Set (a ⊔ ℓ) where
     }
 
   open RawFumula rawFumula
-    using (◆; ●)
+    using (◆; ●; _↑; _↓; _↑′; _↓′; invert)
+
+  ↑-cong : Congruent _≈_ _≈_ _↑
+  ↑-cong x≈y = ⤙⤚-cong refl x≈y refl
+
+  ↓-cong : Congruent _≈_ _≈_ _↓
+  ↓-cong x≈y = ⤙⤚-cong refl x≈y refl
+
+  ↑′-cong : Congruent _≈_ _≈_ _↑′
+  ↑′-cong x≈y = ⤙⤚-cong refl x≈y refl
+
+  ↓′-cong : Congruent _≈_ _≈_ _↓′
+  ↓′-cong x≈y = ⤙⤚-cong refl x≈y refl
+
+  invert-cong : Congruent _≈_ _≈_ invert
+  invert-cong x≈y = ⤙⤚-cong refl refl x≈y
 
   field
     ■-outer-commute : _OuterCommutativeWith_ ■
