@@ -14,7 +14,7 @@ open import Algebra.Fumula.Bundles.Raw
 
 record AlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
   infixl 7 _⤙_⤚_
-  infix  4 _≈_
+  infix 4 _≈_
   field
     Carrier        : Set c
     _≈_            : Rel Carrier ℓ
@@ -28,7 +28,7 @@ record AlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
 
 record ReversibleAlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
   infixl 7 _⤙_⤚_
-  infix  4 _≈_
+  infix 4 _≈_
   field
     Carrier        : Set c
     _≈_            : Rel Carrier ℓ
@@ -45,7 +45,7 @@ record ReversibleAlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
 
 record Fumula c ℓ : Set (suc (c ⊔ ℓ)) where
   infixl 7 _⤙_⤚_
-  infix  4 _≈_
+  infix 4 _≈_
   field
     Carrier        : Set c
     _≈_            : Rel Carrier ℓ
@@ -71,7 +71,7 @@ record Fumula c ℓ : Set (suc (c ⊔ ℓ)) where
 
 record ReversibleFumula c ℓ : Set (suc (c ⊔ ℓ)) where
   infixl 7 _⤙_⤚_
-  infix  4 _≈_
+  infix 4 _≈_
   field
     Carrier        : Set c
     _≈_            : Rel Carrier ℓ
