@@ -1,0 +1,6 @@
+name: fumulas-examples
+depend:
+  fumulas
+  standard-library
+include: examples
+flags: --safe --cubical-compatible
