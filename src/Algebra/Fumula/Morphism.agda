@@ -35,7 +35,6 @@ module AlmostFumulaMorphisms {a b ℓ₁ ℓ₂} (F₁ : RawAlmostFumula a ℓ�
     open IsRelHomomorphism isRelHomomorphism public
       renaming (cong to ⟦⟧-cong)
 
-
   record IsAlmostFumulaMonomorphism (⟦_⟧ : A → B) : Set (a ⊔ ℓ₁ ⊔ ℓ₂) where
     field
       isAlmostFumulaHomomorphism : IsAlmostFumulaHomomorphism ⟦_⟧
@@ -48,7 +47,6 @@ module AlmostFumulaMorphisms {a b ℓ₁ ℓ₂} (F₁ : RawAlmostFumula a ℓ�
       { isHomomorphism = isRelHomomorphism
       ; injective      = injective
       }
-
 
   record IsAlmostFumulaIsomorphism (⟦_⟧ : A → B) : Set (a ⊔ b ⊔ ℓ₁ ⊔ ℓ₂) where
     field
@@ -79,7 +77,6 @@ module FumulaMorphisms {a b ℓ₁ ℓ₂} (F₁ : RawFumula a ℓ₁) (F₂ : R
     open IsAlmostFumulaHomomorphism isAlmostFumulaHomomorphism public
       renaming (homo to ⤙⤚-homo)
 
-
   record IsFumulaMonomorphism (⟦_⟧ : A → B) : Set (a ⊔ ℓ₁ ⊔ ℓ₂) where
     field
       isFumulaHomomorphism : IsFumulaHomomorphism ⟦_⟧
@@ -95,7 +92,6 @@ module FumulaMorphisms {a b ℓ₁ ℓ₂} (F₁ : RawFumula a ℓ₁) (F₂ : R
 
     open IsAlmostFumulaMonomorphism isAlmostFumulaMonomorphism public
       using (isRelMonomorphism)
-
 
   record IsFumulaIsomorphism (⟦_⟧ : A → B) : Set (a ⊔ b ⊔ ℓ₁ ⊔ ℓ₂) where
     field

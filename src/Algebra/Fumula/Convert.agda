@@ -4,7 +4,7 @@
 
 -- The contents of this module should be accessed via `Algebra.Fumula`.
 
-module Algebra.Fumula.Convert {c ℓ} where
+module Algebra.Fumula.Convert where
 
 open import Function using (id)
 open import Data.Product using (_,_)
@@ -19,7 +19,7 @@ open import Algebra.Fumula.Bundles.Raw
 open import Algebra.Fumula.Bundles
 open import Algebra.Fumula.Morphism
 
-module RingHelpers (R : Ring c ℓ) where
+module RingHelpers {c ℓ} (R : Ring c ℓ) where
   private
     module R where
       open Ring R public
@@ -55,7 +55,7 @@ module RingHelpers (R : Ring c ℓ) where
 
 module FromRing where
 
-  rawFumula : RawRing c ℓ → RawFumula c ℓ
+  rawFumula : ∀{c ℓ} → RawRing c ℓ → RawFumula c ℓ
   rawFumula rawRing = record
     { _≈_ = _≈_
     ; _⤙_⤚_ = λ x z y → x * y + z
@@ -63,7 +63,7 @@ module FromRing where
     }
     where open RawRing rawRing
 
-  isFumula : (R : RawRing c ℓ) → IsRing (RawRing._≈_ R) (RawRing._+_ R) (RawRing._*_ R) (RawRing.-_ R) (RawRing.0# R) (RawRing.1# R)
+  isFumula : ∀{c ℓ} → (R : RawRing c ℓ) → IsRing (RawRing._≈_ R) (RawRing._+_ R) (RawRing._*_ R) (RawRing.-_ R) (RawRing.0# R) (RawRing.1# R)
            → (let F = rawFumula R) → IsFumula (RawFumula._≈_ F) (RawFumula._⤙_⤚_ F) (RawFumula.■ F)
   isFumula R isRing = record
     { isAlmostFumula = record
@@ -171,7 +171,7 @@ module FromRing where
       open RingHelpers record { isRing = isRing }
       open SetoidReasoning setoid
 
-  fumula : Ring c ℓ → Fumula c ℓ
+  fumula : ∀{c ℓ} → Ring c ℓ → Fumula c ℓ
   fumula ring = record
     { _⤙_⤚_ = λ x z y → x * y + z
     ; ■ = - 1#
@@ -179,9 +179,52 @@ module FromRing where
     }
     where open Ring ring
 
+  isFumulaHomomorphism : ∀{c₁ ℓ₁ c₂ ℓ₂} {R₁ : RawRing c₁ ℓ₁} (R₂ : Ring c₂ ℓ₂) {morph : RawRing.Carrier R₁ → Ring.Carrier R₂} → IsRingHomomorphism R₁ (Ring.rawRing R₂) morph
+                       → (let F₁ = rawFumula R₁) → (let F₂ = rawFumula (Ring.rawRing R₂)) → IsFumulaHomomorphism F₁ F₂ morph
+  isFumulaHomomorphism {R₁ = R₁} R₂ {morph = morph} isRingHomo = record
+    { isAlmostFumulaHomomorphism = record
+      { isRelHomomorphism = isRelHomomorphism
+      ; homo = λ x y z → begin
+        morph (x F₁.⤙ y ⤚ z) ≡⟨⟩
+        morph ((x R₁.* z) R₁.+ y) ≈⟨ +-homo (x R₁.* z) y ⟩
+        morph (x R₁.* z) R₂.+ morph y ≈⟨ R₂.+-congʳ (*-homo x z) ⟩
+        (morph x R₂.* morph z) R₂.+ morph y ≡⟨⟩
+        morph x F₂.⤙ morph y ⤚ morph z ∎
+      }
+    ; ■-homo = begin
+        morph F₁.■ ≡⟨⟩
+        morph (R₁.- R₁.1#) ≈⟨ -‿homo R₁.1# ⟩
+        R₂.- (morph R₁.1#) ≈⟨ R₂.-‿cong 1#-homo ⟩
+        R₂.- R₂.1# ≡⟨⟩
+        F₂.■ ∎
+    }
+    where
+      module R₁ = RawRing R₁
+      module R₂ = Ring R₂
+      module F₁ = RawFumula (rawFumula R₁)
+      module F₂ = RawFumula (rawFumula (Ring.rawRing R₂))
+      open IsRingHomomorphism isRingHomo
+      open SetoidReasoning R₂.setoid
+
+  isFumulaMonomorphism : ∀{c₁ ℓ₁ c₂ ℓ₂} {R₁ : RawRing c₁ ℓ₁} (R₂ : Ring c₂ ℓ₂) {morph : RawRing.Carrier R₁ → Ring.Carrier R₂} → IsRingMonomorphism R₁ (Ring.rawRing R₂) morph
+                       → (let F₁ = rawFumula R₁) → (let F₂ = rawFumula (Ring.rawRing R₂)) → IsFumulaMonomorphism F₁ F₂ morph
+  isFumulaMonomorphism R₂ isRingMono = record
+    { isFumulaHomomorphism = isFumulaHomomorphism R₂ isRingHomomorphism
+    ; injective = injective
+    }
+    where open IsRingMonomorphism isRingMono
+
+  isFumulaIsomorphism : ∀{c₁ ℓ₁ c₂ ℓ₂} {R₁ : RawRing c₁ ℓ₁} (R₂ : Ring c₂ ℓ₂) {morph : RawRing.Carrier R₁ → Ring.Carrier R₂} → IsRingIsomorphism R₁ (Ring.rawRing R₂) morph
+                       → (let F₁ = rawFumula R₁) → (let F₂ = rawFumula (Ring.rawRing R₂)) → IsFumulaIsomorphism F₁ F₂ morph
+  isFumulaIsomorphism R₂ isRingIso = record
+    { isFumulaMonomorphism = isFumulaMonomorphism R₂ isRingMonomorphism
+    ; surjective = surjective
+    }
+    where open IsRingIsomorphism isRingIso
+
 module FromFumula where
 
-  rawRing : RawFumula c ℓ → RawRing c ℓ
+  rawRing : ∀{c ℓ} → RawFumula c ℓ → RawRing c ℓ
   rawRing rawFumula = record
     { _≈_ = _≈_
     ; _+_ = λ x y → ● ⤙ x ⤚ y
@@ -192,7 +235,7 @@ module FromFumula where
     }
     where open RawFumula rawFumula
 
-  isRing : (F : RawFumula c ℓ) → IsFumula (RawFumula._≈_ F) (RawFumula._⤙_⤚_ F) (RawFumula.■ F)
+  isRing : ∀{c ℓ} → (F : RawFumula c ℓ) → IsFumula (RawFumula._≈_ F) (RawFumula._⤙_⤚_ F) (RawFumula.■ F)
          → (let R = rawRing F) → IsRing (RawRing._≈_ R) (RawRing._+_ R) (RawRing._*_ R) (RawRing.-_ R) (RawRing.0# R) (RawRing.1# R)
   isRing F isFumula = record
     { +-isAbelianGroup = record
@@ -253,7 +296,7 @@ module FromFumula where
       open FumulaProperties record { isFumula = isFumula }
       open SetoidReasoning setoid
 
-  ring : Fumula c ℓ → Ring c ℓ
+  ring : ∀{c ℓ} → Fumula c ℓ → Ring c ℓ
   ring fumula = record
     { _+_ = λ x y → ● ⤙ x ⤚ y
     ; _*_ = λ x y → x ⤙ ◆ ⤚ y
@@ -264,7 +307,80 @@ module FromFumula where
     }
     where open Fumula fumula
 
-module _ (R : Ring c ℓ) where
+  isRingHomomorphism : ∀{c₁ ℓ₁ c₂ ℓ₂} {F₁ : RawFumula c₁ ℓ₁} (F₂ : Fumula c₂ ℓ₂) {morph : RawFumula.Carrier F₁ → Fumula.Carrier F₂} → IsFumulaHomomorphism F₁ (Fumula.rawFumula F₂) morph
+                       → (let R₁ = rawRing F₁) → (let R₂ = rawRing (Fumula.rawFumula F₂)) → IsRingHomomorphism R₁ R₂ morph
+  isRingHomomorphism {F₁ = F₁} F₂ {morph = morph} isFumulaHomo = record
+    { isSemiringHomomorphism = record
+      { isNearSemiringHomomorphism = record
+        { +-isMonoidHomomorphism = record
+          { isMagmaHomomorphism = record
+            { isRelHomomorphism = isRelHomomorphism
+            ; homo = λ x y → begin
+              morph (x R₁.+ y) ≡⟨⟩
+              morph (F₁.● F₁.⤙ x ⤚ y) ≈⟨ ⤙⤚-homo F₁.● x y ⟩
+              morph F₁.● F₂.⤙ morph x ⤚ morph y ≈⟨ F₂.cong ●-homo F₂.refl F₂.refl ⟩
+              F₂.● F₂.⤙ morph x ⤚ morph y ≡⟨⟩
+              morph x R₂.+ morph y ∎
+            }
+          ; ε-homo = ◆-homo
+          }
+        ; *-homo = λ x y → begin
+          morph (x R₁.* y) ≡⟨⟩
+          morph (x F₁.⤙ F₁.◆ ⤚ y) ≈⟨ ⤙⤚-homo x F₁.◆ y ⟩
+          morph x F₂.⤙ morph F₁.◆ ⤚ morph y ≈⟨ F₂.cong F₂.refl ◆-homo F₂.refl ⟩
+          morph x F₂.⤙ F₂.◆ ⤚ morph y ≡⟨⟩
+          morph x R₂.* morph y ∎
+        }
+      ; 1#-homo = ●-homo
+      }
+    ; -‿homo = λ x → begin
+      morph (R₁.- x) ≡⟨⟩
+      morph (F₁.■ F₁.⤙ F₁.◆ ⤚ x) ≈⟨ ⤙⤚-homo F₁.■ F₁.◆ x ⟩
+      morph F₁.■ F₂.⤙ morph F₁.◆ ⤚ morph x ≈⟨ F₂.cong ■-homo ◆-homo F₂.refl ⟩
+      F₂.■ F₂.⤙ F₂.◆ ⤚ morph x ≡⟨⟩
+      R₂.- morph x ∎
+    }
+    where
+      module F₁ = RawFumula F₁
+      module F₂ = Fumula F₂
+      module R₁ = RawRing (rawRing F₁)
+      module R₂ = RawRing (rawRing (Fumula.rawFumula F₂))
+      open IsFumulaHomomorphism isFumulaHomo
+      open SetoidReasoning F₂.setoid
+
+      ◆-homo : morph F₁.◆ F₂.≈ F₂.◆
+      ◆-homo = begin
+        morph F₁.◆ ≡⟨⟩
+        morph (F₁.■ F₁.⤙ F₁.■ ⤚ F₁.■) ≈⟨ ⤙⤚-homo F₁.■ F₁.■ F₁.■ ⟩
+        morph F₁.■ F₂.⤙ morph F₁.■ ⤚ morph F₁.■ ≈⟨ F₂.cong ■-homo ■-homo ■-homo ⟩
+        F₂.■ F₂.⤙ F₂.■ ⤚ F₂.■ ≡⟨⟩
+        F₂.◆ ∎
+
+      ●-homo : morph F₁.● F₂.≈ F₂.●
+      ●-homo = begin
+        morph F₁.● ≡⟨⟩
+        morph (F₁.■ F₁.⤙ F₁.◆ ⤚ F₁.■) ≈⟨ ⤙⤚-homo F₁.■ F₁.◆ F₁.■ ⟩
+        morph F₁.■ F₂.⤙ morph F₁.◆ ⤚ morph F₁.■ ≈⟨ F₂.cong ■-homo ◆-homo ■-homo ⟩
+        F₂.■ F₂.⤙ F₂.◆ ⤚ F₂.■ ≡⟨⟩
+        F₂.● ∎
+
+  isRingMonomorphism : ∀{c₁ ℓ₁ c₂ ℓ₂} {F₁ : RawFumula c₁ ℓ₁} (F₂ : Fumula c₂ ℓ₂) {morph : RawFumula.Carrier F₁ → Fumula.Carrier F₂} → IsFumulaMonomorphism F₁ (Fumula.rawFumula F₂) morph
+                       → (let R₁ = rawRing F₁) → (let R₂ = rawRing (Fumula.rawFumula F₂)) → IsRingMonomorphism R₁ R₂ morph
+  isRingMonomorphism F₂ isFumulaMono = record
+    { isRingHomomorphism = isRingHomomorphism F₂ isFumulaHomomorphism
+    ; injective = injective
+    }
+    where open IsFumulaMonomorphism isFumulaMono
+
+  isRingIsomorphism : ∀{c₁ ℓ₁ c₂ ℓ₂} {F₁ : RawFumula c₁ ℓ₁} (F₂ : Fumula c₂ ℓ₂) {morph : RawFumula.Carrier F₁ → Fumula.Carrier F₂} → IsFumulaIsomorphism F₁ (Fumula.rawFumula F₂) morph
+                       → (let R₁ = rawRing F₁) → (let R₂ = rawRing (Fumula.rawFumula F₂)) → IsRingIsomorphism R₁ R₂ morph
+  isRingIsomorphism F₂ isFumulaIso = record
+    { isRingMonomorphism = isRingMonomorphism F₂ isFumulaMonomorphism
+    ; surjective = surjective
+    }
+    where open IsFumulaIsomorphism isFumulaIso
+
+module _ {c ℓ} (R : Ring c ℓ) where
   private
     F = FromRing.fumula R
     R̂ = FromFumula.ring F
@@ -313,7 +429,7 @@ module _ (R : Ring c ℓ) where
     ; surjective = λ y → y , id
     }
 
-module _ (F : Fumula c ℓ) where
+module _ {c ℓ} (F : Fumula c ℓ) where
   private
     R = FromFumula.ring F
     F̂ = FromRing.fumula R
