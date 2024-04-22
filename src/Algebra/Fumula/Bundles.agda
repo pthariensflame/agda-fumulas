@@ -10,7 +10,7 @@ open import Level using (suc; _⊔_)
 open import Relation.Binary.Core using (Rel)
 open import Algebra.Fumula.Core
 open import Algebra.Fumula.Structures
-open import Algebra.Fumula.Bundles.Raw
+open import Algebra.Fumula.Bundles.Raw public
 
 record AlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
   infix 7 _⤙_⤚_
