@@ -11,4 +11,5 @@ open import Algebra.Fumula.Bundles.Raw public
 open import Algebra.Fumula.Bundles public
 open import Algebra.Fumula.Morphism public
 open import Algebra.Fumula.Properties public
+open import Algebra.Fumula.Construct public
 open import Algebra.Fumula.Convert public
