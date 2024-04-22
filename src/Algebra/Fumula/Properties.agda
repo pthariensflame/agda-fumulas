@@ -28,7 +28,7 @@ open import Relation.Binary.Reasoning.Setoid setoid
 ●-◆-pull-apartʳ : ∀ x y z → ● ⤙ z ⤚ (x ⤙ ◆ ⤚ y) ≈ x ⤙ z ⤚ y
 ●-◆-pull-apartʳ x y z = begin
   ● ⤙ z ⤚ (x ⤙ ◆ ⤚ y) ≈⟨ sym (◆-outer-associate ● x y z) ⟩
-  ● ⤙ ◆ ⤚ x ⤙ z ⤚ y ≈⟨ ⤙⤚-cong (●-◆-collapse-sideˡ x) refl refl ⟩
+  (● ⤙ ◆ ⤚ x) ⤙ z ⤚ y ≈⟨ ⤙⤚-cong (●-◆-collapse-sideˡ x) refl refl ⟩
   x ⤙ z ⤚ y ∎
 
 ------------------------------------------------------------------------

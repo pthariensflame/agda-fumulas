@@ -13,7 +13,7 @@ open import Algebra.Fumula.Structures
 open import Algebra.Fumula.Bundles.Raw
 
 record AlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
-  infixl 7 _⤙_⤚_
+  infix 7 _⤙_⤚_
   infix 4 _≈_
   field
     Carrier        : Set c
@@ -27,7 +27,7 @@ record AlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
     using (_≉_)
 
 record ReversibleAlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
-  infixl 7 _⤙_⤚_
+  infix 7 _⤙_⤚_
   infix 4 _≈_
   field
     Carrier        : Set c
@@ -44,7 +44,7 @@ record ReversibleAlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
   almostFumula = record { isAlmostFumula = isAlmostFumula }
 
 record Fumula c ℓ : Set (suc (c ⊔ ℓ)) where
-  infixl 7 _⤙_⤚_
+  infix 7 _⤙_⤚_
   infix 4 _≈_
   field
     Carrier        : Set c
@@ -70,7 +70,7 @@ record Fumula c ℓ : Set (suc (c ⊔ ℓ)) where
   almostFumula = record { isAlmostFumula = isAlmostFumula }
 
 record ReversibleFumula c ℓ : Set (suc (c ⊔ ℓ)) where
-  infixl 7 _⤙_⤚_
+  infix 7 _⤙_⤚_
   infix 4 _≈_
   field
     Carrier        : Set c

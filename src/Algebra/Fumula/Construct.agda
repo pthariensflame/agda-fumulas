@@ -111,35 +111,35 @@ module Reverse where
 
   module _ {c ℓ} {Carrier : Set c} (_≈_ : Rel Carrier ℓ) (_⤙_⤚_ : Op₃ Carrier) where
 
-    outer-commute-with : Symmetric _≈_ → ∀ e → _OuterCommutativeWith_ _≈_ _⤙_⤚_ e → _OuterCommutativeWith_ _≈_ (reverse _⤙_⤚_) e
+    outer-commute-with : Symmetric _≈_ → ∀ e → OuterCommutativeWith _≈_ _⤙_⤚_ e → OuterCommutativeWith _≈_ (reverse _⤙_⤚_) e
     outer-commute-with sym e ⤙⤚-outer-commute x z = sym (⤙⤚-outer-commute x z)
 
     outer-commute : OuterCommutative _≈_ _⤙_⤚_ → OuterCommutative _≈_ (reverse _⤙_⤚_)
     outer-commute ⤙⤚-outer-commute x z y = ⤙⤚-outer-commute z x y
 
-    left→right-inner-commute-with : ∀ e → _LeftInnerCommutativeWith_ _≈_ _⤙_⤚_ e → _RightInnerCommutativeWith_ _≈_ (reverse _⤙_⤚_) e
+    left→right-inner-commute-with : ∀ e → LeftInnerCommutativeWith _≈_ _⤙_⤚_ e → RightInnerCommutativeWith _≈_ (reverse _⤙_⤚_) e
     left→right-inner-commute-with e ⤙⤚-inner-commuteˡ x y = ⤙⤚-inner-commuteˡ y x
 
-    right→left-inner-commute-with : ∀ e → _RightInnerCommutativeWith_ _≈_ _⤙_⤚_ e → _LeftInnerCommutativeWith_ _≈_ (reverse _⤙_⤚_) e
+    right→left-inner-commute-with : ∀ e → RightInnerCommutativeWith _≈_ _⤙_⤚_ e → LeftInnerCommutativeWith _≈_ (reverse _⤙_⤚_) e
     right→left-inner-commute-with e ⤙⤚-inner-commuteʳ x y = ⤙⤚-inner-commuteʳ y x
 
-    inner-commute-with : ∀ e → _InnerCommutativeWith_ _≈_ _⤙_⤚_ e → _InnerCommutativeWith_ _≈_ (reverse _⤙_⤚_) e
+    inner-commute-with : ∀ e → InnerCommutativeWith _≈_ _⤙_⤚_ e → InnerCommutativeWith _≈_ (reverse _⤙_⤚_) e
     inner-commute-with e (⤙⤚-inner-commuteˡ , ⤙⤚-inner-commuteʳ) =
       right→left-inner-commute-with e ⤙⤚-inner-commuteʳ , left→right-inner-commute-with e ⤙⤚-inner-commuteˡ
 
     double-exchange : MiddleNestedDoubleExchange _≈_ _⤙_⤚_ → MiddleNestedDoubleExchange _≈_ (reverse _⤙_⤚_)
     double-exchange ⤙⤚-double-exchange v w x y z = ⤙⤚-double-exchange w v y x z
 
-    outer-associate-with : Symmetric _≈_ → ∀ e → _OuterAssociativeWith_ _≈_ _⤙_⤚_ e → _OuterAssociativeWith_ _≈_ (reverse _⤙_⤚_) e
+    outer-associate-with : Symmetric _≈_ → ∀ e → OuterAssociativeWith _≈_ _⤙_⤚_ e → OuterAssociativeWith _≈_ (reverse _⤙_⤚_) e
     outer-associate-with sym e ⤙⤚-outer-associate w x y z = sym (⤙⤚-outer-associate y x w z)
 
-    left→right-pullout-with : ∀ e → _LeftPulloutWith_ _≈_ _⤙_⤚_ e → _RightPulloutWith_ _≈_ (reverse _⤙_⤚_) e
+    left→right-pullout-with : ∀ e → LeftPulloutWith _≈_ _⤙_⤚_ e → RightPulloutWith _≈_ (reverse _⤙_⤚_) e
     left→right-pullout-with e ⤙⤚-pulloutˡ v w x y z = ⤙⤚-pulloutˡ z y x w v
 
-    right→left-pullout-with : ∀ e → _RightPulloutWith_ _≈_ _⤙_⤚_ e → _LeftPulloutWith_ _≈_ (reverse _⤙_⤚_) e
+    right→left-pullout-with : ∀ e → RightPulloutWith _≈_ _⤙_⤚_ e → LeftPulloutWith _≈_ (reverse _⤙_⤚_) e
     right→left-pullout-with e ⤙⤚-pulloutʳ v w x y z = ⤙⤚-pulloutʳ z y x w v
 
-    pullout-with : ∀ e → _PulloutWith_ _≈_ _⤙_⤚_ e → _PulloutWith_ _≈_ (reverse _⤙_⤚_) e
+    pullout-with : ∀ e → PulloutWith _≈_ _⤙_⤚_ e → PulloutWith _≈_ (reverse _⤙_⤚_) e
     pullout-with e (⤙⤚-pulloutˡ , ⤙⤚-pulloutʳ) =
       right→left-pullout-with e ⤙⤚-pulloutʳ , left→right-pullout-with e ⤙⤚-pulloutˡ
 

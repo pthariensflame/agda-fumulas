@@ -17,7 +17,7 @@ open import Algebra.Fumula.Core using (Op₃)
 ------------------------------------------------------------------------
 
 record RawAlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
-  infixl 7 _⤙_⤚_
+  infix 7 _⤙_⤚_
   infix  4 _≈_
   field
     Carrier : Set c
@@ -33,7 +33,7 @@ record RawAlmostFumula c ℓ : Set (suc (c ⊔ ℓ)) where
 ------------------------------------------------------------------------
 
 record RawFumula c ℓ : Set (suc (c ⊔ ℓ)) where
-  infixl 7 _⤙_⤚_
+  infix 7 _⤙_⤚_
   infix  4 _≈_
   field
     Carrier : Set c

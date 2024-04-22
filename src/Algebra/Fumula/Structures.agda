@@ -80,12 +80,12 @@ record IsFumula (■ : A) : Set (a ⊔ ℓ) where
   invert-cong x≈y = ⤙⤚-cong refl refl x≈y
 
   field
-    ■-outer-commute : _OuterCommutativeWith_ ■
+    ■-outer-commute : OuterCommutativeWith ■
     ■-collapse-dup : (∀ x → (■ ⤙ x ⤚ x) ≈ ◆) × (∀ x → (x ⤙ x ⤚ ■) ≈ ◆)
-    ◆-outer-commute : _OuterCommutativeWith_ ◆
+    ◆-outer-commute : OuterCommutativeWith ◆
     ◆-collapse-middle : (∀ x z → (◆ ⤙ z ⤚ x) ≈ z) × (∀ x z → (x ⤙ z ⤚ ◆) ≈ z)
-    ●-outer-commute : _OuterCommutativeWith_ ●
-    ●-inner-commute : _InnerCommutativeWith_ ●
+    ●-outer-commute : OuterCommutativeWith ●
+    ●-inner-commute : InnerCommutativeWith ●
     ●-◆-collapse-side : (∀ x → (● ⤙ ◆ ⤚ x) ≈ x) × (∀ x → (x ⤙ ◆ ⤚ ●) ≈ x)
 
   ■-collapse-dupˡ : ∀ x → (■ ⤙ x ⤚ x) ≈ ◆
@@ -100,10 +100,10 @@ record IsFumula (■ : A) : Set (a ⊔ ℓ) where
   ◆-collapse-middleʳ : ∀ x z → (x ⤙ z ⤚ ◆) ≈ z
   ◆-collapse-middleʳ = proj₂ ◆-collapse-middle
 
-  ●-inner-commuteˡ : _LeftInnerCommutativeWith_ ●
+  ●-inner-commuteˡ : LeftInnerCommutativeWith ●
   ●-inner-commuteˡ = proj₁ ●-inner-commute
 
-  ●-inner-commuteʳ : _RightInnerCommutativeWith_ ●
+  ●-inner-commuteʳ : RightInnerCommutativeWith ●
   ●-inner-commuteʳ = proj₂ ●-inner-commute
 
   ●-◆-collapse-sideˡ : ∀ x → (● ⤙ ◆ ⤚ x) ≈ x
@@ -113,13 +113,13 @@ record IsFumula (■ : A) : Set (a ⊔ ℓ) where
   ●-◆-collapse-sideʳ = proj₂ ●-◆-collapse-side
 
   field
-    ◆-outer-associate : _OuterAssociativeWith_ ◆
-    ◆-pullout : _PulloutWith_ ◆
+    ◆-outer-associate : OuterAssociativeWith ◆
+    ◆-pullout : PulloutWith ◆
 
-  ◆-pulloutˡ : _LeftPulloutWith_ ◆
+  ◆-pulloutˡ : LeftPulloutWith ◆
   ◆-pulloutˡ = proj₁ ◆-pullout
 
-  ◆-pulloutʳ : _RightPulloutWith_ ◆
+  ◆-pulloutʳ : RightPulloutWith ◆
   ◆-pulloutʳ = proj₂ ◆-pullout
 
 record IsReversibleFumula (■ : A) : Set (a ⊔ ℓ) where

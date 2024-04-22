@@ -21,32 +21,32 @@ open import Data.Product.Base using (_×_)
 Congruent₃ : Set _
 Congruent₃ = _⤙_⤚_ Preserves₃ _≈_ ⟶ _≈_ ⟶ _≈_ ⟶ _≈_
 
-_OuterCommutativeWith_ : A → Set _
-_OuterCommutativeWith_ e = ∀ x z → (x ⤙ z ⤚ e) ≈ (e ⤙ z ⤚ x)
+OuterCommutativeWith : A → Set _
+OuterCommutativeWith e = ∀ x z → (x ⤙ z ⤚ e) ≈ (e ⤙ z ⤚ x)
 
 OuterCommutative : Set _
-OuterCommutative = ∀ y → _OuterCommutativeWith_ y
+OuterCommutative = ∀ y → OuterCommutativeWith y
 
-_LeftInnerCommutativeWith_ : A → Set _
-_LeftInnerCommutativeWith_ e = ∀ x y → (x ⤙ y ⤚ e) ≈ (y ⤙ x ⤚ e)
+LeftInnerCommutativeWith : A → Set _
+LeftInnerCommutativeWith e = ∀ x y → (x ⤙ y ⤚ e) ≈ (y ⤙ x ⤚ e)
 
-_RightInnerCommutativeWith_ : A → Set _
-_RightInnerCommutativeWith_ e = ∀ x y → (e ⤙ x ⤚ y) ≈ (e ⤙ y ⤚ x)
+RightInnerCommutativeWith : A → Set _
+RightInnerCommutativeWith e = ∀ x y → (e ⤙ x ⤚ y) ≈ (e ⤙ y ⤚ x)
 
-_InnerCommutativeWith_ : A → Set _
-_InnerCommutativeWith_ e = _LeftInnerCommutativeWith_ e × _RightInnerCommutativeWith_ e
+InnerCommutativeWith : A → Set _
+InnerCommutativeWith e = LeftInnerCommutativeWith e × RightInnerCommutativeWith e
 
 MiddleNestedDoubleExchange : Set _
 MiddleNestedDoubleExchange = ∀ v w x y z → (v ⤙ x ⤙ z ⤚ y ⤚ w) ≈ (x ⤙ v ⤙ z ⤚ w ⤚ y)
 
-_OuterAssociativeWith_ : A → Set _
-_OuterAssociativeWith_ e = ∀ w x y z → ((w ⤙ e ⤚ x) ⤙ z ⤚ y) ≈ (w ⤙ z ⤚ (x ⤙ e ⤚ y))
+OuterAssociativeWith : A → Set _
+OuterAssociativeWith e = ∀ w x y z → ((w ⤙ e ⤚ x) ⤙ z ⤚ y) ≈ (w ⤙ z ⤚ (x ⤙ e ⤚ y))
 
-_LeftPulloutWith_ : A → Set _
-_LeftPulloutWith_ e = ∀ v w x y z → ((w ⤙ v ⤚ x) ⤙ z ⤚ y) ≈ ((w ⤙ e ⤚ x) ⤙ v ⤙ z ⤚ y ⤚ y)
+LeftPulloutWith : A → Set _
+LeftPulloutWith e = ∀ v w x y z → ((w ⤙ v ⤚ x) ⤙ z ⤚ y) ≈ ((w ⤙ e ⤚ x) ⤙ v ⤙ z ⤚ y ⤚ y)
 
-_RightPulloutWith_ : A → Set _
-_RightPulloutWith_ e = ∀ v w x y z → (w ⤙ v ⤚ (x ⤙ z ⤚ y)) ≈ (w ⤙ w ⤙ v ⤚ z ⤚ (x ⤙ e ⤚ y))
+RightPulloutWith : A → Set _
+RightPulloutWith e = ∀ v w x y z → (w ⤙ v ⤚ (x ⤙ z ⤚ y)) ≈ (w ⤙ w ⤙ v ⤚ z ⤚ (x ⤙ e ⤚ y))
 
-_PulloutWith_ : A → Set _
-_PulloutWith_ e = _LeftPulloutWith_ e × _RightPulloutWith_ e
+PulloutWith : A → Set _
+PulloutWith e = LeftPulloutWith e × RightPulloutWith e

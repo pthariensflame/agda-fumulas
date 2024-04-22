@@ -293,8 +293,8 @@ module FromFumula where
         (x ⤙ x ⤙ ◆ ⤚ y ⤚ z) ≈⟨ sym (●-◆-pull-apartʳ x z (x ⤙ ◆ ⤚ y)) ⟩
         ● ⤙ x ⤙ ◆ ⤚ y ⤚ (x ⤙ ◆ ⤚ z) ∎) ,
       (λ x y z → begin
-        ● ⤙ y ⤚ z ⤙ ◆ ⤚ x ≈⟨ ◆-pulloutˡ y ● z x ◆ ⟩
-        ● ⤙ ◆ ⤚ z ⤙ y ⤙ ◆ ⤚ x ⤚ x ≈⟨ ⤙⤚-cong (●-◆-collapse-sideˡ z) refl refl ⟩
+        (● ⤙ y ⤚ z) ⤙ ◆ ⤚ x ≈⟨ ◆-pulloutˡ y ● z x ◆ ⟩
+        (● ⤙ ◆ ⤚ z) ⤙ y ⤙ ◆ ⤚ x ⤚ x ≈⟨ ⤙⤚-cong (●-◆-collapse-sideˡ z) refl refl ⟩
         (z ⤙ y ⤙ ◆ ⤚ x ⤚ x) ≈⟨ sym (●-◆-pull-apartʳ z x (y ⤙ ◆ ⤚ x)) ⟩
         ● ⤙ y ⤙ ◆ ⤚ x ⤚ (z ⤙ ◆ ⤚ x) ∎)
     }
