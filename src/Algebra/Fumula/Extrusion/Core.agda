@@ -9,7 +9,7 @@ module Algebra.Fumula.Extrusion.Core where
 open import Level using (_⊔_)
 
 Op₃ₗ : ∀{a b} → Set a → Set b → Set (a ⊔ b)
-Op₃ₗ A B = A → B → B → B → B
+Op₃ₗ A B = A → B → B → B
 
 Op₃ₘ : ∀{a b} → Set a → Set b → Set (a ⊔ b)
 Op₃ₘ A B = B → A → B → B
