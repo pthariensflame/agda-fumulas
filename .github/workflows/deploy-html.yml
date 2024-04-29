@@ -35,7 +35,9 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
       - name: Run Agda
-        run: agda --html src/Algebra/Fumula.agda
+        run: |
+          agda --html src/Algebra/Fumula.agda
+          agda --html src/Algebra/Fumula/Extrusion.agda
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
