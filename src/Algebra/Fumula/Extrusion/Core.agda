@@ -2,7 +2,7 @@
 -- Basic definitions about nonuniform ternary operations
 ------------------------------------------------------------------------
 
--- The contents of this module should be accessed via `Algebra.Fumula.Extension`.
+-- The contents of this module should be accessed via `Algebra.Fumula.Extrusion`.
 
 module Algebra.Fumula.Extrusion.Core where
 
