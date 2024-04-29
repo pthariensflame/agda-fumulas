@@ -77,8 +77,8 @@ module _ (Fₗ : AlmostFumula fₗ ℓfₗ) (Fᵣ : AlmostFumula fᵣ ℓfᵣ) (
       ; ⤙⤚❲❳-double-exchange = ⤙⤚❲❳-double-exchange
       }
 
-    ❲❳⤙⤚-⤙⤚❲❳-double-exchange : MiddleNestedDoubleExchange
-    ❲❳⤙⤚-⤙⤚❲❳-double-exchange = ❲❳⤙⤚-double-exchange , ⤙⤚❲❳-double-exchange
+    double-exchange : MiddleNestedDoubleExchange
+    double-exchange = ❲❳⤙⤚-double-exchange , ⤙⤚❲❳-double-exchange
 
 module _ (F : AlmostFumula f ℓf) (_≈_ : Rel {x} X ℓx)
          (❲_❳⤙_⤚_ : Op₃ₗ (AlmostFumula.Carrier F) X) (_⤙_⤚❲_❳ : Op₃ᵣ (AlmostFumula.Carrier F) X)
@@ -102,7 +102,7 @@ module _ (F : ReversibleAlmostFumula f ℓf) (_≈_ : Rel {x} X ℓx)
 
     field
       isAlmostFumulaExtrusion : IsAlmostFumulaExtrusion F.almostFumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
-      ❲❳⤙⤚-⤙⤚❲❳-outer-commute : OuterCommutative
+      outer-commute : OuterCommutative
 
     open IsAlmostFumulaExtrusion isAlmostFumulaExtrusion public
 
@@ -195,7 +195,7 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel 
       }
 
     open IsBiAlmostFumulaExtrusion isBiAlmostFumulaExtrusion public
-      using (❲❳⤙⤚-⤙⤚❲❳-double-exchange)
+      using (double-exchange)
 
 module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel {x} X ℓx)
          (❲_❳⤙_⤚_ : Op₃ₗ (Fumula.Carrier Fₗ) X)
@@ -207,13 +207,13 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel 
 
     field
       isPartialBiFumulaExtrusion : IsPartialBiFumulaExtrusion Fₗ Fᵣ _≈_ ❲_❳⤙_⤚_ ◆ _⤙_⤚❲_❳ ◆
-      ❲❳⤙⤚-⤙⤚❲❳-◆-outer-associate : OuterAssociativeWith ◆
+      ◆-outer-associate : OuterAssociativeWith ◆
 
     open IsPartialBiFumulaExtrusion isPartialBiFumulaExtrusion public
       renaming (❲❳⤙⤚-◆-pulloutᵣ to ❲❳⤙⤚-◆-pulloutᵣ; ⤙⤚❲❳-◆-pulloutₗ to ⤙⤚❲❳-◆-pulloutₗ)
 
-    ❲❳⤙⤚-⤙⤚❲❳-◆-pullout : PulloutWith ◆
-    ❲❳⤙⤚-⤙⤚❲❳-◆-pullout = ⤙⤚❲❳-◆-pulloutₗ , ❲❳⤙⤚-◆-pulloutᵣ
+    ◆-pullout : PulloutWith ◆
+    ◆-pullout = ⤙⤚❲❳-◆-pulloutₗ , ❲❳⤙⤚-◆-pulloutᵣ
 
 module _ (F : Fumula f ℓf) (_≈_ : Rel {x} X ℓx)
          (❲_❳⤙_⤚_ : Op₃ₗ (Fumula.Carrier F) X)
@@ -227,15 +227,15 @@ module _ (F : Fumula f ℓf) (_≈_ : Rel {x} X ℓx)
 
     field
       isBiFumulaExtrusion : IsBiFumulaExtrusion F F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
-      ❲❳⤙⤚-⤙⤚❲❳-■ᶠ-outer-commute : OuterCommutativeWithUnderlying F.■
-      ❲❳⤙⤚-⤙⤚❲❳-◆ᶠ-outer-commute : OuterCommutativeWithUnderlying F.◆
-      ❲❳⤙⤚-⤙⤚❲❳-●ᶠ-outer-commute : OuterCommutativeWithUnderlying F.●
-      ❲❳⤙⤚-⤙⤚❲❳-◆-outer-commute : OuterCommutativeWith ◆
+      ■ᶠ-outer-commute : OuterCommutativeWithUnderlying F.■
+      ◆ᶠ-outer-commute : OuterCommutativeWithUnderlying F.◆
+      ●ᶠ-outer-commute : OuterCommutativeWithUnderlying F.●
+      ◆-outer-commute : OuterCommutativeWith ◆
 
     open IsBiFumulaExtrusion isBiFumulaExtrusion public
 
-    ❲❳⤙⤚-⤙⤚❲❳-●ᶠ-inner-commute : InnerCommutativeWith F.●
-    ❲❳⤙⤚-⤙⤚❲❳-●ᶠ-inner-commute = ⤙⤚❲❳-●ᶠ-inner-commuteₗ , ❲❳⤙⤚-●ᶠ-inner-commuteᵣ
+    ●ᶠ-inner-commute : InnerCommutativeWith F.●
+    ●ᶠ-inner-commute = ⤙⤚❲❳-●ᶠ-inner-commuteₗ , ❲❳⤙⤚-●ᶠ-inner-commuteᵣ
 
 module _ (F : ReversibleFumula f ℓf) (_≈_ : Rel {x} X ℓx)
          (❲_❳⤙_⤚_ : Op₃ₗ (ReversibleFumula.Carrier F) X)
@@ -249,6 +249,6 @@ module _ (F : ReversibleFumula f ℓf) (_≈_ : Rel {x} X ℓx)
 
     field
       isFumulaExtrusion : IsFumulaExtrusion F.fumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
-      ❲❳⤙⤚-⤙⤚❲❳-outer-commute : OuterCommutative
+      outer-commute : OuterCommutative
 
     open IsFumulaExtrusion isFumulaExtrusion public
