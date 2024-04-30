@@ -9,7 +9,6 @@ module Algebra.Fumula.Extrusion.Bundles where
 open import Level using (Level; _⊔_; suc)
 open import Relation.Binary.Core using (Rel)
 open import Relation.Binary.Bundles using (Setoid)
-import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open import Algebra.Fumula.Bundles
 open import Algebra.Fumula.Extrusion.Core
 open import Algebra.Fumula.Extrusion.Definitions
@@ -30,6 +29,9 @@ module _ (F : AlmostFumula f ℓf) where
       ❲_❳⤙_⤚_ : Op₃ₗ F.Carrier Carrier
       isLeftAlmostFumulaExtrusion : IsLeftAlmostFumulaExtrusion F _≈_ ❲_❳⤙_⤚_
     open IsLeftAlmostFumulaExtrusion isLeftAlmostFumulaExtrusion public
+
+    setoid : Setoid x ℓx
+    setoid = record { isEquivalence = isEquivalence }
 
   record RightAlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
     field
