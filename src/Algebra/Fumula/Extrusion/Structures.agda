@@ -9,7 +9,6 @@ module Algebra.Fumula.Extrusion.Structures where
 open import Level using (Level; _⊔_)
 open import Data.Product.Base using (_,_)
 open import Relation.Binary.Core using (Rel)
-open import Relation.Binary.Bundles using (Setoid)
 open import Relation.Binary.Structures using (IsEquivalence)
 open import Algebra.Fumula.Core
 import Algebra.Fumula.Definitions as BaseDefs
@@ -145,16 +144,17 @@ module _ (F : Fumula f ℓf) (_≈_ : Rel {x} X ℓx)
     open IsRightAlmostFumulaExtrusion ⤙⤚❲❳-isRightAlmostFumulaExtrusion public
 
 module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel {x} X ℓx)
-         (❲_❳⤙_⤚_ : Op₃ₗ (Fumula.Carrier Fₗ) X) (◆ : X)
+         (❲_❳⤙_⤚_ : Op₃ₗ (Fumula.Carrier Fₗ) X)
          (_⤙_⤚❲_❳ : Op₃ᵣ (Fumula.Carrier Fᵣ) X) (◆ : X)
          where
   private
     module Fₗ = Fumula Fₗ
     module Fᵣ = Fumula Fᵣ
 
-  record IsPartialBiFumulaExtrusion : Set (fₗ ⊔ fᵣ ⊔ x ⊔ ℓfₗ ⊔ ℓfᵣ ⊔ ℓx) where
+  record IsBiFumulaExtrusion : Set (fₗ ⊔ fᵣ ⊔ x ⊔ ℓfₗ ⊔ ℓfᵣ ⊔ ℓx) where
     private
       module R = RightDefs _⤙_⤚❲_❳ _≈_
+    open BiDefs ❲_❳⤙_⤚_ _⤙_⤚❲_❳ _≈_
 
     field
       ❲❳⤙⤚-isLeftFumulaExtrusion : IsLeftFumulaExtrusion Fₗ _≈_ ❲_❳⤙_⤚_ ◆
@@ -166,8 +166,12 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel 
       ⤙⤚❲❳-◆-collapse-middleˡ : ∀ x z → (◆ ⤙ z ⤚❲ x ❳) ≈ z
       ⤙⤚❲❳-◆ᶠ-collapse-middleʳ : ∀ x z → (x ⤙ z ⤚❲ Fᵣ.◆ ❳) ≈ z
       ●-◆-collapse-sideʳ : ∀ x → (x ⤙ ◆ ⤚❲ Fᵣ.● ❳) ≈ x
+      ◆-outer-associate : OuterAssociativeWith ◆
 
     open IsLeftFumulaExtrusion ❲❳⤙⤚-isLeftFumulaExtrusion public
+
+    ◆-pullout : PulloutWith ◆
+    ◆-pullout = ⤙⤚❲❳-◆-pulloutₗ , ❲❳⤙⤚-◆-pulloutᵣ
 
     ⤙⤚❲❳-isRightFumulaExtrusion : IsRightFumulaExtrusion Fᵣ _≈_ _⤙_⤚❲_❳ ◆
     ⤙⤚❲❳-isRightFumulaExtrusion = record
@@ -197,24 +201,6 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel 
     open IsBiAlmostFumulaExtrusion isBiAlmostFumulaExtrusion public
       using (double-exchange)
 
-module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel {x} X ℓx)
-         (❲_❳⤙_⤚_ : Op₃ₗ (Fumula.Carrier Fₗ) X)
-         (_⤙_⤚❲_❳ : Op₃ᵣ (Fumula.Carrier Fᵣ) X) (◆ : X)
-         where
-
-  record IsBiFumulaExtrusion : Set (fₗ ⊔ fᵣ ⊔ x ⊔ ℓfₗ ⊔ ℓfᵣ ⊔ ℓx) where
-    open BiDefs ❲_❳⤙_⤚_ _⤙_⤚❲_❳ _≈_
-
-    field
-      isPartialBiFumulaExtrusion : IsPartialBiFumulaExtrusion Fₗ Fᵣ _≈_ ❲_❳⤙_⤚_ ◆ _⤙_⤚❲_❳ ◆
-      ◆-outer-associate : OuterAssociativeWith ◆
-
-    open IsPartialBiFumulaExtrusion isPartialBiFumulaExtrusion public
-      renaming (❲❳⤙⤚-◆-pulloutᵣ to ❲❳⤙⤚-◆-pulloutᵣ; ⤙⤚❲❳-◆-pulloutₗ to ⤙⤚❲❳-◆-pulloutₗ)
-
-    ◆-pullout : PulloutWith ◆
-    ◆-pullout = ⤙⤚❲❳-◆-pulloutₗ , ❲❳⤙⤚-◆-pulloutᵣ
-
 module _ (F : Fumula f ℓf) (_≈_ : Rel {x} X ℓx)
          (❲_❳⤙_⤚_ : Op₃ₗ (Fumula.Carrier F) X)
          (_⤙_⤚❲_❳ : Op₃ᵣ (Fumula.Carrier F) X) (◆ : X)
@@ -236,6 +222,9 @@ module _ (F : Fumula f ℓf) (_≈_ : Rel {x} X ℓx)
 
     ●ᶠ-inner-commute : InnerCommutativeWith F.●
     ●ᶠ-inner-commute = ⤙⤚❲❳-●ᶠ-inner-commuteₗ , ❲❳⤙⤚-●ᶠ-inner-commuteᵣ
+
+    isAlmostFumulaExtrusion : IsAlmostFumulaExtrusion F.almostFumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
+    isAlmostFumulaExtrusion = record { isBiAlmostFumulaExtrusion = isBiAlmostFumulaExtrusion }
 
 module _ (F : ReversibleFumula f ℓf) (_≈_ : Rel {x} X ℓx)
          (❲_❳⤙_⤚_ : Op₃ₗ (ReversibleFumula.Carrier F) X)
