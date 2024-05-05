@@ -49,8 +49,7 @@ module RingHelpers {c ℓ} (R : Ring c ℓ) where
   1≈-1*-1+[-1*-1+-1] : R.1# R.≈ R.- R.1# R.* R.- R.1# R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#)
   1≈-1*-1+[-1*-1+-1] = begin
     R.1# ≈⟨ R.sym (R.+-identityʳ R.1#) ⟩
-    R.1# R.+ R.0# ≈⟨ R.+-congʳ (R.sym -1*-1≈1) ⟩
-    R.- R.1# R.* R.- R.1# R.+ R.0# ≈⟨ R.+-congˡ 0≈-1*-1+-1 ⟩
+    R.1# R.+ R.0# ≈⟨ R.+-cong (R.sym -1*-1≈1) 0≈-1*-1+-1 ⟩
     R.- R.1# R.* R.- R.1# R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#) ∎
 
 module FromRing where

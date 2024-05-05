@@ -110,6 +110,156 @@ module FromModule where
         open IsEquivalence ≈ᴹ-isEquivalence using (refl)
         open SetoidReasoning record { isEquivalence = ≈ᴹ-isEquivalence }
 
+  module _ {r m rℓ mℓ} (R : Ring r rℓ) {Carrier : Set m} (_≈_ : Rel Carrier mℓ)
+           (_+_ : Op₂ Carrier) (0# : Carrier) (-_ : Op₁ Carrier) (_*ᵣ_ : Opᵣ (Ring.Carrier R) Carrier) where
+    private
+      F : Fumula r rℓ
+      F = FromRing.fumula R
+      module R where
+        open Ring R public
+        open RingProperties R public
+        open RingHelpers R public
+      module F where
+        open Fumula F public
+        open FumulaProperties F public
+
+      _⤙_⤚❲_❳ : Op₃ᵣ F.Carrier Carrier
+      x ⤙ z ⤚❲ s ❳ = (x *ᵣ s) + z
+
+      ◆ : Carrier
+      ◆ = 0#
+
+    isRightFumulaExtrusion : (M : IsRightModule R _≈_ _+_ 0# -_ _*ᵣ_) → IsRightFumulaExtrusion F _≈_ _⤙_⤚❲_❳ ◆
+    isRightFumulaExtrusion M = record
+      { ⤙⤚❲❳-isRightAlmostFumulaExtrusion = record
+        { isEquivalence = ≈ᴹ-isEquivalence
+        ; ⤙⤚❲❳-cong = λ x≈ z≈ s≈ → +ᴹ-cong (*ᵣ-cong x≈ s≈) z≈
+        ; ⤙⤚❲❳-double-exchange = λ v w x y z → begin
+          (v *ᵣ w) + ((x *ᵣ y) + z) ≈⟨ +ᴹ-assoc (v *ᵣ w) (x *ᵣ y) z ⟨
+          ((v *ᵣ w) + (x *ᵣ y)) + z ≈⟨ +ᴹ-congʳ (+ᴹ-comm (v *ᵣ w) (x *ᵣ y)) ⟩
+          ((x *ᵣ y) + (v *ᵣ w)) + z ≈⟨ +ᴹ-assoc (x *ᵣ y) (v *ᵣ w) z ⟩
+          (x *ᵣ y) + ((v *ᵣ w) + z) ∎
+        }
+      ; ⤙⤚❲❳-●ᶠ-inner-commuteₗ = λ x y → begin
+        (x *ᵣ (R.- R.1# R.* R.- R.1# R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#))) + y ≈⟨ +ᴹ-congʳ (*ᵣ-congˡ R.1≈-1*-1+[-1*-1+-1]) ⟨
+        (x *ᵣ R.1#) + y ≈⟨ +ᴹ-congʳ (*ᵣ-identityʳ x) ⟩
+        x + y ≈⟨ +ᴹ-comm x y ⟩
+        y + x ≈⟨ +ᴹ-congʳ (*ᵣ-identityʳ y) ⟨
+        (y *ᵣ R.1#) + x ≈⟨ +ᴹ-congʳ (*ᵣ-congˡ R.1≈-1*-1+[-1*-1+-1]) ⟩
+        (y *ᵣ (R.- R.1# R.* R.- R.1# R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#))) + x ∎
+      ; ⤙⤚❲❳-◆-pulloutₗ = λ v w x y z → begin
+        (((w *ᵣ x) + v) *ᵣ y) + z ≈⟨ +ᴹ-congʳ (*ᵣ-distribʳ y (w *ᵣ x) v) ⟩
+        (((w *ᵣ x) *ᵣ y) + (v *ᵣ y)) + z ≈⟨ +ᴹ-assoc ((w *ᵣ x) *ᵣ y) (v *ᵣ y) z ⟩
+        ((w *ᵣ x) *ᵣ y) + ((v *ᵣ y) + z) ≈⟨ {!!} ⟩
+        (((w *ᵣ x) + 0#) *ᵣ y) + ((v *ᵣ y) + z) ∎
+      ; ⤙⤚❲❳-◆ᶠ-pulloutᵣ = λ v w x y z → begin
+        (w *ᵣ (x R.* y R.+ z)) + v ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        (w *ᵣ (x R.* y R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#))) + ((w *ᵣ z) + v) ∎
+      ; ⤙⤚❲❳-■ᶠ-collapse-dupˡ = λ x → begin
+        (x *ᵣ (R.- R.1#)) + x ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        0# ∎
+      ; ⤙⤚❲❳-◆-collapse-middleˡ = λ x z → begin
+        (0# *ᵣ x) + z ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        z ∎
+      ; ⤙⤚❲❳-◆ᶠ-collapse-middleʳ = λ x z → begin
+        (x *ᵣ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#)) + z ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        z ∎
+      ; ⤙⤚❲❳-●-◆-collapse-sideʳ = λ x → begin
+        (x *ᵣ (R.- R.1# R.* R.- R.1# R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#))) + 0# ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        x ∎
+      ; ⤙⤚❲❳-◆ᶠ-◆-outer-associate = λ w x y z → begin
+        (((w *ᵣ x) + 0#) *ᵣ y) + z ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        {!!} ≈⟨ {!!} ⟩
+        (w *ᵣ (x R.* y R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#))) + z ∎
+      }
+      where
+        open IsRightModule M
+        open IsEquivalence ≈ᴹ-isEquivalence using (refl)
+        open SetoidReasoning record { isEquivalence = ≈ᴹ-isEquivalence }
+
 module FromFumulaExtrusion where
 
   module _ {f x fℓ xℓ} (F : Fumula f fℓ) {Carrier : Set x} (_≈_ : Rel Carrier xℓ)
