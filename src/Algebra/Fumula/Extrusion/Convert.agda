@@ -49,7 +49,7 @@ module FromModule where
       ◆ : Carrier
       ◆ = 0#
 
-    isLeftFumulaExtrusion : (M : IsLeftModule R _≈_ _+_ 0# -_ _*ₗ_) → IsLeftFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ ◆
+    isLeftFumulaExtrusion : IsLeftModule R _≈_ _+_ 0# -_ _*ₗ_ → IsLeftFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ ◆
     isLeftFumulaExtrusion M = record
       { ❲❳⤙⤚-isLeftAlmostFumulaExtrusion = record
         { isEquivalence = ≈ᴹ-isEquivalence
@@ -110,6 +110,15 @@ module FromModule where
         open IsEquivalence ≈ᴹ-isEquivalence using (refl)
         open SetoidReasoning record { isEquivalence = ≈ᴹ-isEquivalence }
 
+  module _ {r m rℓ mℓ} (R : Ring r rℓ) where
+    private
+      F : Fumula r rℓ
+      F = FromRing.fumula R
+
+    leftFumulaExtrusion : LeftModule R m mℓ → LeftFumulaExtrusion F m mℓ
+    leftFumulaExtrusion M = record { isLeftFumulaExtrusion = isLeftFumulaExtrusion R _≈ᴹ_ _+ᴹ_ 0ᴹ -ᴹ_ _*ₗ_ isLeftModule }
+      where open LeftModule M
+
   module _ {r m rℓ mℓ} (R : Ring r rℓ) {Carrier : Set m} (_≈_ : Rel Carrier mℓ)
            (_+_ : Op₂ Carrier) (0# : Carrier) (-_ : Op₁ Carrier) (_*ᵣ_ : Opᵣ (Ring.Carrier R) Carrier) where
     private
@@ -129,7 +138,7 @@ module FromModule where
       ◆ : Carrier
       ◆ = 0#
 
-    isRightFumulaExtrusion : (M : IsRightModule R _≈_ _+_ 0# -_ _*ᵣ_) → IsRightFumulaExtrusion F _≈_ _⤙_⤚❲_❳ ◆
+    isRightFumulaExtrusion : IsRightModule R _≈_ _+_ 0# -_ _*ᵣ_ → IsRightFumulaExtrusion F _≈_ _⤙_⤚❲_❳ ◆
     isRightFumulaExtrusion M = record
       { ⤙⤚❲❳-isRightAlmostFumulaExtrusion = record
         { isEquivalence = ≈ᴹ-isEquivalence
@@ -190,6 +199,15 @@ module FromModule where
         open IsEquivalence ≈ᴹ-isEquivalence using (refl)
         open SetoidReasoning record { isEquivalence = ≈ᴹ-isEquivalence }
 
+  module _ {r m rℓ mℓ} (R : Ring r rℓ) where
+    private
+      F : Fumula r rℓ
+      F = FromRing.fumula R
+
+    rightFumulaExtrusion : RightModule R m mℓ → RightFumulaExtrusion F m mℓ
+    rightFumulaExtrusion M = record { isRightFumulaExtrusion = isRightFumulaExtrusion R _≈ᴹ_ _+ᴹ_ 0ᴹ -ᴹ_ _*ᵣ_ isRightModule }
+      where open RightModule M
+
 module FromFumulaExtrusion where
 
   module _ {f x fℓ xℓ} (F : Fumula f fℓ) {Carrier : Set x} (_≈_ : Rel Carrier xℓ)
@@ -217,7 +235,7 @@ module FromFumulaExtrusion where
       _*ₗ_ : Opₗ R.Carrier Carrier
       s *ₗ x = ❲ s ❳⤙ ◆ ⤚ x
 
-    isLeftModule : (X : IsLeftFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ ◆) → IsLeftModule R _≈_ _+_ 0# -_ _*ₗ_
+    isLeftModule : IsLeftFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ ◆ → IsLeftModule R _≈_ _+_ 0# -_ _*ₗ_
     isLeftModule X = record
       { isLeftSemimodule = record
         { +ᴹ-isCommutativeMonoid = record
@@ -277,6 +295,15 @@ module FromFumulaExtrusion where
         open IsEquivalence isEquivalence using (refl; sym)
         open SetoidReasoning (record { isEquivalence = isEquivalence })
 
+  module _ {f x fℓ xℓ} (F : Fumula f fℓ) where
+    private
+      R : Ring f fℓ
+      R = FromFumula.ring F
+
+    leftModule : LeftFumulaExtrusion F x xℓ → LeftModule R x xℓ
+    leftModule X = record { isLeftModule = isLeftModule F _≈_ ❲_❳⤙_⤚_ ◆ isLeftFumulaExtrusion }
+      where open LeftFumulaExtrusion X
+
   module _ {f x fℓ xℓ} (F : Fumula f fℓ) {Carrier : Set x} (_≈_ : Rel Carrier xℓ)
            (_⤙_⤚❲_❳ : Op₃ᵣ (Fumula.Carrier F) Carrier) (◆ : Carrier) where
     private
@@ -302,7 +329,7 @@ module FromFumulaExtrusion where
       _*ᵣ_ : Opᵣ R.Carrier Carrier
       x *ᵣ s = x ⤙ ◆ ⤚❲ s ❳
 
-    isRightModule : (X : IsRightFumulaExtrusion F _≈_ _⤙_⤚❲_❳ ◆) → IsRightModule R _≈_ _+_ 0# -_ _*ᵣ_
+    isRightModule : IsRightFumulaExtrusion F _≈_ _⤙_⤚❲_❳ ◆ → IsRightModule R _≈_ _+_ 0# -_ _*ᵣ_
     isRightModule X = record
       { isRightSemimodule = record
         { +ᴹ-isCommutativeMonoid = record
@@ -363,3 +390,12 @@ module FromFumulaExtrusion where
         open RightProperties F record { isRightFumulaExtrusion = X }
         open IsEquivalence isEquivalence using (refl; sym)
         open SetoidReasoning (record { isEquivalence = isEquivalence })
+
+  module _ {f x fℓ xℓ} (F : Fumula f fℓ) where
+    private
+      R : Ring f fℓ
+      R = FromFumula.ring F
+
+    rightModule : RightFumulaExtrusion F x xℓ → RightModule R x xℓ
+    rightModule X = record { isRightModule = isRightModule F _≈_ _⤙_⤚❲_❳ ◆ isRightFumulaExtrusion }
+      where open RightFumulaExtrusion X
