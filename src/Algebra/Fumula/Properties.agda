@@ -10,9 +10,14 @@ module Algebra.Fumula.Properties {c ℓ} (F : Fumula c ℓ) where
 
 open import Function.Definitions using (Inverseˡ; Inverseʳ; Inverseᵇ)
 open import Data.Product.Base using (_,_)
+open import Data.Nat.Base using (zero; suc) renaming (_+_ to _ℕ+_)
+open import Data.Nat.Properties using (+-comm)
+open import Data.Integer.Base using (ℤ; +_; -[1+_]; -1ℤ; 0ℤ; 1ℤ; _+_; _-_)
 open Fumula F
 open import Algebra.Definitions _≈_ using (Involutive)
+open import Relation.Binary.PropositionalEquality using (_≡_) renaming (cong to ≡-cong)
 open import Relation.Binary.Reasoning.Setoid setoid
+open import Algebra.Fumula.Definitions _≈_ _⤙_⤚_ using (OuterCommutativeWith)
 
 ------------------------------------------------------------------------
 -- The "pull apart" property: a way of separating the two ring
@@ -68,6 +73,32 @@ open import Relation.Binary.Reasoning.Setoid setoid
 ↓′≈↓ : ∀ x → x ↓′ ≈ x ↓
 ↓′≈↓ x = sym (●-outer-commute ■ x)
 
+↑-⤙⤚-●-dup-nestˡ : ∀ x y z → x ↑ ⤙ z ⤚ y ≈ x ⤙ ● ⤙ z ⤚ y ⤚ y
+↑-⤙⤚-●-dup-nestˡ x y z = begin
+  x ↑ ⤙ z ⤚ y ≈⟨ ◆-pulloutˡ x ■ ■ y z ⟩
+  ● ⤙ x ⤙ z ⤚ y ⤚ y ≈⟨ double-exchange ● y x y z ⟩
+  x ⤙ ● ⤙ z ⤚ y ⤚ y ∎
+
+↑-⤙⤚-●-dup-nestʳ : ∀ x y z → x ⤙ z ⤚ y ↑ ≈ x ⤙ x ⤙ z ⤚ ● ⤚ y
+↑-⤙⤚-●-dup-nestʳ x y z = begin
+  x ⤙ z ⤚ y ↑ ≈⟨ ◆-pulloutʳ z x ■ ■ y ⟩
+  x ⤙ x ⤙ z ⤚ y ⤚ ● ≈⟨ double-exchange x ● x y z ⟩
+  x ⤙ x ⤙ z ⤚ ● ⤚ y ∎
+
+↓-⤙⤚-■-dup-nestˡ : ∀ x y z → x ↓ ⤙ z ⤚ y ≈ x ⤙ ■ ⤙ z ⤚ y ⤚ y
+↓-⤙⤚-■-dup-nestˡ x y z = begin
+  x ↓ ⤙ z ⤚ y ≈⟨ ◆-pulloutˡ x ■ ● y z ⟩
+  (■ ⤙ ◆ ⤚ ●) ⤙ x ⤙ z ⤚ y ⤚ y ≈⟨ ⤙⤚-cong (●-◆-collapse-sideʳ ■) refl refl ⟩
+  ■ ⤙ x ⤙ z ⤚ y ⤚ y ≈⟨ double-exchange ■ y x y z ⟩
+  x ⤙ ■ ⤙ z ⤚ y ⤚ y ∎
+
+↓-⤙⤚-■-dup-nestʳ : ∀ x y z → x ⤙ z ⤚ y ↓ ≈ x ⤙ x ⤙ z ⤚ ■ ⤚ y
+↓-⤙⤚-■-dup-nestʳ x y z = begin
+  x ⤙ z ⤚ y ↓ ≈⟨ ◆-pulloutʳ z x ■ ● y ⟩
+  x ⤙ x ⤙ z ⤚ y ⤚ (■ ⤙ ◆ ⤚ ●) ≈⟨ ⤙⤚-cong refl refl (●-◆-collapse-sideʳ ■) ⟩
+  x ⤙ x ⤙ z ⤚ y ⤚ ■ ≈⟨ double-exchange x ■ x y z ⟩
+  x ⤙ x ⤙ z ⤚ ■ ⤚ y ∎
+
 ------------------------------------------------------------------------
 -- Properties of the invert operation.
 ------------------------------------------------------------------------
@@ -78,3 +109,63 @@ invert-involutive x = begin
   ■ ⤙ ◆ ⤚ (■ ⤙ ◆ ⤚ x) ≈⟨ sym (◆-outer-associate ■ ■ x ◆) ⟩
   ● ⤙ ◆ ⤚ x ≈⟨ ●-◆-collapse-sideˡ x ⟩
   x ∎
+
+------------------------------------------------------------------------
+-- The heartline of a fumula: the shadow of the integers
+------------------------------------------------------------------------
+
+heartline : ℤ → Carrier
+heartline (+ zero) = ◆ -- ≈ ■ ↑
+heartline (+ suc n) = heartline (+ n) ↑
+heartline -[1+ zero ] = ■
+heartline -[1+ suc n ] = heartline -[1+ n ] ↓
+
+heartline-cong : ∀{i j} → i ≡ j → heartline i ≈ heartline j
+heartline-cong i≡j = reflexive (≡-cong heartline i≡j)
+
+heartline‿-1≈■ : heartline -1ℤ ≈ ■
+heartline‿-1≈■ = refl
+
+heartline-0≈◆ : heartline 0ℤ ≈ ◆
+heartline-0≈◆ = refl
+
+heartline-1≈● : heartline 1ℤ ≈ ●
+heartline-1≈● = refl
+
+heartline∘[+1]≈↑∘heartline : ∀ i → heartline (i + 1ℤ) ≈ heartline i ↑
+heartline∘[+1]≈↑∘heartline (+ zero) = refl
+heartline∘[+1]≈↑∘heartline (+ suc n) = ↑-cong (heartline∘[+1]≈↑∘heartline (+ n))
+heartline∘[+1]≈↑∘heartline -[1+ zero ] = refl
+heartline∘[+1]≈↑∘heartline -[1+ suc n ] = sym (↑-↓-inverseˡ refl)
+
+heartline∘[-1]≈↓∘heartline : ∀ i → heartline (i - 1ℤ) ≈ heartline i ↓
+heartline∘[-1]≈↓∘heartline (+ zero) = sym (↑-↓-inverseʳ refl)
+heartline∘[-1]≈↓∘heartline (+ suc n) = sym (↑-↓-inverseʳ refl)
+heartline∘[-1]≈↓∘heartline -[1+ zero ] = refl
+heartline∘[-1]≈↓∘heartline -[1+ suc n ] = ↓-cong (↓-cong (heartline-cong (≡-cong -[1+_] (+-comm n zero))))
+
+heartline-outer-commute : ∀ i → OuterCommutativeWith (heartline i)
+heartline-outer-commute (+ zero) = ◆-outer-commute
+heartline-outer-commute (+ suc n) x z = begin
+  x ⤙ z ⤚ heartline (+ n) ↑ ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  heartline (+ n) ↑ ⤙ z ⤚ x ∎
+heartline-outer-commute -[1+ zero ] = ■-outer-commute
+heartline-outer-commute -[1+ suc n ] x z = begin
+  x ⤙ z ⤚ heartline -[1+ n ] ↓ ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  {!!} ≈⟨ {!!} ⟩
+  heartline -[1+ n ] ↓ ⤙ z ⤚ x ∎

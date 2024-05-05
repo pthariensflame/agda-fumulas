@@ -326,16 +326,46 @@ module FromFumulaExtrusion where
           }
         ; isPrerightSemimodule = record
           { *ᵣ-cong = λ x≈ → ⤙⤚❲❳-cong x≈ refl
-          ; *ᵣ-zeroʳ = λ x → {!!}
-          ; *ᵣ-distribˡ = λ x s r → {!!}
-          ; *ᵣ-identityʳ = λ x → {!!}
-          ; *ᵣ-assoc = λ x s r → {!!}
-          ; *ᵣ-zeroˡ = λ x → {!!}
-          ; *ᵣ-distribʳ = λ s x y → {!!}
+          ; *ᵣ-zeroʳ = λ x → ⤙⤚❲❳-◆ᶠ-collapse-middleʳ x ◆
+          ; *ᵣ-distribˡ = λ x s r → begin
+            x ⤙ ◆ ⤚❲ F.● F.⤙ s ⤚ r ❳ ≈⟨ ⤙⤚❲❳-cong refl refl (F.●-inner-commuteʳ s r) ⟩
+            x ⤙ ◆ ⤚❲ F.● F.⤙ r ⤚ s ❳ ≈⟨ ⤙⤚❲❳-◆ᶠ-pulloutᵣ ◆ x F.● s r ⟩
+            x ⤙ x ⤙ ◆ ⤚❲ r ❳ ⤚❲ F.● F.⤙ F.◆ ⤚ s ❳ ≈⟨ ⤙⤚❲❳-cong refl refl (F.●-outer-commute s (F.■ F.⤙ F.■ ⤚ F.■)) ⟨
+            x ⤙ x ⤙ ◆ ⤚❲ r ❳ ⤚❲ s F.⤙ F.◆ ⤚ F.● ❳ ≈⟨ ⤙⤚❲❳-◆ᶠ-◆-outer-associate x s F.● (x ⤙ ◆ ⤚❲ r ❳) ⟨
+            x ⤙ ◆ ⤚❲ s ❳ ⤙ x ⤙ ◆ ⤚❲ r ❳ ⤚❲ F.● ❳ ∎
+          ; *ᵣ-identityʳ = ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ
+          ; *ᵣ-assoc = λ x s r → ⤙⤚❲❳-◆ᶠ-◆-outer-associate x s r ◆
+          ; *ᵣ-zeroˡ = λ x → ⤙⤚❲❳-◆-collapse-middleˡ x ◆
+          ; *ᵣ-distribʳ = λ s x y → begin
+            x ⤙ y ⤚❲ F.● ❳ ⤙ ◆ ⤚❲ s ❳ ≈⟨ {!!} ⟩
+            {!!} ≈⟨ {!!} ⟩
+            {!!} ≈⟨ {!!} ⟩
+            {!!} ≈⟨ {!!} ⟩
+            {!!} ≈⟨ {!!} ⟩
+            {!!} ≈⟨ {!!} ⟩
+            {!!} ≈⟨ {!!} ⟩
+            {!!} ≈⟨ {!!} ⟩
+            {!!} ≈⟨ {!!} ⟩
+            {!!} ≈⟨ {!!} ⟩
+            {!!} ≈⟨ {!!} ⟩
+            {!!} ≈⟨ {!!} ⟩
+            {!!} ≈⟨ {!!} ⟩
+            x ⤙ ◆ ⤚❲ s ❳ ⤙ y ⤙ ◆ ⤚❲ s ❳ ⤚❲ F.● ❳ ∎
           }
         }
       ; -ᴹ‿cong = λ x≈ → ⤙⤚❲❳-cong x≈ refl F.refl
-      ; -ᴹ‿inverse = (λ x → {!!}) , (λ x → {!!})
+      ; -ᴹ‿inverse =
+        (λ x → begin
+          x ⤙ ◆ ⤚❲ F.■ ❳ ⤙ x ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-●ᶠ-inner-commuteₗ (x ⤙ ◆ ⤚❲ F.■ ❳) x ⟩
+          x ⤙ x ⤙ ◆ ⤚❲ F.■ ❳ ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-double-exchange x F.● x F.■ ◆ ⟩
+          x ⤙ x ⤙ ◆ ⤚❲ F.● ❳ ⤚❲ F.■ ❳ ≈⟨ ⤙⤚❲❳-cong refl (⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ x) F.refl ⟩
+          x ⤙ x ⤚❲ F.■ ❳ ≈⟨ ⤙⤚❲❳-■ᶠ-collapse-dupˡ x ⟩
+          ◆ ∎) ,
+        (λ x → begin
+          x ⤙ x ⤙ ◆ ⤚❲ F.■ ❳ ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-double-exchange x F.● x F.■ ◆ ⟩
+          x ⤙ x ⤙ ◆ ⤚❲ F.● ❳ ⤚❲ F.■ ❳ ≈⟨ ⤙⤚❲❳-cong refl (⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ x) F.refl ⟩
+          x ⤙ x ⤚❲ F.■ ❳ ≈⟨ ⤙⤚❲❳-■ᶠ-collapse-dupˡ x ⟩
+          ◆ ∎)
       }
       where
         open IsRightFumulaExtrusion X
