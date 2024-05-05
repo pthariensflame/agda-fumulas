@@ -5,7 +5,6 @@
 -- The contents of this module should be accessed via `Algebra.Fumula`.
 
 module Algebra.Fumula.Convert where
-
 open import Function using (id)
 open import Data.Product using (_,_)
 open import Relation.Binary.Structures using (IsEquivalence)
@@ -441,6 +440,15 @@ module _ {c ℓ} (R : Ring c ℓ) where
     ; surjective = λ y → y , id
     }
 
+module _ {c ℓ} (R : CommutativeRing c ℓ) where
+  private
+    R̂ = FromFumula.commutativeRing (FromRing.reversibleFumula R)
+    module R = CommutativeRing R
+    module R̂ = CommutativeRing R̂
+    
+  commutativeRing↔reversibleFumula : IsRingIsomorphism R.rawRing R̂.rawRing id
+  commutativeRing↔reversibleFumula = ring↔fumula R.ring
+
 module _ {c ℓ} (F : Fumula c ℓ) where
   private
     R = FromFumula.ring F
@@ -471,3 +479,12 @@ module _ {c ℓ} (F : Fumula c ℓ) where
       }
     ; surjective = λ y → y , id
     }
+
+module _ {c ℓ} (F : ReversibleFumula c ℓ) where
+  private
+    F̂ = FromRing.reversibleFumula (FromFumula.commutativeRing F)
+    module F = ReversibleFumula F
+    module F̂ = ReversibleFumula F̂
+    
+  reversibleFumula↔commutativeRing : IsFumulaIsomorphism F.rawFumula F̂.rawFumula id
+  reversibleFumula↔commutativeRing = fumula↔ring F.fumula

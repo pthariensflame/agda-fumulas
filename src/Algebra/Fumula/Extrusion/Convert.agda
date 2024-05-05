@@ -5,7 +5,7 @@
 -- The contents of this module should be accessed via `Algebra.Fumula.Extrusion`.
 
 module Algebra.Fumula.Extrusion.Convert where
-
+open import Function using (id)
 open import Data.Product using (_,_)
 open import Relation.Binary.Core using (Rel)
 open import Relation.Binary.Structures using (IsEquivalence)
