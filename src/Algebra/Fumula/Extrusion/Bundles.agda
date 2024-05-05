@@ -53,7 +53,7 @@ module _ (Fₗ : AlmostFumula fₗ ℓfₗ) (Fᵣ : AlmostFumula fᵣ ℓfᵣ) w
     module Fₗ = AlmostFumula Fₗ
     module Fᵣ = AlmostFumula Fᵣ
 
-  record BiAlmostFumulaExtrusion (x ℓx : Level) : Set (fₗ ⊔ fᵣ ⊔ suc x ⊔ ℓfₗ ⊔ ℓfᵣ ⊔ suc ℓx) where
+  record DoubleAlmostFumulaExtrusion (x ℓx : Level) : Set (fₗ ⊔ fᵣ ⊔ suc x ⊔ ℓfₗ ⊔ ℓfᵣ ⊔ suc ℓx) where
     infix 7 ❲_❳⤙_⤚_
     infix 7 _⤙_⤚❲_❳
     infix 4 _≈_
@@ -62,8 +62,8 @@ module _ (Fₗ : AlmostFumula fₗ ℓfₗ) (Fᵣ : AlmostFumula fᵣ ℓfᵣ) w
       _≈_ : Rel Carrier ℓx
       ❲_❳⤙_⤚_ : Op₃ₗ Fₗ.Carrier Carrier
       _⤙_⤚❲_❳ : Op₃ᵣ Fᵣ.Carrier Carrier
-      isBiAlmostFumulaExtrusion : IsBiAlmostFumulaExtrusion Fₗ Fᵣ _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
-    open IsBiAlmostFumulaExtrusion isBiAlmostFumulaExtrusion public
+      isDoubleAlmostFumulaExtrusion : IsDoubleAlmostFumulaExtrusion Fₗ Fᵣ _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
+    open IsDoubleAlmostFumulaExtrusion isDoubleAlmostFumulaExtrusion public
 
     ❲❳⤙⤚-leftAlmostFumulaExtrusion : LeftAlmostFumulaExtrusion Fₗ x ℓx
     ❲❳⤙⤚-leftAlmostFumulaExtrusion = record { isLeftAlmostFumulaExtrusion = ❲❳⤙⤚-isLeftAlmostFumulaExtrusion }
@@ -89,9 +89,9 @@ module _ (F : ReversibleAlmostFumula f ℓf) where
       isAlmostFumulaExtrusion : IsAlmostFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
     open IsAlmostFumulaExtrusion isAlmostFumulaExtrusion public
 
-    biAlmostFumulaExtrusion : BiAlmostFumulaExtrusion F.almostFumula F.almostFumula x ℓx
-    biAlmostFumulaExtrusion = record { isBiAlmostFumulaExtrusion = isBiAlmostFumulaExtrusion }
-    open BiAlmostFumulaExtrusion biAlmostFumulaExtrusion public
+    doubleAlmostFumulaExtrusion : DoubleAlmostFumulaExtrusion F.almostFumula F.almostFumula x ℓx
+    doubleAlmostFumulaExtrusion = record { isDoubleAlmostFumulaExtrusion = isDoubleAlmostFumulaExtrusion }
+    open DoubleAlmostFumulaExtrusion doubleAlmostFumulaExtrusion public
       using (❲❳⤙⤚-leftAlmostFumulaExtrusion; ⤙⤚❲❳-rightAlmostFumulaExtrusion; setoid)
 
   record ReversibleAlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
@@ -110,7 +110,7 @@ module _ (F : ReversibleAlmostFumula f ℓf) where
     almostFumulaExtrusion = record { isAlmostFumulaExtrusion = isAlmostFumulaExtrusion }
     open AlmostFumulaExtrusion almostFumulaExtrusion public
       using (❲❳⤙⤚-leftAlmostFumulaExtrusion; ⤙⤚❲❳-rightAlmostFumulaExtrusion;
-             biAlmostFumulaExtrusion)
+             doubleAlmostFumulaExtrusion)
 
 module _ (F : Fumula f ℓf) where
   private
@@ -153,7 +153,7 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) where
     module Fₗ = Fumula Fₗ
     module Fᵣ = Fumula Fᵣ
 
-  record BiFumulaExtrusion (x ℓx : Level) : Set (fₗ ⊔ fᵣ ⊔ suc x ⊔ ℓfₗ ⊔ ℓfᵣ ⊔ suc ℓx) where
+  record DoubleFumulaExtrusion (x ℓx : Level) : Set (fₗ ⊔ fᵣ ⊔ suc x ⊔ ℓfₗ ⊔ ℓfᵣ ⊔ suc ℓx) where
     infix 7 ❲_❳⤙_⤚_
     infix 7 _⤙_⤚❲_❳
     infix 4 _≈_
@@ -163,8 +163,8 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) where
       ❲_❳⤙_⤚_ : Op₃ₗ Fₗ.Carrier Carrier
       _⤙_⤚❲_❳ : Op₃ᵣ Fᵣ.Carrier Carrier
       ◆ : Carrier
-      isBiFumulaExtrusion : IsBiFumulaExtrusion Fₗ Fᵣ _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
-    open IsBiFumulaExtrusion isBiFumulaExtrusion public
+      isDoubleFumulaExtrusion : IsDoubleFumulaExtrusion Fₗ Fᵣ _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
+    open IsDoubleFumulaExtrusion isDoubleFumulaExtrusion public
 
     ❲❳⤙⤚-leftFumulaExtrusion : LeftFumulaExtrusion Fₗ x ℓx
     ❲❳⤙⤚-leftFumulaExtrusion = record { isLeftFumulaExtrusion = ❲❳⤙⤚-isLeftFumulaExtrusion }
@@ -176,8 +176,8 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) where
     open RightFumulaExtrusion ⤙⤚❲❳-rightFumulaExtrusion public
       using (⤙⤚❲❳-rightAlmostFumulaExtrusion)
 
-    biAlmostFumulaExtrusion : BiAlmostFumulaExtrusion Fₗ.almostFumula Fᵣ.almostFumula x ℓx
-    biAlmostFumulaExtrusion = record { isBiAlmostFumulaExtrusion = isBiAlmostFumulaExtrusion }
+    doubleAlmostFumulaExtrusion : DoubleAlmostFumulaExtrusion Fₗ.almostFumula Fᵣ.almostFumula x ℓx
+    doubleAlmostFumulaExtrusion = record { isDoubleAlmostFumulaExtrusion = isDoubleAlmostFumulaExtrusion }
 
 module _ (F : ReversibleFumula f ℓf) where
   private
@@ -196,12 +196,12 @@ module _ (F : ReversibleFumula f ℓf) where
       isFumulaExtrusion : IsFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
     open IsFumulaExtrusion isFumulaExtrusion public
 
-    biFumulaExtrusion : BiFumulaExtrusion F.fumula F.fumula x ℓx
-    biFumulaExtrusion = record { isBiFumulaExtrusion = isBiFumulaExtrusion }
-    open BiFumulaExtrusion biFumulaExtrusion public
+    doubleFumulaExtrusion : DoubleFumulaExtrusion F.fumula F.fumula x ℓx
+    doubleFumulaExtrusion = record { isDoubleFumulaExtrusion = isDoubleFumulaExtrusion }
+    open DoubleFumulaExtrusion doubleFumulaExtrusion public
       using (❲❳⤙⤚-leftFumulaExtrusion; ⤙⤚❲❳-rightFumulaExtrusion;
              ❲❳⤙⤚-leftAlmostFumulaExtrusion; ⤙⤚❲❳-rightAlmostFumulaExtrusion;
-             biAlmostFumulaExtrusion)
+             doubleAlmostFumulaExtrusion)
 
     almostFumulaExtrusion : AlmostFumulaExtrusion F.reversibleAlmostFumula x ℓx
     almostFumulaExtrusion = record { isAlmostFumulaExtrusion = isAlmostFumulaExtrusion }
@@ -224,4 +224,4 @@ module _ (F : ReversibleFumula f ℓf) where
     open FumulaExtrusion fumulaExtrusion public
       using (❲❳⤙⤚-leftFumulaExtrusion; ⤙⤚❲❳-rightFumulaExtrusion;
              ❲❳⤙⤚-leftAlmostFumulaExtrusion; ⤙⤚❲❳-rightAlmostFumulaExtrusion;
-             biFumulaExtrusion; biAlmostFumulaExtrusion; almostFumulaExtrusion)
+             doubleFumulaExtrusion; doubleAlmostFumulaExtrusion; almostFumulaExtrusion)

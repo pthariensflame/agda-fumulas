@@ -208,6 +208,41 @@ module FromModule where
     rightFumulaExtrusion M = record { isRightFumulaExtrusion = isRightFumulaExtrusion R _≈ᴹ_ _+ᴹ_ 0ᴹ -ᴹ_ _*ᵣ_ isRightModule }
       where open RightModule M
 
+  module _ {rₗ rᵣ m rℓₗ rℓᵣ mℓ} (Rₗ : Ring rₗ rℓₗ) (Rᵣ : Ring rᵣ rℓᵣ) {Carrier : Set m} (_≈_ : Rel Carrier mℓ)
+           (_+_ : Op₂ Carrier) (0# : Carrier) (-_ : Op₁ Carrier)
+           (_*ₗ_ : Opₗ (Ring.Carrier Rₗ) Carrier) (_*ᵣ_ : Opᵣ (Ring.Carrier Rᵣ) Carrier) where
+    private
+      Fₗ : Fumula rₗ rℓₗ
+      Fₗ = FromRing.fumula Rₗ
+      module Rₗ where
+        open Ring Rₗ public
+        open RingProperties Rₗ public
+        open RingHelpers Rₗ public
+      module Fₗ where
+        open Fumula Fₗ public
+        open FumulaProperties Fₗ public
+      Fᵣ : Fumula rᵣ rℓᵣ
+      Fᵣ = FromRing.fumula Rᵣ
+      module Rᵣ where
+        open Ring Rᵣ public
+        open RingProperties Rᵣ public
+        open RingHelpers Rᵣ public
+      module Fᵣ where
+        open Fumula Fᵣ public
+        open FumulaProperties Fᵣ public
+
+      ❲_❳⤙_⤚_ : Op₃ₗ Fₗ.Carrier Carrier
+      ❲ s ❳⤙ z ⤚ x = (s *ₗ x) + z
+
+      _⤙_⤚❲_❳ : Op₃ᵣ Fᵣ.Carrier Carrier
+      x ⤙ z ⤚❲ s ❳ = (x *ᵣ s) + z
+
+      ◆ : Carrier
+      ◆ = 0#
+
+      isDoubleFumulaExtrusion : IsBimodule Rₗ Rᵣ _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_ → {!!}
+      isDoubleFumulaExtrusion = {!!}
+
 module FromFumulaExtrusion where
 
   module _ {f x fℓ xℓ} (F : Fumula f fℓ) {Carrier : Set x} (_≈_ : Rel Carrier xℓ)
