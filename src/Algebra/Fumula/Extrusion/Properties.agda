@@ -20,6 +20,12 @@ module LeftProperties {f fℓ x xℓ} (F : Fumula f fℓ) (X : LeftFumulaExtrusi
   open Setoid setoid using (refl)
   open SetoidReasoning setoid
 
+  ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ : ∀ x → (❲ F.● ❳⤙ ◆ ⤚ x) ≈ x
+  ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ x = begin
+    ❲ F.● ❳⤙ ◆ ⤚ x ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteᵣ ◆ x ⟩
+    ❲ F.● ❳⤙ x ⤚ ◆ ≈⟨ ❲❳⤙⤚-◆-collapse-middleʳ F.● x ⟩
+    x ∎
+
   ❲❳⤙⤚-●ᶠ-◆-pull-apartʳ : ∀ x y z → (❲ F.● ❳⤙ z ⤚ ❲ x ❳⤙ ◆ ⤚ y) ≈ ❲ x ❳⤙ z ⤚ y
   ❲❳⤙⤚-●ᶠ-◆-pull-apartʳ x y z = begin
     ❲ F.● ❳⤙ z ⤚ ❲ x ❳⤙ ◆ ⤚ y ≈⟨ ❲❳⤙⤚-◆ᶠ-◆-outer-associate F.● x y z ⟨
@@ -34,6 +40,12 @@ module RightProperties {f fℓ x xℓ} (F : Fumula f fℓ) (X : RightFumulaExtru
   open RightFumulaExtrusion X
   open Setoid setoid using (refl)
   open SetoidReasoning setoid
+
+  ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ : ∀ x → (x ⤙ ◆ ⤚❲ F.● ❳) ≈ x
+  ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ x = begin
+    x ⤙ ◆ ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-●ᶠ-inner-commuteₗ x ◆ ⟩
+    ◆ ⤙ x ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-◆-collapse-middleˡ F.● x ⟩
+    x ∎
 
   ⤙⤚❲❳-●ᶠ-◆-pull-apartˡ : ∀ x y z → (x ⤙ ◆ ⤚❲ y ❳ ⤙ z ⤚❲ F.● ❳) ≈ x ⤙ z ⤚❲ y ❳
   ⤙⤚❲❳-●ᶠ-◆-pull-apartˡ x y z = begin

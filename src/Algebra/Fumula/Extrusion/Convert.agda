@@ -93,11 +93,6 @@ module FromModule where
         (x *ₗ 0#) + z ≈⟨ +ᴹ-congʳ (*ₗ-zeroʳ x) ⟩
         0# + z ≈⟨ +ᴹ-identityˡ z ⟩
         z ∎
-      ; ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ = λ x → begin
-        ((R.- R.1# R.* R.- R.1# R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#)) *ₗ x) + 0# ≈⟨ +ᴹ-congʳ (*ₗ-congʳ R.1≈-1*-1+[-1*-1+-1]) ⟨
-        (R.1# *ₗ x) + 0# ≈⟨ +ᴹ-identityʳ (R.1# *ₗ x) ⟩
-        R.1# *ₗ x ≈⟨ *ₗ-identityˡ x ⟩
-        x ∎
       ; ❲❳⤙⤚-◆ᶠ-◆-outer-associate = λ w x y _ → +ᴹ-congʳ (begin
         (w R.* x R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#)) *ₗ y ≈⟨ *ₗ-congʳ (R.+-congˡ R.0≈-1*-1+-1) ⟨
         (w R.* x R.+ R.0#) *ₗ y ≈⟨ *ₗ-congʳ (R.+-identityʳ (w R.* x)) ⟩
@@ -182,11 +177,6 @@ module FromModule where
         (x *ᵣ R.0#) + z ≈⟨ +ᴹ-congʳ (*ᵣ-zeroʳ x) ⟩
         0# + z ≈⟨ +ᴹ-identityˡ z ⟩
         z ∎
-      ; ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ = λ x → begin
-        (x *ᵣ (R.- R.1# R.* R.- R.1# R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#))) + 0# ≈⟨ +ᴹ-identityʳ (x *ᵣ (R.- R.1# R.* R.- R.1# R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#))) ⟩
-        x *ᵣ (R.- R.1# R.* R.- R.1# R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#)) ≈⟨ *ᵣ-congˡ R.1≈-1*-1+[-1*-1+-1] ⟨
-        x *ᵣ R.1# ≈⟨ *ᵣ-identityʳ x ⟩
-        x ∎
       ; ⤙⤚❲❳-◆ᶠ-◆-outer-associate = λ w x y _ → +ᴹ-congʳ (begin
         ((w *ᵣ x) + 0#) *ᵣ y ≈⟨ *ᵣ-congʳ (+ᴹ-identityʳ (w *ᵣ x)) ⟩
         ((w *ᵣ x) *ᵣ y) ≈⟨ *ᵣ-assoc w x y ⟩
@@ -255,7 +245,6 @@ module FromModule where
       ; ❲❳⤙⤚-■ᶠ-collapse-dupʳ = ❲❳⤙⤚-■ᶠ-collapse-dupʳ
       ; ❲❳⤙⤚-◆ᶠ-collapse-middleˡ = ❲❳⤙⤚-◆ᶠ-collapse-middleˡ
       ; ❲❳⤙⤚-◆-collapse-middleʳ = ❲❳⤙⤚-◆-collapse-middleʳ
-      ; ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ = ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ
       ; ❲❳⤙⤚-◆ᶠ-◆-outer-associate = ❲❳⤙⤚-◆ᶠ-◆-outer-associate
       ; ⤙⤚❲❳-●ᶠ-inner-commuteₗ = ⤙⤚❲❳-●ᶠ-inner-commuteₗ
       ; ⤙⤚❲❳-◆-pulloutₗ = ⤙⤚❲❳-◆-pulloutₗ
@@ -263,7 +252,6 @@ module FromModule where
       ; ⤙⤚❲❳-■ᶠ-collapse-dupˡ = ⤙⤚❲❳-■ᶠ-collapse-dupˡ
       ; ⤙⤚❲❳-◆-collapse-middleˡ = ⤙⤚❲❳-◆-collapse-middleˡ
       ; ⤙⤚❲❳-◆ᶠ-collapse-middleʳ = ⤙⤚❲❳-◆ᶠ-collapse-middleʳ
-      ; ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ = ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ
       ; ⤙⤚❲❳-◆ᶠ-◆-outer-associate = ⤙⤚❲❳-◆ᶠ-◆-outer-associate
       ; ◆-outer-associate = λ w x y z → +ᴹ-congʳ (begin
         ((w *ₗ x) + 0#) *ᵣ y ≈⟨ *ᵣ-congʳ (+ᴹ-identityʳ (w *ₗ x)) ⟩
@@ -589,17 +577,23 @@ module FromFumulaExtrusion where
       }
       where
         open IsDoubleFumulaExtrusion X
-        module L = IsLeftModule (isLeftModule Fₗ _≈_ ❲_❳⤙_⤚_ ◆ ❲❳⤙⤚-isLeftFumulaExtrusion)
-        module R = IsRightModule (isRightModule Fᵣ _≈_ _⤙_⤚❲_❳ ◆ ⤙⤚❲❳-isRightFumulaExtrusion)
+        L = isLeftModule Fₗ _≈_ ❲_❳⤙_⤚_ ◆ ❲❳⤙⤚-isLeftFumulaExtrusion
+        R = isRightModule Fᵣ _≈_ _⤙_⤚❲_❳ ◆ ⤙⤚❲❳-isRightFumulaExtrusion
+        module L where
+          open IsLeftModule L public
+          open LeftProperties Fₗ record { isLeftFumulaExtrusion = ❲❳⤙⤚-isLeftFumulaExtrusion } public
+        module R where
+          open IsRightModule R public
+          open RightProperties Fᵣ record { isRightFumulaExtrusion = ⤙⤚❲❳-isRightFumulaExtrusion } public
         open IsEquivalence isEquivalence using (refl)
         open SetoidReasoning record { isEquivalence = isEquivalence }
 
         +≈+′ : ∀ x y → (x + y) ≈ (x +′ y)
         +≈+′ x y = begin
           ❲ Fₗ.● ❳⤙ x ⤚ y ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteᵣ x y ⟩
-          ❲ Fₗ.● ❳⤙ y ⤚ x ≈⟨ ❲❳⤙⤚-cong Fₗ.refl refl (⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ x) ⟨
+          ❲ Fₗ.● ❳⤙ y ⤚ x ≈⟨ ❲❳⤙⤚-cong Fₗ.refl refl (R.⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ x) ⟨
           ❲ Fₗ.● ❳⤙ y ⤚ (x ⤙ ◆ ⤚❲ Fᵣ.● ❳) ≈⟨ ◆-outer-associate Fₗ.● x Fᵣ.● y ⟨
-          (❲ Fₗ.● ❳⤙ ◆ ⤚ x) ⤙ y ⤚❲ Fᵣ.● ❳ ≈⟨ ⤙⤚❲❳-cong (❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ x) refl Fᵣ.refl ⟩
+          (❲ Fₗ.● ❳⤙ ◆ ⤚ x) ⤙ y ⤚❲ Fᵣ.● ❳ ≈⟨ ⤙⤚❲❳-cong (L.❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ x) refl Fᵣ.refl ⟩
           x ⤙ y ⤚❲ Fᵣ.● ❳ ∎
 
   module _ {fₗ fᵣ x fℓₗ fℓᵣ xℓ} (Fₗ : Fumula fₗ fℓₗ) (Fᵣ : Fumula fᵣ fℓᵣ) where
