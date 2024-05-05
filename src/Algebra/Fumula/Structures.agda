@@ -86,7 +86,6 @@ record IsFumula (■ : A) : Set (a ⊔ ℓ) where
     ◆-collapse-middle : (∀ x z → (◆ ⤙ z ⤚ x) ≈ z) × (∀ x z → (x ⤙ z ⤚ ◆) ≈ z)
     ●-outer-commute : OuterCommutativeWith ●
     ●-inner-commute : InnerCommutativeWith ●
-    ●-◆-collapse-side : (∀ x → (● ⤙ ◆ ⤚ x) ≈ x) × (∀ x → (x ⤙ ◆ ⤚ ●) ≈ x) -- not primitive (TODO: move)
 
   ■-collapse-dupˡ : ∀ x → (■ ⤙ x ⤚ x) ≈ ◆
   ■-collapse-dupˡ = proj₁ ■-collapse-dup
@@ -105,12 +104,6 @@ record IsFumula (■ : A) : Set (a ⊔ ℓ) where
 
   ●-inner-commuteʳ : RightInnerCommutativeWith ●
   ●-inner-commuteʳ = proj₂ ●-inner-commute
-
-  ●-◆-collapse-sideˡ : ∀ x → (● ⤙ ◆ ⤚ x) ≈ x
-  ●-◆-collapse-sideˡ = proj₁ ●-◆-collapse-side
-
-  ●-◆-collapse-sideʳ : ∀ x → (x ⤙ ◆ ⤚ ●) ≈ x
-  ●-◆-collapse-sideʳ = proj₂ ●-◆-collapse-side
 
   field
     ◆-outer-associate : OuterAssociativeWith ◆

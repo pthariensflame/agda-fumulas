@@ -7,12 +7,15 @@
 module Algebra.Fumula.Extrusion.Properties where
 open import Relation.Binary.Bundles using (Setoid)
 open import Algebra.Fumula.Bundles
+import Algebra.Fumula.Properties as FumulaProperties
 open import Algebra.Fumula.Extrusion.Bundles
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
 module LeftProperties {f fℓ x xℓ} (F : Fumula f fℓ) (X : LeftFumulaExtrusion F x xℓ) where
   private
-    module F = Fumula F
+    module F where
+      open Fumula F public
+      open FumulaProperties F public
   open LeftFumulaExtrusion X
   open Setoid setoid using (refl)
   open SetoidReasoning setoid
@@ -25,7 +28,9 @@ module LeftProperties {f fℓ x xℓ} (F : Fumula f fℓ) (X : LeftFumulaExtrusi
 
 module RightProperties {f fℓ x xℓ} (F : Fumula f fℓ) (X : RightFumulaExtrusion F x xℓ) where
   private
-    module F = Fumula F
+    module F where
+      open Fumula F public
+      open FumulaProperties F public
   open RightFumulaExtrusion X
   open Setoid setoid using (refl)
   open SetoidReasoning setoid

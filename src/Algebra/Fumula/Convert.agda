@@ -130,17 +130,6 @@ module FromRing where
         x + y ≈⟨ +-congʳ (sym (*-identityˡ x)) ⟩
         1# * x + y ≈⟨ +-congʳ (*-congʳ 1≈-1*-1+[-1*-1+-1]) ⟩
         (- 1# * - 1# + (- 1# * - 1# + - 1#)) * x + y ∎)
-    ; ●-◆-collapse-side =
-      (λ x →  begin
-      (- 1# * - 1# + (- 1# * - 1# + - 1#)) * x + (- 1# * - 1# + - 1#) ≈⟨ +-cong (*-congʳ (sym 1≈-1*-1+[-1*-1+-1])) (sym 0≈-1*-1+-1) ⟩
-      1# * x + 0# ≈⟨ +-identityʳ (1# * x) ⟩
-      1# * x ≈⟨ *-identityˡ x ⟩
-      x ∎) ,
-      (λ x → begin
-      x * (- 1# * - 1# + (- 1# * - 1# + - 1#)) + (- 1# * - 1# + - 1#) ≈⟨ +-cong (*-congˡ (sym 1≈-1*-1+[-1*-1+-1])) (sym 0≈-1*-1+-1) ⟩
-      x * 1# + 0# ≈⟨ +-identityʳ (x * 1#) ⟩
-      x * 1# ≈⟨ *-identityʳ x ⟩
-      x ∎)
     ; ◆-outer-associate = λ w x y z → +-congʳ (begin
       (w * x + (- 1# * - 1# + - 1#)) * y ≈⟨ *-congʳ (+-congˡ (sym 0≈-1*-1+-1)) ⟩
       (w * x + 0#) * y ≈⟨ *-congʳ (+-identityʳ (w * x)) ⟩

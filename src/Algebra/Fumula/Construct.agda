@@ -171,7 +171,6 @@ module Reverse where
       ; ◆-collapse-middle = F.◆-collapse-middleʳ , F.◆-collapse-middleˡ
       ; ●-outer-commute = outer-commute-with _≈_ _⤙_⤚_ F.sym (RawFumula.● F.rawFumula) F.●-outer-commute
       ; ●-inner-commute = inner-commute-with _≈_ _⤙_⤚_ (RawFumula.● F.rawFumula) F.●-inner-commute
-      ; ●-◆-collapse-side = F.●-◆-collapse-sideʳ , F.●-◆-collapse-sideˡ
       ; ◆-outer-associate = outer-associate-with _≈_ _⤙_⤚_ F.sym (RawFumula.◆ F.rawFumula) F.◆-outer-associate
       ; ◆-pullout = pullout-with _≈_ _⤙_⤚_ (RawFumula.◆ F.rawFumula) F.◆-pullout
       }
@@ -290,9 +289,6 @@ module DirectProduct {c ℓ} where
       ; ●-inner-commute =
         (λ (x₁ , x₂) (y₁ , y₂) → F₁.●-inner-commuteˡ x₁ y₁ , F₂.●-inner-commuteˡ x₂ y₂) ,
         (λ (x₁ , x₂) (y₁ , y₂) → F₁.●-inner-commuteʳ x₁ y₁ , F₂.●-inner-commuteʳ x₂ y₂)
-      ; ●-◆-collapse-side =
-        (λ (x₁ , x₂) → F₁.●-◆-collapse-sideˡ x₁ , F₂.●-◆-collapse-sideˡ x₂) ,
-        (λ (x₁ , x₂) → F₁.●-◆-collapse-sideʳ x₁ , F₂.●-◆-collapse-sideʳ x₂)
       ; ◆-outer-associate = λ (w₁ , w₂) (x₁ , x₂) (y₁ , y₂) (z₁ , z₂) →
         F₁.◆-outer-associate w₁ x₁ y₁ z₁ , F₂.◆-outer-associate w₂ x₂ y₂ z₂
       ; ◆-pullout =

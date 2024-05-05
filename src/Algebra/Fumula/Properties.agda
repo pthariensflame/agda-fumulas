@@ -9,7 +9,7 @@ open import Algebra.Fumula.Bundles using (Fumula)
 module Algebra.Fumula.Properties {c ℓ} (F : Fumula c ℓ) where
 
 open import Function.Definitions using (Inverseˡ; Inverseʳ; Inverseᵇ)
-open import Data.Product.Base using (_,_)
+open import Data.Product.Base using (_×_; _,_)
 open import Data.Nat.Base using (zero; suc) renaming (_+_ to _ℕ+_)
 open import Data.Nat.Properties using (+-comm)
 open import Data.Integer.Base using (ℤ; +_; -[1+_]; -1ℤ; 0ℤ; 1ℤ; _+_; _-_)
@@ -20,13 +20,33 @@ open import Relation.Binary.Reasoning.Setoid setoid
 open import Algebra.Fumula.Definitions _≈_ _⤙_⤚_ using (OuterCommutativeWith)
 
 ------------------------------------------------------------------------
+-- The "side collapse" property: the "missing" collapse form,
+-- derivable from the other axioms.
+------------------------------------------------------------------------
+
+●-◆-collapse-sideˡ : ∀ x → (● ⤙ ◆ ⤚ x) ≈ x
+●-◆-collapse-sideˡ x = begin
+  ● ⤙ ◆ ⤚ x ≈⟨ ●-inner-commuteʳ ◆ x ⟩
+  ● ⤙ x ⤚ ◆ ≈⟨ ◆-collapse-middleʳ ● x ⟩
+  x ∎
+
+●-◆-collapse-sideʳ : ∀ x → (x ⤙ ◆ ⤚ ●) ≈ x
+●-◆-collapse-sideʳ x = begin
+  x ⤙ ◆ ⤚ ● ≈⟨ ●-inner-commuteˡ x ◆ ⟩
+  ◆ ⤙ x ⤚ ● ≈⟨ ◆-collapse-middleˡ ● x ⟩
+  x ∎
+
+●-◆-collapse-side : (∀ x → (● ⤙ ◆ ⤚ x) ≈ x) × (∀ x → (x ⤙ ◆ ⤚ ●) ≈ x)
+●-◆-collapse-side = ●-◆-collapse-sideˡ , ●-◆-collapse-sideʳ
+
+------------------------------------------------------------------------
 -- The "pull apart" property: a way of separating the two ring
 -- operators from within a fumula, or of melding them again.
 ------------------------------------------------------------------------
 
 ●-◆-pull-apartˡ : ∀ x y z → (x ⤙ ◆ ⤚ y) ⤙ z ⤚ ● ≈ x ⤙ z ⤚ y
 ●-◆-pull-apartˡ x y z = begin
-  (x ⤙ ◆ ⤚ y) ⤙ z ⤚ ● ≈⟨  ◆-outer-associate x y ● z  ⟩
+  (x ⤙ ◆ ⤚ y) ⤙ z ⤚ ● ≈⟨ ◆-outer-associate x y ● z ⟩
   x ⤙ z ⤚ (y ⤙ ◆ ⤚ ●) ≈⟨ ⤙⤚-cong refl refl (●-◆-collapse-sideʳ y) ⟩
   x ⤙ z ⤚ y ∎
 
@@ -35,6 +55,9 @@ open import Algebra.Fumula.Definitions _≈_ _⤙_⤚_ using (OuterCommutativeWi
   ● ⤙ z ⤚ (x ⤙ ◆ ⤚ y) ≈⟨ sym (◆-outer-associate ● x y z) ⟩
   (● ⤙ ◆ ⤚ x) ⤙ z ⤚ y ≈⟨ ⤙⤚-cong (●-◆-collapse-sideˡ x) refl refl ⟩
   x ⤙ z ⤚ y ∎
+
+●-◆-pull-apart : (∀ x y z → (x ⤙ ◆ ⤚ y) ⤙ z ⤚ ● ≈ x ⤙ z ⤚ y) × (∀ x y z → ● ⤙ z ⤚ (x ⤙ ◆ ⤚ y) ≈ x ⤙ z ⤚ y)
+●-◆-pull-apart = ●-◆-pull-apartˡ , ●-◆-pull-apartʳ
 
 ------------------------------------------------------------------------
 -- Properties of the successor and predecessor operations.
@@ -85,6 +108,9 @@ open import Algebra.Fumula.Definitions _≈_ _⤙_⤚_ using (OuterCommutativeWi
   x ⤙ x ⤙ z ⤚ y ⤚ ● ≈⟨ double-exchange x ● x y z ⟩
   x ⤙ x ⤙ z ⤚ ● ⤚ y ∎
 
+↑-⤙⤚-●-dup-nest : (∀ x y z → x ↑ ⤙ z ⤚ y ≈ x ⤙ ● ⤙ z ⤚ y ⤚ y) × (∀ x y z → x ⤙ z ⤚ y ↑ ≈ x ⤙ x ⤙ z ⤚ ● ⤚ y)
+↑-⤙⤚-●-dup-nest = ↑-⤙⤚-●-dup-nestˡ , ↑-⤙⤚-●-dup-nestʳ
+
 ↓-⤙⤚-■-dup-nestˡ : ∀ x y z → x ↓ ⤙ z ⤚ y ≈ x ⤙ ■ ⤙ z ⤚ y ⤚ y
 ↓-⤙⤚-■-dup-nestˡ x y z = begin
   x ↓ ⤙ z ⤚ y ≈⟨ ◆-pulloutˡ x ■ ● y z ⟩
@@ -98,6 +124,9 @@ open import Algebra.Fumula.Definitions _≈_ _⤙_⤚_ using (OuterCommutativeWi
   x ⤙ x ⤙ z ⤚ y ⤚ (■ ⤙ ◆ ⤚ ●) ≈⟨ ⤙⤚-cong refl refl (●-◆-collapse-sideʳ ■) ⟩
   x ⤙ x ⤙ z ⤚ y ⤚ ■ ≈⟨ double-exchange x ■ x y z ⟩
   x ⤙ x ⤙ z ⤚ ■ ⤚ y ∎
+
+↓-⤙⤚-■-dup-nest : (∀ x y z → x ↓ ⤙ z ⤚ y ≈ x ⤙ ■ ⤙ z ⤚ y ⤚ y) × (∀ x y z → x ⤙ z ⤚ y ↓ ≈ x ⤙ x ⤙ z ⤚ ■ ⤚ y)
+↓-⤙⤚-■-dup-nest = ↓-⤙⤚-■-dup-nestˡ , ↓-⤙⤚-■-dup-nestʳ
 
 ------------------------------------------------------------------------
 -- Properties of the invert operation.
