@@ -23,6 +23,8 @@ module _ (F : AlmostFumula f ℓf) where
     module F = AlmostFumula F
 
   record LeftAlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+    infix 7 ❲_❳⤙_⤚_
+    infix 4 _≈_
     field
       Carrier : Set x
       _≈_ : Rel Carrier ℓx
@@ -34,6 +36,8 @@ module _ (F : AlmostFumula f ℓf) where
     setoid = record { isEquivalence = isEquivalence }
 
   record RightAlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+    infix 7 _⤙_⤚❲_❳
+    infix 4 _≈_
     field
       Carrier : Set x
       _≈_ : Rel Carrier ℓx
@@ -41,12 +45,18 @@ module _ (F : AlmostFumula f ℓf) where
       isRightAlmostFumulaExtrusion : IsRightAlmostFumulaExtrusion F _≈_ _⤙_⤚❲_❳
     open IsRightAlmostFumulaExtrusion isRightAlmostFumulaExtrusion public
 
+    setoid : Setoid x ℓx
+    setoid = record { isEquivalence = isEquivalence }
+
 module _ (Fₗ : AlmostFumula fₗ ℓfₗ) (Fᵣ : AlmostFumula fᵣ ℓfᵣ) where
   private
     module Fₗ = AlmostFumula Fₗ
     module Fᵣ = AlmostFumula Fᵣ
 
   record BiAlmostFumulaExtrusion (x ℓx : Level) : Set (fₗ ⊔ fᵣ ⊔ suc x ⊔ ℓfₗ ⊔ ℓfᵣ ⊔ suc ℓx) where
+    infix 7 ❲_❳⤙_⤚_
+    infix 7 _⤙_⤚❲_❳
+    infix 4 _≈_
     field
       Carrier : Set x
       _≈_ : Rel Carrier ℓx
@@ -57,15 +67,20 @@ module _ (Fₗ : AlmostFumula fₗ ℓfₗ) (Fᵣ : AlmostFumula fᵣ ℓfᵣ) w
 
     ❲❳⤙⤚-leftAlmostFumulaExtrusion : LeftAlmostFumulaExtrusion Fₗ x ℓx
     ❲❳⤙⤚-leftAlmostFumulaExtrusion = record { isLeftAlmostFumulaExtrusion = ❲❳⤙⤚-isLeftAlmostFumulaExtrusion }
+    open LeftAlmostFumulaExtrusion ❲❳⤙⤚-leftAlmostFumulaExtrusion public
+      using (setoid)
 
     ⤙⤚❲❳-rightAlmostFumulaExtrusion : RightAlmostFumulaExtrusion Fᵣ x ℓx
     ⤙⤚❲❳-rightAlmostFumulaExtrusion = record { isRightAlmostFumulaExtrusion = ⤙⤚❲❳-isRightAlmostFumulaExtrusion }
 
-module _ (F : AlmostFumula f ℓf) where
+module _ (F : ReversibleAlmostFumula f ℓf) where
   private
-    module F = AlmostFumula F
+    module F = ReversibleAlmostFumula F
 
   record AlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+    infix 7 ❲_❳⤙_⤚_
+    infix 7 _⤙_⤚❲_❳
+    infix 4 _≈_
     field
       Carrier : Set x
       _≈_ : Rel Carrier ℓx
@@ -74,16 +89,15 @@ module _ (F : AlmostFumula f ℓf) where
       isAlmostFumulaExtrusion : IsAlmostFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
     open IsAlmostFumulaExtrusion isAlmostFumulaExtrusion public
 
-    biAlmostFumulaExtrusion : BiAlmostFumulaExtrusion F F x ℓx
+    biAlmostFumulaExtrusion : BiAlmostFumulaExtrusion F.almostFumula F.almostFumula x ℓx
     biAlmostFumulaExtrusion = record { isBiAlmostFumulaExtrusion = isBiAlmostFumulaExtrusion }
     open BiAlmostFumulaExtrusion biAlmostFumulaExtrusion public
-      using (❲❳⤙⤚-leftAlmostFumulaExtrusion; ⤙⤚❲❳-rightAlmostFumulaExtrusion)
-
-module _ (F : ReversibleAlmostFumula f ℓf) where
-  private
-    module F = ReversibleAlmostFumula F
+      using (❲❳⤙⤚-leftAlmostFumulaExtrusion; ⤙⤚❲❳-rightAlmostFumulaExtrusion; setoid)
 
   record ReversibleAlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+    infix 7 ❲_❳⤙_⤚_
+    infix 7 _⤙_⤚❲_❳
+    infix 4 _≈_
     field
       Carrier : Set x
       _≈_ : Rel Carrier ℓx
@@ -92,7 +106,7 @@ module _ (F : ReversibleAlmostFumula f ℓf) where
       isReversibleAlmostFumulaExtrusion : IsReversibleAlmostFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
     open IsReversibleAlmostFumulaExtrusion isReversibleAlmostFumulaExtrusion public
 
-    almostFumulaExtrusion : AlmostFumulaExtrusion F.almostFumula x ℓx
+    almostFumulaExtrusion : AlmostFumulaExtrusion x ℓx
     almostFumulaExtrusion = record { isAlmostFumulaExtrusion = isAlmostFumulaExtrusion }
     open AlmostFumulaExtrusion almostFumulaExtrusion public
       using (❲❳⤙⤚-leftAlmostFumulaExtrusion; ⤙⤚❲❳-rightAlmostFumulaExtrusion;
@@ -103,6 +117,8 @@ module _ (F : Fumula f ℓf) where
     module F = Fumula F
 
   record LeftFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+    infix 7 ❲_❳⤙_⤚_
+    infix 4 _≈_
     field
       Carrier : Set x
       _≈_ : Rel Carrier ℓx
@@ -113,8 +129,12 @@ module _ (F : Fumula f ℓf) where
 
     ❲❳⤙⤚-leftAlmostFumulaExtrusion : LeftAlmostFumulaExtrusion F.almostFumula x ℓx
     ❲❳⤙⤚-leftAlmostFumulaExtrusion = record { isLeftAlmostFumulaExtrusion = ❲❳⤙⤚-isLeftAlmostFumulaExtrusion }
+    open LeftAlmostFumulaExtrusion ❲❳⤙⤚-leftAlmostFumulaExtrusion public
+      using (setoid)
 
   record RightFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+    infix 7 _⤙_⤚❲_❳
+    infix 4 _≈_
     field
       Carrier : Set x
       _≈_ : Rel Carrier ℓx
@@ -125,6 +145,8 @@ module _ (F : Fumula f ℓf) where
 
     ⤙⤚❲❳-rightAlmostFumulaExtrusion : RightAlmostFumulaExtrusion F.almostFumula x ℓx
     ⤙⤚❲❳-rightAlmostFumulaExtrusion = record { isRightAlmostFumulaExtrusion = ⤙⤚❲❳-isRightAlmostFumulaExtrusion }
+    open RightAlmostFumulaExtrusion ⤙⤚❲❳-rightAlmostFumulaExtrusion public
+      using (setoid)
 
 module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) where
   private
@@ -132,6 +154,9 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) where
     module Fᵣ = Fumula Fᵣ
 
   record BiFumulaExtrusion (x ℓx : Level) : Set (fₗ ⊔ fᵣ ⊔ suc x ⊔ ℓfₗ ⊔ ℓfᵣ ⊔ suc ℓx) where
+    infix 7 ❲_❳⤙_⤚_
+    infix 7 _⤙_⤚❲_❳
+    infix 4 _≈_
     field
       Carrier : Set x
       _≈_ : Rel Carrier ℓx
@@ -144,7 +169,7 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) where
     ❲❳⤙⤚-leftFumulaExtrusion : LeftFumulaExtrusion Fₗ x ℓx
     ❲❳⤙⤚-leftFumulaExtrusion = record { isLeftFumulaExtrusion = ❲❳⤙⤚-isLeftFumulaExtrusion }
     open LeftFumulaExtrusion ❲❳⤙⤚-leftFumulaExtrusion public
-      using (❲❳⤙⤚-leftAlmostFumulaExtrusion)
+      using (❲❳⤙⤚-leftAlmostFumulaExtrusion; setoid)
 
     ⤙⤚❲❳-rightFumulaExtrusion : RightFumulaExtrusion Fᵣ x ℓx
     ⤙⤚❲❳-rightFumulaExtrusion = record { isRightFumulaExtrusion = ⤙⤚❲❳-isRightFumulaExtrusion }
@@ -154,11 +179,14 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) where
     biAlmostFumulaExtrusion : BiAlmostFumulaExtrusion Fₗ.almostFumula Fᵣ.almostFumula x ℓx
     biAlmostFumulaExtrusion = record { isBiAlmostFumulaExtrusion = isBiAlmostFumulaExtrusion }
 
-module _ (F : Fumula f ℓf) where
+module _ (F : ReversibleFumula f ℓf) where
   private
-    module F = Fumula F
+    module F = ReversibleFumula F
 
   record FumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+    infix 7 ❲_❳⤙_⤚_
+    infix 7 _⤙_⤚❲_❳
+    infix 4 _≈_
     field
       Carrier : Set x
       _≈_ : Rel Carrier ℓx
@@ -168,21 +196,20 @@ module _ (F : Fumula f ℓf) where
       isFumulaExtrusion : IsFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
     open IsFumulaExtrusion isFumulaExtrusion public
 
-    biFumulaExtrusion : BiFumulaExtrusion F F x ℓx
+    biFumulaExtrusion : BiFumulaExtrusion F.fumula F.fumula x ℓx
     biFumulaExtrusion = record { isBiFumulaExtrusion = isBiFumulaExtrusion }
     open BiFumulaExtrusion biFumulaExtrusion public
       using (❲❳⤙⤚-leftFumulaExtrusion; ⤙⤚❲❳-rightFumulaExtrusion;
              ❲❳⤙⤚-leftAlmostFumulaExtrusion; ⤙⤚❲❳-rightAlmostFumulaExtrusion;
              biAlmostFumulaExtrusion)
 
-    almostFumulaExtrusion : AlmostFumulaExtrusion F.almostFumula x ℓx
+    almostFumulaExtrusion : AlmostFumulaExtrusion F.reversibleAlmostFumula x ℓx
     almostFumulaExtrusion = record { isAlmostFumulaExtrusion = isAlmostFumulaExtrusion }
 
-module _ (F : ReversibleFumula f ℓf) where
-  private
-    module F = ReversibleFumula F
-
   record ReversibleFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+    infix 7 ❲_❳⤙_⤚_
+    infix 7 _⤙_⤚❲_❳
+    infix 4 _≈_
     field
       Carrier : Set x
       _≈_ : Rel Carrier ℓx
@@ -192,7 +219,7 @@ module _ (F : ReversibleFumula f ℓf) where
       isReversibleFumulaExtrusion : IsReversibleFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
     open IsReversibleFumulaExtrusion isReversibleFumulaExtrusion public
 
-    fumulaExtrusion : FumulaExtrusion F.fumula x ℓx
+    fumulaExtrusion : FumulaExtrusion x ℓx
     fumulaExtrusion = record { isFumulaExtrusion = isFumulaExtrusion }
     open FumulaExtrusion fumulaExtrusion public
       using (❲❳⤙⤚-leftFumulaExtrusion; ⤙⤚❲❳-rightFumulaExtrusion;
