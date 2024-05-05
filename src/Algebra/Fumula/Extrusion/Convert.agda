@@ -235,15 +235,12 @@ module FromFumulaExtrusion where
               ❲ F.● ❳⤙ x ⤚ ❲ F.● ❳⤙ z ⤚ y ≈⟨ ❲❳⤙⤚-cong F.refl refl (❲❳⤙⤚-●ᶠ-inner-commuteᵣ z y) ⟩
               ❲ F.● ❳⤙ x ⤚ ❲ F.● ❳⤙ y ⤚ z ∎
             }
-          ; identity = ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ , (λ x → begin
-            ❲ F.● ❳⤙ x ⤚ ◆ ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteᵣ x ◆ ⟩
-            ❲ F.● ❳⤙ ◆ ⤚ x ≈⟨ ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ x ⟩
-            x ∎)
+          ; identity = ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ , ❲❳⤙⤚-◆-collapse-middleʳ F.●
           }
-          ; comm = λ x y → ❲❳⤙⤚-●ᶠ-inner-commuteᵣ x y
+          ; comm = ❲❳⤙⤚-●ᶠ-inner-commuteᵣ
           }
         ; isPreleftSemimodule = record
-          { *ₗ-cong = λ x≈ y≈ → ❲❳⤙⤚-cong x≈ refl y≈
+          { *ₗ-cong = λ x≈ → ❲❳⤙⤚-cong x≈ refl
           ; *ₗ-zeroˡ = λ x → ❲❳⤙⤚-◆ᶠ-collapse-middleˡ x ◆
           ; *ₗ-distribʳ = λ x s r → begin
             ❲ F.● F.⤙ s ⤚ r ❳⤙ ◆ ⤚ x ≈⟨ ❲❳⤙⤚-◆ᶠ-pulloutₗ s F.● r x ◆ ⟩
@@ -277,5 +274,71 @@ module FromFumulaExtrusion where
       where
         open IsLeftFumulaExtrusion X
         open LeftProperties F record { isLeftFumulaExtrusion = X }
+        open IsEquivalence isEquivalence using (refl; sym)
+        open SetoidReasoning (record { isEquivalence = isEquivalence })
+
+  module _ {f x fℓ xℓ} (F : Fumula f fℓ) {Carrier : Set x} (_≈_ : Rel Carrier xℓ)
+           (_⤙_⤚❲_❳ : Op₃ᵣ (Fumula.Carrier F) Carrier) (◆ : Carrier) where
+    private
+      R : Ring f fℓ
+      R = FromFumula.ring F
+      module F where
+        open Fumula F public
+        open FumulaProperties F public
+      module R where
+        open Ring R public
+        open RingProperties R public
+        open RingHelpers R public
+
+      _+_ : Op₂ Carrier
+      x + y = x ⤙ y ⤚❲ F.● ❳
+
+      0# : Carrier
+      0# = ◆
+
+      -_ : Op₁ Carrier
+      - x = x ⤙ ◆ ⤚❲ F.■ ❳
+
+      _*ᵣ_ : Opᵣ R.Carrier Carrier
+      x *ᵣ s = x ⤙ ◆ ⤚❲ s ❳
+
+    isRightModule : (X : IsRightFumulaExtrusion F _≈_ _⤙_⤚❲_❳ ◆) → IsRightModule R _≈_ _+_ 0# -_ _*ᵣ_
+    isRightModule X = record
+      { isRightSemimodule = record
+        { +ᴹ-isCommutativeMonoid = record
+          { isMonoid = record
+            { isSemigroup = record
+              { isMagma = record
+                { isEquivalence = isEquivalence
+                ; ∙-cong = λ x≈ y≈ → ⤙⤚❲❳-cong x≈ y≈ F.refl
+                }
+              ; assoc = λ x y z → begin
+                x ⤙ y ⤚❲ F.● ❳ ⤙ z ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-cong (⤙⤚❲❳-●ᶠ-inner-commuteₗ x y) refl F.refl ⟩
+                y ⤙ x ⤚❲ F.● ❳ ⤙ z ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-●ᶠ-inner-commuteₗ (y ⤙ x ⤚❲ F.● ❳) z ⟩
+                z ⤙ y ⤙ x ⤚❲ F.● ❳ ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-double-exchange z F.● y F.● x ⟩
+                y ⤙ z ⤙ x ⤚❲ F.● ❳ ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-cong refl (⤙⤚❲❳-●ᶠ-inner-commuteₗ z x) F.refl ⟩
+                y ⤙ x ⤙ z ⤚❲ F.● ❳ ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-double-exchange y F.● x F.● z ⟩
+                x ⤙ y ⤙ z ⤚❲ F.● ❳ ⤚❲ F.● ❳ ∎
+              }
+            ; identity = ⤙⤚❲❳-◆-collapse-middleˡ F.● , ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ
+            }
+          ; comm = ⤙⤚❲❳-●ᶠ-inner-commuteₗ
+          }
+        ; isPrerightSemimodule = record
+          { *ᵣ-cong = λ x≈ → ⤙⤚❲❳-cong x≈ refl
+          ; *ᵣ-zeroʳ = λ x → {!!}
+          ; *ᵣ-distribˡ = λ x s r → {!!}
+          ; *ᵣ-identityʳ = λ x → {!!}
+          ; *ᵣ-assoc = λ x s r → {!!}
+          ; *ᵣ-zeroˡ = λ x → {!!}
+          ; *ᵣ-distribʳ = λ s x y → {!!}
+          }
+        }
+      ; -ᴹ‿cong = λ x≈ → ⤙⤚❲❳-cong x≈ refl F.refl
+      ; -ᴹ‿inverse = (λ x → {!!}) , (λ x → {!!})
+      }
+      where
+        open IsRightFumulaExtrusion X
+        open RightProperties F record { isRightFumulaExtrusion = X }
         open IsEquivalence isEquivalence using (refl; sym)
         open SetoidReasoning (record { isEquivalence = isEquivalence })
