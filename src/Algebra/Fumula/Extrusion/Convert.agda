@@ -288,6 +288,47 @@ module FromModule where
     doubleFumulaExtrusion M = record { isDoubleFumulaExtrusion = isDoubleFumulaExtrusion Rₗ Rᵣ _≈ᴹ_ _+ᴹ_ 0ᴹ -ᴹ_ _*ₗ_ _*ᵣ_ isBimodule }
       where open Bimodule M
 
+  module _ {r m rℓ mℓ} (R : CommutativeRing r rℓ) {Carrier : Set m} (_≈_ : Rel Carrier mℓ)
+           (_+_ : Op₂ Carrier) (0# : Carrier) (-_ : Op₁ Carrier)
+           (_*ₗ_ : Opₗ (CommutativeRing.Carrier R) Carrier) (_*ᵣ_ : Opᵣ (CommutativeRing.Carrier R) Carrier) where
+    private
+      F : ReversibleFumula r rℓ
+      F = FromRing.reversibleFumula R
+      module R where
+        open CommutativeRing R public
+        open RingProperties ring public
+        open RingHelpers ring public
+      module F where
+        open ReversibleFumula F public
+        open FumulaProperties fumula public
+
+      ❲_❳⤙_⤚_ : Op₃ₗ F.Carrier Carrier
+      ❲ s ❳⤙ z ⤚ x = (s *ₗ x) + z
+
+      _⤙_⤚❲_❳ : Op₃ᵣ F.Carrier Carrier
+      x ⤙ z ⤚❲ s ❳ = (x *ᵣ s) + z
+
+      ◆ : Carrier
+      ◆ = 0#
+
+    isReversibleFumulaExtrusion : IsModule R _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_ → IsReversibleFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
+    isReversibleFumulaExtrusion M = record
+      { isFumulaExtrusion = record
+        { isDoubleFumulaExtrusion = iDFE
+        ; ■ᶠ-outer-commute = λ x _ → +ᴹ-congʳ (sym (*ₗ-*ᵣ-coincident F.■ x))
+        ; ◆ᶠ-outer-commute = λ x _ → +ᴹ-congʳ (sym (*ₗ-*ᵣ-coincident F.◆ x))
+        ; ●ᶠ-outer-commute = λ x _ → +ᴹ-congʳ (sym (*ₗ-*ᵣ-coincident F.● x))
+        ; ◆-outer-commute = λ x _ → +ᴹ-congʳ (*ₗ-*ᵣ-coincident x 0#)
+      }
+      ; outer-commute = λ y x _ → +ᴹ-congʳ (*ₗ-*ᵣ-coincident x y)
+      }
+      where
+        open IsModule M
+        iDFE : IsDoubleFumulaExtrusion F.fumula F.fumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
+        iDFE = isDoubleFumulaExtrusion R.ring R.ring _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_ isBimodule
+        open IsDoubleFumulaExtrusion iDFE
+        open IsEquivalence isEquivalence using (sym)
+
 module FromFumulaExtrusion where
 
   module _ {f x fℓ xℓ} (F : Fumula f fℓ) {Carrier : Set x} (_≈_ : Rel Carrier xℓ)
@@ -514,9 +555,6 @@ module FromFumulaExtrusion where
       -_ : Op₁ Carrier
       - x = ❲ Fₗ.■ ❳⤙ ◆ ⤚ x
 
-      -′_ : Op₁ Carrier
-      -′ x = x ⤙ ◆ ⤚❲ Fᵣ.■ ❳
-
       _*ₗ_ : Opₗ Rₗ.Carrier Carrier
       s *ₗ x = ❲ s ❳⤙ ◆ ⤚ x
 
@@ -574,3 +612,51 @@ module FromFumulaExtrusion where
     bimodule : DoubleFumulaExtrusion Fₗ Fᵣ x xℓ → Bimodule Rₗ Rᵣ x xℓ
     bimodule X = record { isBimodule = isBimodule Fₗ Fᵣ _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆ isDoubleFumulaExtrusion }
       where open DoubleFumulaExtrusion X
+
+  module _ {f x fℓ xℓ} (F : ReversibleFumula f fℓ) {Carrier : Set x} (_≈_ : Rel Carrier xℓ)
+           (❲_❳⤙_⤚_ : Op₃ₗ (ReversibleFumula.Carrier F) Carrier) (_⤙_⤚❲_❳ : Op₃ᵣ (ReversibleFumula.Carrier F) Carrier) (◆ : Carrier) where
+    private
+      R : CommutativeRing f fℓ
+      R = FromFumula.commutativeRing F
+      module F where
+        open ReversibleFumula F public
+        open FumulaProperties fumula public
+      module R where
+        open CommutativeRing R public
+        open RingProperties ring public
+        open RingHelpers ring public
+
+      _+_ : Op₂ Carrier
+      x + y = ❲ F.● ❳⤙ x ⤚ y
+
+      0# : Carrier
+      0# = ◆
+
+      -_ : Op₁ Carrier
+      - x = ❲ F.■ ❳⤙ ◆ ⤚ x
+
+      _*ₗ_ : Opₗ R.Carrier Carrier
+      s *ₗ x = ❲ s ❳⤙ ◆ ⤚ x
+
+      _*ᵣ_ : Opᵣ R.Carrier Carrier
+      x *ᵣ s = x ⤙ ◆ ⤚❲ s ❳
+
+    isModule : IsReversibleFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆ → IsModule R _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_
+    isModule X = record
+      { isBimodule = iB
+      ; *ₗ-*ᵣ-coincident = λ x s → outer-commute s x ◆
+      }
+      where
+        open IsReversibleFumulaExtrusion X
+        iB : IsBimodule R.ring R.ring _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_
+        iB = isBimodule F.fumula F.fumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆ isDoubleFumulaExtrusion
+        open IsBimodule iB
+
+  module _ {f x fℓ xℓ} (F : ReversibleFumula f fℓ) where
+    private
+      R : CommutativeRing f fℓ
+      R = FromFumula.commutativeRing F
+
+    ‵module : ReversibleFumulaExtrusion F x xℓ → Module R x xℓ
+    ‵module X = record { isModule = isModule F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆ isReversibleFumulaExtrusion }
+      where open ReversibleFumulaExtrusion X
