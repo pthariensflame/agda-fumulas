@@ -182,7 +182,7 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel 
       ⤙⤚❲❳-■ᶠ-collapse-dupˡ : ∀ x → (x ⤙ x ⤚❲ Fᵣ.■ ❳) ≈ ◆
       ⤙⤚❲❳-◆-collapse-middleˡ : ∀ x z → (◆ ⤙ z ⤚❲ x ❳) ≈ z
       ⤙⤚❲❳-◆ᶠ-collapse-middleʳ : ∀ x z → (x ⤙ z ⤚❲ Fᵣ.◆ ❳) ≈ z
-      ⤙⤚❲❳-●-◆-collapse-sideʳ : ∀ x → (x ⤙ ◆ ⤚❲ Fᵣ.● ❳) ≈ x
+      ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ : ∀ x → (x ⤙ ◆ ⤚❲ Fᵣ.● ❳) ≈ x
       ⤙⤚❲❳-◆ᶠ-◆-outer-associate : R.OuterAssociativeWith Fᵣ._⤙_⤚_ Fᵣ.◆ ◆
       ◆-outer-associate : OuterAssociativeWith ◆
 
@@ -213,7 +213,7 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel 
       ; ⤙⤚❲❳-■ᶠ-collapse-dupˡ = ⤙⤚❲❳-■ᶠ-collapse-dupˡ
       ; ⤙⤚❲❳-◆-collapse-middleˡ = ⤙⤚❲❳-◆-collapse-middleˡ
       ; ⤙⤚❲❳-◆ᶠ-collapse-middleʳ = ⤙⤚❲❳-◆ᶠ-collapse-middleʳ
-      ; ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ = ⤙⤚❲❳-●-◆-collapse-sideʳ
+      ; ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ = ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ
       ; ⤙⤚❲❳-◆ᶠ-◆-outer-associate = ⤙⤚❲❳-◆ᶠ-◆-outer-associate
       }
 

@@ -208,8 +208,8 @@ module FromModule where
     rightFumulaExtrusion M = record { isRightFumulaExtrusion = isRightFumulaExtrusion R _≈ᴹ_ _+ᴹ_ 0ᴹ -ᴹ_ _*ᵣ_ isRightModule }
       where open RightModule M
 
-  module _ {rₗ rᵣ m rℓₗ rℓᵣ mℓ} (Rₗ : Ring rₗ rℓₗ) (Rᵣ : Ring rᵣ rℓᵣ) {Carrier : Set m} (_≈_ : Rel Carrier mℓ)
-           (_+_ : Op₂ Carrier) (0# : Carrier) (-_ : Op₁ Carrier)
+  module _ {rₗ rᵣ m rℓₗ rℓᵣ mℓ} (Rₗ : Ring rₗ rℓₗ) (Rᵣ : Ring rᵣ rℓᵣ) {Carrier : Set m}
+           (_≈_ : Rel Carrier mℓ) (_+_ : Op₂ Carrier) (0# : Carrier) (-_ : Op₁ Carrier)
            (_*ₗ_ : Opₗ (Ring.Carrier Rₗ) Carrier) (_*ᵣ_ : Opᵣ (Ring.Carrier Rᵣ) Carrier) where
     private
       Fₗ : Fumula rₗ rℓₗ
@@ -240,8 +240,53 @@ module FromModule where
       ◆ : Carrier
       ◆ = 0#
 
-      isDoubleFumulaExtrusion : IsBimodule Rₗ Rᵣ _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_ → {!!}
-      isDoubleFumulaExtrusion = {!!}
+    isDoubleFumulaExtrusion : IsBimodule Rₗ Rᵣ _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_ → IsDoubleFumulaExtrusion Fₗ Fᵣ _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
+    isDoubleFumulaExtrusion M = record
+      { isDoubleAlmostFumulaExtrusion = record
+        { isEquivalence = ≈ᴹ-isEquivalence
+        ; ❲❳⤙⤚-cong = ❲❳⤙⤚-cong
+        ; ❲❳⤙⤚-double-exchange = ❲❳⤙⤚-double-exchange
+        ; ⤙⤚❲❳-cong = ⤙⤚❲❳-cong
+        ; ⤙⤚❲❳-double-exchange = ⤙⤚❲❳-double-exchange
+        }
+      ; ❲❳⤙⤚-●ᶠ-inner-commuteᵣ = ❲❳⤙⤚-●ᶠ-inner-commuteᵣ
+      ; ❲❳⤙⤚-◆ᶠ-pulloutₗ = ❲❳⤙⤚-◆ᶠ-pulloutₗ
+      ; ❲❳⤙⤚-◆-pulloutᵣ = ❲❳⤙⤚-◆-pulloutᵣ
+      ; ❲❳⤙⤚-■ᶠ-collapse-dupʳ = ❲❳⤙⤚-■ᶠ-collapse-dupʳ
+      ; ❲❳⤙⤚-◆ᶠ-collapse-middleˡ = ❲❳⤙⤚-◆ᶠ-collapse-middleˡ
+      ; ❲❳⤙⤚-◆-collapse-middleʳ = ❲❳⤙⤚-◆-collapse-middleʳ
+      ; ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ = ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ
+      ; ❲❳⤙⤚-◆ᶠ-◆-outer-associate = ❲❳⤙⤚-◆ᶠ-◆-outer-associate
+      ; ⤙⤚❲❳-●ᶠ-inner-commuteₗ = ⤙⤚❲❳-●ᶠ-inner-commuteₗ
+      ; ⤙⤚❲❳-◆-pulloutₗ = ⤙⤚❲❳-◆-pulloutₗ
+      ; ⤙⤚❲❳-◆ᶠ-pulloutᵣ = ⤙⤚❲❳-◆ᶠ-pulloutᵣ
+      ; ⤙⤚❲❳-■ᶠ-collapse-dupˡ = ⤙⤚❲❳-■ᶠ-collapse-dupˡ
+      ; ⤙⤚❲❳-◆-collapse-middleˡ = ⤙⤚❲❳-◆-collapse-middleˡ
+      ; ⤙⤚❲❳-◆ᶠ-collapse-middleʳ = ⤙⤚❲❳-◆ᶠ-collapse-middleʳ
+      ; ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ = ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ
+      ; ⤙⤚❲❳-◆ᶠ-◆-outer-associate = ⤙⤚❲❳-◆ᶠ-◆-outer-associate
+      ; ◆-outer-associate = λ w x y z → +ᴹ-congʳ (begin
+        ((w *ₗ x) + 0#) *ᵣ y ≈⟨ *ᵣ-congʳ (+ᴹ-identityʳ (w *ₗ x)) ⟩
+        (w *ₗ x) *ᵣ y ≈⟨ *ₗ-*ᵣ-assoc w x y ⟩
+        (w *ₗ (x *ᵣ y)) ≈⟨ *ₗ-congˡ (+ᴹ-identityʳ (x *ᵣ y)) ⟨
+        w *ₗ ((x *ᵣ y) + 0#) ∎)
+      }
+      where
+        open IsBimodule M
+        open IsLeftFumulaExtrusion (isLeftFumulaExtrusion Rₗ _≈_ _+_ 0# -_ _*ₗ_ isLeftModule) hiding (isEquivalence)
+        open IsRightFumulaExtrusion (isRightFumulaExtrusion Rᵣ _≈_ _+_ 0# -_ _*ᵣ_ isRightModule) hiding (isEquivalence)
+        open SetoidReasoning record { isEquivalence = ≈ᴹ-isEquivalence }
+
+  module _ {rₗ rᵣ m rℓₗ rℓᵣ mℓ} (Rₗ : Ring rₗ rℓₗ) (Rᵣ : Ring rᵣ rℓᵣ) where
+    private
+      Fₗ : Fumula rₗ rℓₗ
+      Fₗ = FromRing.fumula Rₗ
+      Fᵣ : Fumula rᵣ rℓᵣ
+      Fᵣ = FromRing.fumula Rᵣ
+
+    doubleFumulaExtrusion : Bimodule Rₗ Rᵣ m mℓ → DoubleFumulaExtrusion Fₗ Fᵣ m mℓ
+    doubleFumulaExtrusion M = record { isDoubleFumulaExtrusion = isDoubleFumulaExtrusion Rₗ Rᵣ _≈ᴹ_ _+ᴹ_ 0ᴹ -ᴹ_ _*ₗ_ _*ᵣ_ isBimodule }
+      where open Bimodule M
 
 module FromFumulaExtrusion where
 
@@ -434,3 +479,98 @@ module FromFumulaExtrusion where
     rightModule : RightFumulaExtrusion F x xℓ → RightModule R x xℓ
     rightModule X = record { isRightModule = isRightModule F _≈_ _⤙_⤚❲_❳ ◆ isRightFumulaExtrusion }
       where open RightFumulaExtrusion X
+
+  module _ {fₗ fᵣ x fℓₗ fℓᵣ xℓ} (Fₗ : Fumula fₗ fℓₗ) (Fᵣ : Fumula fᵣ fℓᵣ) {Carrier : Set x} (_≈_ : Rel Carrier xℓ)
+           (❲_❳⤙_⤚_ : Op₃ₗ (Fumula.Carrier Fₗ) Carrier) (_⤙_⤚❲_❳ : Op₃ᵣ (Fumula.Carrier Fᵣ) Carrier) (◆ : Carrier) where
+    private
+      Rₗ : Ring fₗ fℓₗ
+      Rₗ = FromFumula.ring Fₗ
+      module Fₗ where
+        open Fumula Fₗ public
+        open FumulaProperties Fₗ public
+      module Rₗ where
+        open Ring Rₗ public
+        open RingProperties Rₗ public
+        open RingHelpers Rₗ public
+      Rᵣ : Ring fᵣ fℓᵣ
+      Rᵣ = FromFumula.ring Fᵣ
+      module Fᵣ where
+        open Fumula Fᵣ public
+        open FumulaProperties Fᵣ public
+      module Rᵣ where
+        open Ring Rᵣ public
+        open RingProperties Rᵣ public
+        open RingHelpers Rᵣ public
+
+      _+_ : Op₂ Carrier
+      x + y = ❲ Fₗ.● ❳⤙ x ⤚ y
+
+      _+′_ : Op₂ Carrier
+      x +′ y = x ⤙ y ⤚❲ Fᵣ.● ❳
+
+      0# : Carrier
+      0# = ◆
+
+      -_ : Op₁ Carrier
+      - x = ❲ Fₗ.■ ❳⤙ ◆ ⤚ x
+
+      -′_ : Op₁ Carrier
+      -′ x = x ⤙ ◆ ⤚❲ Fᵣ.■ ❳
+
+      _*ₗ_ : Opₗ Rₗ.Carrier Carrier
+      s *ₗ x = ❲ s ❳⤙ ◆ ⤚ x
+
+      _*ᵣ_ : Opᵣ Rᵣ.Carrier Carrier
+      x *ᵣ s = x ⤙ ◆ ⤚❲ s ❳
+
+    isBimodule : IsDoubleFumulaExtrusion Fₗ Fᵣ _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆ → IsBimodule Rₗ Rᵣ _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_
+    isBimodule X = record
+      { isBisemimodule = record
+        { +ᴹ-isCommutativeMonoid = L.+ᴹ-isCommutativeMonoid
+        ; isPreleftSemimodule = L.isPreleftSemimodule
+        ; isPrerightSemimodule = record
+          { *ᵣ-cong = R.*ᵣ-cong
+          ; *ᵣ-zeroʳ = R.*ᵣ-zeroʳ
+          ; *ᵣ-distribˡ = λ x s r → begin
+            x *ᵣ (s Rᵣ.+ r) ≈⟨ R.*ᵣ-distribˡ x s r ⟩
+            (x *ᵣ s) +′ (x *ᵣ r) ≈⟨ +≈+′ (x *ᵣ s) (x *ᵣ r) ⟨
+            (x *ᵣ s) + (x *ᵣ r) ∎
+          ; *ᵣ-identityʳ = R.*ᵣ-identityʳ
+          ; *ᵣ-assoc = R.*ᵣ-assoc
+          ; *ᵣ-zeroˡ = R.*ᵣ-zeroˡ
+          ; *ᵣ-distribʳ = λ x s r → begin
+            (s + r) *ᵣ x ≈⟨ R.*ᵣ-congʳ (+≈+′ s r) ⟩
+            (s +′ r) *ᵣ x ≈⟨ R.*ᵣ-distribʳ x s r ⟩
+            (s *ᵣ x) +′ (r *ᵣ x) ≈⟨ +≈+′ (s *ᵣ x) (r *ᵣ x) ⟨
+            (s *ᵣ x) + (r *ᵣ x) ∎
+          }
+        ; *ₗ-*ᵣ-assoc = λ s x r → ◆-outer-associate s x r ◆
+        }
+      ; -ᴹ‿cong = L.-ᴹ‿cong
+      ; -ᴹ‿inverse = L.-ᴹ‿inverse
+      }
+      where
+        open IsDoubleFumulaExtrusion X
+        module L = IsLeftModule (isLeftModule Fₗ _≈_ ❲_❳⤙_⤚_ ◆ ❲❳⤙⤚-isLeftFumulaExtrusion)
+        module R = IsRightModule (isRightModule Fᵣ _≈_ _⤙_⤚❲_❳ ◆ ⤙⤚❲❳-isRightFumulaExtrusion)
+        open IsEquivalence isEquivalence using (refl)
+        open SetoidReasoning record { isEquivalence = isEquivalence }
+
+        +≈+′ : ∀ x y → (x + y) ≈ (x +′ y)
+        +≈+′ x y = begin
+          ❲ Fₗ.● ❳⤙ x ⤚ y ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteᵣ x y ⟩
+          ❲ Fₗ.● ❳⤙ y ⤚ x ≈⟨ ❲❳⤙⤚-cong Fₗ.refl refl (⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ x) ⟨
+          ❲ Fₗ.● ❳⤙ y ⤚ (x ⤙ ◆ ⤚❲ Fᵣ.● ❳) ≈⟨ ◆-outer-associate Fₗ.● x Fᵣ.● y ⟨
+          (❲ Fₗ.● ❳⤙ ◆ ⤚ x) ⤙ y ⤚❲ Fᵣ.● ❳ ≈⟨ ⤙⤚❲❳-cong (❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ x) refl Fᵣ.refl ⟩
+          x ⤙ y ⤚❲ Fᵣ.● ❳ ∎
+
+  module _ {fₗ fᵣ x fℓₗ fℓᵣ xℓ} (Fₗ : Fumula fₗ fℓₗ) (Fᵣ : Fumula fᵣ fℓᵣ) where
+    private
+      Rₗ : Ring fₗ fℓₗ
+      Rₗ = FromFumula.ring Fₗ
+      Rᵣ : Ring fᵣ fℓᵣ
+      Rᵣ = FromFumula.ring Fᵣ
+
+    bimodule : DoubleFumulaExtrusion Fₗ Fᵣ x xℓ → Bimodule Rₗ Rᵣ x xℓ
+    bimodule X = record { isBimodule = isBimodule Fₗ Fᵣ _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆ isDoubleFumulaExtrusion }
+      where open DoubleFumulaExtrusion X
