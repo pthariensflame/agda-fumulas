@@ -337,19 +337,10 @@ module FromFumulaExtrusion where
           ; *ᵣ-assoc = λ x s r → ⤙⤚❲❳-◆ᶠ-◆-outer-associate x s r ◆
           ; *ᵣ-zeroˡ = λ x → ⤙⤚❲❳-◆-collapse-middleˡ x ◆
           ; *ᵣ-distribʳ = λ s x y → begin
-            x ⤙ y ⤚❲ F.● ❳ ⤙ ◆ ⤚❲ s ❳ ≈⟨ {!!} ⟩
-            {!!} ≈⟨ {!!} ⟩
-            {!!} ≈⟨ {!!} ⟩
-            {!!} ≈⟨ {!!} ⟩
-            {!!} ≈⟨ {!!} ⟩
-            {!!} ≈⟨ {!!} ⟩
-            {!!} ≈⟨ {!!} ⟩
-            {!!} ≈⟨ {!!} ⟩
-            {!!} ≈⟨ {!!} ⟩
-            {!!} ≈⟨ {!!} ⟩
-            {!!} ≈⟨ {!!} ⟩
-            {!!} ≈⟨ {!!} ⟩
-            {!!} ≈⟨ {!!} ⟩
+            x ⤙ y ⤚❲ F.● ❳ ⤙ ◆ ⤚❲ s ❳ ≈⟨ ⤙⤚❲❳-◆-pulloutₗ y x F.● s ◆ ⟩
+            x ⤙ ◆ ⤚❲ F.● ❳ ⤙ y ⤙ ◆ ⤚❲ s ❳ ⤚❲ s ❳ ≈⟨ ⤙⤚❲❳-cong (⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ x) (sym (⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ (y ⤙ ◆ ⤚❲ s ❳))) F.refl ⟩
+            x ⤙ y ⤙ ◆ ⤚❲ s ❳ ⤙ ◆ ⤚❲ F.● ❳ ⤚❲ s ❳ ≈⟨ ⤙⤚❲❳-double-exchange x s (y ⤙ ◆ ⤚❲ s ❳) F.● ◆ ⟩
+            ((y ⤙ ◆ ⤚❲ s ❳) ⤙ x ⤙ ◆ ⤚❲ s ❳ ⤚❲ F.● ❳) ≈⟨ ⤙⤚❲❳-●ᶠ-inner-commuteₗ (y ⤙ ◆ ⤚❲ s ❳) (x ⤙ ◆ ⤚❲ s ❳) ⟩
             x ⤙ ◆ ⤚❲ s ❳ ⤙ y ⤙ ◆ ⤚❲ s ❳ ⤚❲ F.● ❳ ∎
           }
         }
