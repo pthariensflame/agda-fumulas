@@ -227,6 +227,9 @@ module _ (F : ReversibleFumula f ℓf) (_≈_ : Rel {x} X ℓx)
     ●ᶠ-inner-commute : InnerCommutativeWith F.●
     ●ᶠ-inner-commute = ⤙⤚❲❳-●ᶠ-inner-commuteₗ , ❲❳⤙⤚-●ᶠ-inner-commuteᵣ
 
+    ◆ᶠ-pullout : PulloutWith F._⤙_⤚_ F.◆
+    ◆ᶠ-pullout = ❲❳⤙⤚-◆ᶠ-pulloutₗ , ⤙⤚❲❳-◆ᶠ-pulloutᵣ
+
     isAlmostFumulaExtrusion : IsAlmostFumulaExtrusion F.reversibleAlmostFumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
     isAlmostFumulaExtrusion = record { isBiAlmostFumulaExtrusion = isBiAlmostFumulaExtrusion }
 
@@ -238,3 +241,9 @@ module _ (F : ReversibleFumula f ℓf) (_≈_ : Rel {x} X ℓx)
       outer-commute : OuterCommutative
 
     open IsFumulaExtrusion isFumulaExtrusion public
+
+    isReversibleAlmostFumulaExtrusion : IsReversibleAlmostFumulaExtrusion F.reversibleAlmostFumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
+    isReversibleAlmostFumulaExtrusion = record
+      { isAlmostFumulaExtrusion = isAlmostFumulaExtrusion
+      ; outer-commute = outer-commute
+      }
