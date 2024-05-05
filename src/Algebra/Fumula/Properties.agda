@@ -147,25 +147,17 @@ heartline∘[-1]≈↓∘heartline -[1+ suc n ] = ↓-cong (↓-cong (heartline-
 heartline-outer-commute : ∀ i → OuterCommutativeWith (heartline i)
 heartline-outer-commute (+ zero) = ◆-outer-commute
 heartline-outer-commute (+ suc n) x z = begin
-  x ⤙ z ⤚ heartline (+ n) ↑ ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
+  x ⤙ z ⤚ heartline (+ n) ↑ ≈⟨ ◆-pulloutʳ z x ■ ■ (heartline (+ n)) ⟩
+  x ⤙ x ⤙ z ⤚ heartline (+ n) ⤚ ● ≈⟨ ●-outer-commute x (x ⤙ z ⤚ heartline (+ n)) ⟩
+  ● ⤙ x ⤙ z ⤚ heartline (+ n) ⤚ x ≈⟨ ⤙⤚-cong refl (heartline-outer-commute (+ n) x z) refl ⟩
+  ● ⤙ heartline (+ n) ⤙ z ⤚ x ⤚ x ≈⟨ ◆-pulloutˡ (heartline (+ n)) ■ ■ x z ⟨
   heartline (+ n) ↑ ⤙ z ⤚ x ∎
 heartline-outer-commute -[1+ zero ] = ■-outer-commute
 heartline-outer-commute -[1+ suc n ] x z = begin
-  x ⤙ z ⤚ heartline -[1+ n ] ↓ ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
-  {!!} ≈⟨ {!!} ⟩
+  x ⤙ z ⤚ heartline -[1+ n ] ↓ ≈⟨ ◆-pulloutʳ z x ■ ● (heartline -[1+ n ]) ⟩
+  x ⤙ x ⤙ z ⤚ heartline -[1+ n ] ⤚ (■ ⤙ ◆ ⤚ ●) ≈⟨ ⤙⤚-cong refl refl (↑-↓-inverseʳ refl) ⟩
+  x ⤙ x ⤙ z ⤚ heartline -[1+ n ] ⤚ ■ ≈⟨ ■-outer-commute x (x ⤙ z ⤚ heartline -[1+ n ]) ⟩
+  ■ ⤙ x ⤙ z ⤚ heartline -[1+ n ] ⤚ x ≈⟨ ⤙⤚-cong (↑-↓-inverseʳ refl) refl refl ⟨
+  (■ ⤙ ◆ ⤚ ●) ⤙ x ⤙ z ⤚ heartline -[1+ n ] ⤚ x ≈⟨ ⤙⤚-cong refl (heartline-outer-commute -[1+ n ] x z) refl ⟩
+  (■ ⤙ ◆ ⤚ ●) ⤙ heartline -[1+ n ] ⤙ z ⤚ x ⤚ x ≈⟨ ◆-pulloutˡ (heartline -[1+ n ]) ■ (■ ⤙ ■ ⤙ ■ ⤚ ■ ⤚ ■) x z ⟨
   heartline -[1+ n ] ↓ ⤙ z ⤚ x ∎
