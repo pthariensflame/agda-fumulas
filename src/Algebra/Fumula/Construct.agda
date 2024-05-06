@@ -9,7 +9,6 @@ open import Data.Product.Relation.Binary.Pointwise.NonDependent using (Pointwise
 open import Algebra.Fumula.Core
 open import Algebra.Fumula.Definitions
 open import Algebra.Fumula.Structures
-open import Algebra.Fumula.Bundles.Raw
 open import Algebra.Fumula.Bundles
 
 module Terminal {c ℓ} where
@@ -61,7 +60,7 @@ module Initial {c ℓ} where
     _≈_ : Rel Carrier ℓ
     _≈_ ()
 
-    infixl 7 _⤙_⤚_
+    infix 7 _⤙_⤚_
     _⤙_⤚_ : Op₃ Carrier
     _⤙_⤚_ ()
 
@@ -98,7 +97,9 @@ module Initial {c ℓ} where
   reversibleAlmostFumula = record { isReversibleAlmostFumula = isReversibleAlmostFumula }
 
   open Terminal {c} {ℓ} public
-    hiding (rawAlmostFumula; isEquivalence; isAlmostFumula; almostFumula; isReversibleAlmostFumula; reversibleAlmostFumula)
+    hiding (module 𝕆ne; rawAlmostFumula; isEquivalence;
+           isAlmostFumula; almostFumula;
+           isReversibleAlmostFumula; reversibleAlmostFumula)
 
 module Reverse where
 
