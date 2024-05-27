@@ -1,4 +1,5 @@
 module Algebra.Fumula.Construct where
+open import Level using (Level; _⊔_)
 open import Data.Empty.Polymorphic
 open import Data.Unit.Polymorphic
 open import Data.Product using (_×_; _,_)
@@ -325,3 +326,98 @@ module DirectProduct {c ℓ} where
       module Almost = ReversibleAlmostFumula (reversibleAlmostFumula F₁.reversibleAlmostFumula F₂.reversibleAlmostFumula)
   module _ F₁ F₂ where
     open ReversibleFumula (reversibleFumula F₁ F₂) public using (isReversibleFumula)
+
+module Pointwise {a} (A : Set a) where
+  private
+    variable
+      c ℓ : Level
+      C : Set c
+      _≈_ : Rel C ℓ
+      ■ ◆ ● : C
+      _⤙_⤚_ : Op₃ C
+
+    lift₀ : C → A → C
+    lift₀ x _ = x
+
+    lift₃ : Op₃ C → Op₃ (A → C)
+    lift₃ _⤙_⤚_ x z y i = x i ⤙ z i ⤚ y i
+
+    liftRel : Rel C ℓ → Rel (A → C) (a ⊔ ℓ)
+    liftRel _≈_ g h = ∀{x} → (g x) ≈ (h x)
+
+    isEquivalence : IsEquivalence _≈_ → IsEquivalence (liftRel _≈_)
+    isEquivalence E = record
+      { refl = λ {x} {i} → E.refl {x i}
+      ; sym = λ x≈y → E.sym x≈y
+      ; trans = λ x≈y y≈z → E.trans x≈y y≈z
+      }
+      where module E = IsEquivalence E
+
+  rawAlmostFumula : RawAlmostFumula c ℓ → RawAlmostFumula (a ⊔ c) (a ⊔ ℓ)
+  rawAlmostFumula F = record
+    { Carrier = A → F.Carrier
+    ; _≈_ = liftRel F._≈_
+    ; _⤙_⤚_ = lift₃ F._⤙_⤚_
+    }
+    where module F = RawAlmostFumula F
+
+  rawFumula : RawFumula c ℓ → RawFumula (a ⊔ c) (a ⊔ ℓ)
+  rawFumula F = record
+    { Carrier = A → F.Carrier
+    ; _≈_ = liftRel F._≈_
+    ; _⤙_⤚_ = lift₃ F._⤙_⤚_
+    ; ■ = lift₀ F.■
+    }
+    where module F = RawFumula F
+
+  isAlmostFumula : IsAlmostFumula _≈_ _⤙_⤚_ → IsAlmostFumula (liftRel _≈_) (lift₃ _⤙_⤚_)
+  isAlmostFumula F = record
+    { isEquivalence = isEquivalence F.isEquivalence
+    ; ⤙⤚-cong = λ x≈y u≈v n≈m → F.⤙⤚-cong x≈y u≈v n≈m
+    ; double-exchange = λ v w x y z {i} → F.double-exchange (v i) (w i) (x i) (y i) (z i)
+    }
+    where module F = IsAlmostFumula F
+
+  isReversibleAlmostFumula : IsReversibleAlmostFumula _≈_ _⤙_⤚_ → IsReversibleAlmostFumula (liftRel _≈_) (lift₃ _⤙_⤚_)
+  isReversibleAlmostFumula F = record
+    { isAlmostFumula = isAlmostFumula F.isAlmostFumula
+    ; outer-commute = λ y x z {i} → F.outer-commute (y i) (x i) (z i)
+    }
+    where module F = IsReversibleAlmostFumula F
+
+  isFumula : IsFumula _≈_ _⤙_⤚_ ■ → IsFumula (liftRel _≈_) (lift₃ _⤙_⤚_) (lift₀ ■)
+  isFumula F = record
+    { isAlmostFumula = isAlmostFumula F.isAlmostFumula
+    ; ■-outer-commute = λ x z {i} → F.■-outer-commute (x i) (z i)
+    ; ■-collapse-dup = (λ x {i} → F.■-collapse-dupˡ (x i)) , (λ x {i} → F.■-collapse-dupʳ (x i))
+    ; ◆-outer-commute = λ x z {i} → F.◆-outer-commute (x i) (z i)
+    ; ◆-collapse-middle = (λ x z {i} → F.◆-collapse-middleˡ (x i) (z i)) , (λ x z {i} → F.◆-collapse-middleʳ (x i) (z i))
+    ; ●-outer-commute = λ x z {i} → F.●-outer-commute (x i) (z i)
+    ; ●-inner-commute = (λ x y {i} → F.●-inner-commuteˡ (x i) (y i)) , (λ x y {i} → F.●-inner-commuteʳ (x i) (y i))
+    ; ◆-outer-associate = λ w x y z {i} → F.◆-outer-associate (w i) (x i) (y i) (z i)
+    ; ◆-pullout = (λ v w x y z {i} → F.◆-pulloutˡ (v i) (w i) (x i) (y i) (z i)) , (λ v w x y z {i} → F.◆-pulloutʳ (v i) (w i) (x i) (y i) (z i))
+    }
+    where module F = IsFumula F
+
+  isReversibleFumula : IsReversibleFumula _≈_ _⤙_⤚_ ■ → IsReversibleFumula (liftRel _≈_) (lift₃ _⤙_⤚_) (lift₀ ■)
+  isReversibleFumula F = record
+    { isFumula = isFumula F.isFumula
+    ; outer-commute = λ y x z {i} → F.outer-commute (y i) (x i) (z i)
+    }
+    where module F = IsReversibleFumula F
+
+  almostFumula : AlmostFumula c ℓ → AlmostFumula (a ⊔ c) (a ⊔ ℓ)
+  almostFumula F = record { isAlmostFumula = isAlmostFumula F.isAlmostFumula }
+    where module F = AlmostFumula F
+
+  reversibleAlmostFumula : ReversibleAlmostFumula c ℓ → ReversibleAlmostFumula (a ⊔ c) (a ⊔ ℓ)
+  reversibleAlmostFumula F = record { isReversibleAlmostFumula = isReversibleAlmostFumula F.isReversibleAlmostFumula }
+    where module F = ReversibleAlmostFumula F
+
+  fumula : Fumula c ℓ → Fumula (a ⊔ c) (a ⊔ ℓ)
+  fumula F = record { isFumula = isFumula F.isFumula }
+    where module F = Fumula F
+
+  reversibleFumula : ReversibleFumula c ℓ → ReversibleFumula (a ⊔ c) (a ⊔ ℓ)
+  reversibleFumula F = record { isReversibleFumula = isReversibleFumula F.isReversibleFumula }
+    where module F = ReversibleFumula F
