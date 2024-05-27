@@ -60,20 +60,20 @@ module FromModule where
           ((x *ₗ y) + (v *ₗ w)) + z ≈⟨ +ᴹ-assoc (x *ₗ y) (v *ₗ w) z ⟩
           (x *ₗ y) + ((v *ₗ w) + z) ∎
         }
-      ; ❲❳⤙⤚-●ᶠ-inner-commuteᵣ = λ x y → begin
+      ; ❲❳⤙⤚-●ᶠ-inner-commuteʳ = λ x y → begin
         ((R.- R.1# R.* R.- R.1# R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#)) *ₗ y) + x ≈⟨ +ᴹ-congʳ (*ₗ-congʳ R.1≈-1*-1+[-1*-1+-1]) ⟨
         (R.1# *ₗ y) + x ≈⟨ +ᴹ-congʳ (*ₗ-identityˡ y) ⟩
         y + x ≈⟨ +ᴹ-congˡ (*ₗ-identityˡ x) ⟨
         y + (R.1# *ₗ x) ≈⟨ +ᴹ-comm y (R.1# *ₗ x) ⟩
         (R.1# *ₗ x) + y ≈⟨ +ᴹ-congʳ (*ₗ-congʳ R.1≈-1*-1+[-1*-1+-1]) ⟩
         ((R.- R.1# R.* R.- R.1# R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#)) *ₗ x) + y ∎
-      ; ❲❳⤙⤚-◆ᶠ-pulloutₗ = λ v w x y z → begin
+      ; ❲❳⤙⤚-◆ᶠ-pulloutˡ = λ v w x y z → begin
         ((w R.* x R.+ v) *ₗ y) + z ≈⟨ +ᴹ-congʳ (*ₗ-distribʳ y (w R.* x) v) ⟩
         (((w R.* x) *ₗ y) + (v *ₗ y)) + z ≈⟨ +ᴹ-assoc ((w R.* x) *ₗ y) (v *ₗ y) z ⟩
         ((w R.* x) *ₗ y) + ((v *ₗ y) + z) ≈⟨ +ᴹ-congʳ (*ₗ-congʳ (R.+-identityʳ (w R.* x))) ⟨
         ((w R.* x R.+ R.0#) *ₗ y) + ((v *ₗ y) + z) ≈⟨ +ᴹ-congʳ (*ₗ-congʳ (R.+-congˡ R.0≈-1*-1+-1)) ⟩
         ((w R.* x R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#)) *ₗ y) + ((v *ₗ y) + z) ∎
-      ; ❲❳⤙⤚-◆-pulloutᵣ = λ v w x y z → begin
+      ; ❲❳⤙⤚-◆-pulloutʳ = λ v w x y z → begin
         (w *ₗ ((x *ₗ y) + z)) + v ≈⟨ +ᴹ-congʳ (*ₗ-distribˡ w (x *ₗ y) z) ⟩
         ((w *ₗ (x *ₗ y)) + (w *ₗ z)) + v ≈⟨ +ᴹ-assoc (w *ₗ (x *ₗ y)) (w *ₗ z) v ⟩
         (w *ₗ (x *ₗ y)) + ((w *ₗ z) + v) ≈⟨ +ᴹ-congʳ (*ₗ-congˡ (+ᴹ-identityʳ (x *ₗ y))) ⟨
@@ -144,19 +144,19 @@ module FromModule where
           ((x *ᵣ y) + (v *ᵣ w)) + z ≈⟨ +ᴹ-assoc (x *ᵣ y) (v *ᵣ w) z ⟩
           (x *ᵣ y) + ((v *ᵣ w) + z) ∎
         }
-      ; ⤙⤚❲❳-●ᶠ-inner-commuteₗ = λ x y → begin
+      ; ⤙⤚❲❳-●ᶠ-inner-commuteˡ = λ x y → begin
         (x *ᵣ (R.- R.1# R.* R.- R.1# R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#))) + y ≈⟨ +ᴹ-congʳ (*ᵣ-congˡ R.1≈-1*-1+[-1*-1+-1]) ⟨
         (x *ᵣ R.1#) + y ≈⟨ +ᴹ-congʳ (*ᵣ-identityʳ x) ⟩
         x + y ≈⟨ +ᴹ-comm x y ⟩
         y + x ≈⟨ +ᴹ-congʳ (*ᵣ-identityʳ y) ⟨
         (y *ᵣ R.1#) + x ≈⟨ +ᴹ-congʳ (*ᵣ-congˡ R.1≈-1*-1+[-1*-1+-1]) ⟩
         (y *ᵣ (R.- R.1# R.* R.- R.1# R.+ (R.- R.1# R.* R.- R.1# R.+ R.- R.1#))) + x ∎
-      ; ⤙⤚❲❳-◆-pulloutₗ = λ v w x y z → begin
+      ; ⤙⤚❲❳-◆-pulloutˡ = λ v w x y z → begin
         (((w *ᵣ x) + v) *ᵣ y) + z ≈⟨ +ᴹ-congʳ (*ᵣ-distribʳ y (w *ᵣ x) v) ⟩
         (((w *ᵣ x) *ᵣ y) + (v *ᵣ y)) + z ≈⟨ +ᴹ-assoc ((w *ᵣ x) *ᵣ y) (v *ᵣ y) z ⟩
         ((w *ᵣ x) *ᵣ y) + ((v *ᵣ y) + z) ≈⟨ +ᴹ-congʳ (*ᵣ-congʳ (+ᴹ-identityʳ (w *ᵣ x))) ⟨
         (((w *ᵣ x) + 0#) *ᵣ y) + ((v *ᵣ y) + z) ∎
-      ; ⤙⤚❲❳-◆ᶠ-pulloutᵣ = λ v w x y z → begin
+      ; ⤙⤚❲❳-◆ᶠ-pulloutʳ = λ v w x y z → begin
         (w *ᵣ (x R.* y R.+ z)) + v ≈⟨ +ᴹ-congʳ (*ᵣ-distribˡ w (x R.* y) z) ⟩
         ((w *ᵣ (x R.* y)) + (w *ᵣ z)) + v ≈⟨ +ᴹ-assoc (w *ᵣ (x R.* y)) (w *ᵣ z) v ⟩
         (w *ᵣ (x R.* y)) + ((w *ᵣ z) + v) ≈⟨ +ᴹ-congʳ (*ᵣ-congˡ (R.+-identityʳ (x R.* y))) ⟨
@@ -239,16 +239,16 @@ module FromModule where
         ; ⤙⤚❲❳-cong = ⤙⤚❲❳-cong
         ; ⤙⤚❲❳-double-exchange = ⤙⤚❲❳-double-exchange
         }
-      ; ❲❳⤙⤚-●ᶠ-inner-commuteᵣ = ❲❳⤙⤚-●ᶠ-inner-commuteᵣ
-      ; ❲❳⤙⤚-◆ᶠ-pulloutₗ = ❲❳⤙⤚-◆ᶠ-pulloutₗ
-      ; ❲❳⤙⤚-◆-pulloutᵣ = ❲❳⤙⤚-◆-pulloutᵣ
+      ; ❲❳⤙⤚-●ᶠ-inner-commuteʳ = ❲❳⤙⤚-●ᶠ-inner-commuteʳ
+      ; ❲❳⤙⤚-◆ᶠ-pulloutˡ = ❲❳⤙⤚-◆ᶠ-pulloutˡ
+      ; ❲❳⤙⤚-◆-pulloutʳ = ❲❳⤙⤚-◆-pulloutʳ
       ; ❲❳⤙⤚-■ᶠ-collapse-dupʳ = ❲❳⤙⤚-■ᶠ-collapse-dupʳ
       ; ❲❳⤙⤚-◆ᶠ-collapse-middleˡ = ❲❳⤙⤚-◆ᶠ-collapse-middleˡ
       ; ❲❳⤙⤚-◆-collapse-middleʳ = ❲❳⤙⤚-◆-collapse-middleʳ
       ; ❲❳⤙⤚-◆ᶠ-◆-outer-associate = ❲❳⤙⤚-◆ᶠ-◆-outer-associate
-      ; ⤙⤚❲❳-●ᶠ-inner-commuteₗ = ⤙⤚❲❳-●ᶠ-inner-commuteₗ
-      ; ⤙⤚❲❳-◆-pulloutₗ = ⤙⤚❲❳-◆-pulloutₗ
-      ; ⤙⤚❲❳-◆ᶠ-pulloutᵣ = ⤙⤚❲❳-◆ᶠ-pulloutᵣ
+      ; ⤙⤚❲❳-●ᶠ-inner-commuteˡ = ⤙⤚❲❳-●ᶠ-inner-commuteˡ
+      ; ⤙⤚❲❳-◆-pulloutˡ = ⤙⤚❲❳-◆-pulloutˡ
+      ; ⤙⤚❲❳-◆ᶠ-pulloutʳ = ⤙⤚❲❳-◆ᶠ-pulloutʳ
       ; ⤙⤚❲❳-■ᶠ-collapse-dupˡ = ⤙⤚❲❳-■ᶠ-collapse-dupˡ
       ; ⤙⤚❲❳-◆-collapse-middleˡ = ⤙⤚❲❳-◆-collapse-middleˡ
       ; ⤙⤚❲❳-◆ᶠ-collapse-middleʳ = ⤙⤚❲❳-◆ᶠ-collapse-middleʳ
@@ -356,38 +356,38 @@ module FromFumulaExtrusion where
               }
             ; assoc = λ x y z → begin
               ❲ F.● ❳⤙ ❲ F.● ❳⤙ x ⤚ y ⤚ z ≈⟨ ❲❳⤙⤚-double-exchange F.● z F.● y x ⟩
-              ❲ F.● ❳⤙ ❲ F.● ❳⤙ x ⤚ z ⤚ y ≈⟨ ❲❳⤙⤚-cong F.refl (❲❳⤙⤚-●ᶠ-inner-commuteᵣ x z) refl ⟩
+              ❲ F.● ❳⤙ ❲ F.● ❳⤙ x ⤚ z ⤚ y ≈⟨ ❲❳⤙⤚-cong F.refl (❲❳⤙⤚-●ᶠ-inner-commuteʳ x z) refl ⟩
               ❲ F.● ❳⤙ ❲ F.● ❳⤙ z ⤚ x ⤚ y ≈⟨ ❲❳⤙⤚-double-exchange F.● y F.● x z ⟩
-              ❲ F.● ❳⤙ ❲ F.● ❳⤙ z ⤚ y ⤚ x ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteᵣ (❲ F.● ❳⤙ z ⤚ y) x ⟩
-              ❲ F.● ❳⤙ x ⤚ ❲ F.● ❳⤙ z ⤚ y ≈⟨ ❲❳⤙⤚-cong F.refl refl (❲❳⤙⤚-●ᶠ-inner-commuteᵣ z y) ⟩
+              ❲ F.● ❳⤙ ❲ F.● ❳⤙ z ⤚ y ⤚ x ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteʳ (❲ F.● ❳⤙ z ⤚ y) x ⟩
+              ❲ F.● ❳⤙ x ⤚ ❲ F.● ❳⤙ z ⤚ y ≈⟨ ❲❳⤙⤚-cong F.refl refl (❲❳⤙⤚-●ᶠ-inner-commuteʳ z y) ⟩
               ❲ F.● ❳⤙ x ⤚ ❲ F.● ❳⤙ y ⤚ z ∎
             }
           ; identity = ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ , ❲❳⤙⤚-◆-collapse-middleʳ F.●
           }
-          ; comm = ❲❳⤙⤚-●ᶠ-inner-commuteᵣ
+          ; comm = ❲❳⤙⤚-●ᶠ-inner-commuteʳ
           }
         ; isPreleftSemimodule = record
           { *ₗ-cong = λ x≈ → ❲❳⤙⤚-cong x≈ refl
           ; *ₗ-zeroˡ = λ x → ❲❳⤙⤚-◆ᶠ-collapse-middleˡ x ◆
           ; *ₗ-distribʳ = λ x s r → begin
-            ❲ F.● F.⤙ s ⤚ r ❳⤙ ◆ ⤚ x ≈⟨ ❲❳⤙⤚-◆ᶠ-pulloutₗ s F.● r x ◆ ⟩
+            ❲ F.● F.⤙ s ⤚ r ❳⤙ ◆ ⤚ x ≈⟨ ❲❳⤙⤚-◆ᶠ-pulloutˡ s F.● r x ◆ ⟩
             ❲ F.● F.⤙ F.◆ ⤚ r ❳⤙ ❲ s ❳⤙ ◆ ⤚ x ⤚ x ≈⟨ ❲❳⤙⤚-◆ᶠ-◆-outer-associate F.● r x (❲ s ❳⤙ ◆ ⤚ x) ⟩
             ❲ F.● ❳⤙ ❲ s ❳⤙ ◆ ⤚ x ⤚ ❲ r ❳⤙ ◆ ⤚ x ∎
           ; *ₗ-identityˡ = ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ
           ; *ₗ-assoc = λ s r x → ❲❳⤙⤚-◆ᶠ-◆-outer-associate s r x ◆
           ; *ₗ-zeroʳ = λ x → ❲❳⤙⤚-◆-collapse-middleʳ x ◆
           ; *ₗ-distribˡ = λ s x y → begin
-            ❲ s ❳⤙ ◆ ⤚ ❲ F.● ❳⤙ x ⤚ y ≈⟨ ❲❳⤙⤚-◆-pulloutᵣ ◆ s F.● y x ⟩
+            ❲ s ❳⤙ ◆ ⤚ ❲ F.● ❳⤙ x ⤚ y ≈⟨ ❲❳⤙⤚-◆-pulloutʳ ◆ s F.● y x ⟩
             ❲ s ❳⤙ ❲ s ❳⤙ ◆ ⤚ x ⤚ ❲ F.● ❳⤙ ◆ ⤚ y ≈⟨ ❲❳⤙⤚-cong F.refl (sym (❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ (❲ s ❳⤙ ◆ ⤚ x))) (❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ y) ⟩
             ❲ s ❳⤙ ❲ F.● ❳⤙ ◆ ⤚ ❲ s ❳⤙ ◆ ⤚ x ⤚ y ≈⟨ ❲❳⤙⤚-double-exchange s y F.● (❲ s ❳⤙ ◆ ⤚ x) ◆ ⟩
-            ❲ F.● ❳⤙ ❲ s ❳⤙ ◆ ⤚ y ⤚ ❲ s ❳⤙ ◆ ⤚ x ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteᵣ (❲ s ❳⤙ ◆ ⤚ y) (❲ s ❳⤙ ◆ ⤚ x) ⟩
+            ❲ F.● ❳⤙ ❲ s ❳⤙ ◆ ⤚ y ⤚ ❲ s ❳⤙ ◆ ⤚ x ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteʳ (❲ s ❳⤙ ◆ ⤚ y) (❲ s ❳⤙ ◆ ⤚ x) ⟩
             ❲ F.● ❳⤙ ❲ s ❳⤙ ◆ ⤚ x ⤚ ❲ s ❳⤙ ◆ ⤚ y ∎
           }
         }
       ; -ᴹ‿cong = ❲❳⤙⤚-cong F.refl refl
       ; -ᴹ‿inverse =
         (λ x → begin
-          ❲ F.● ❳⤙ ❲ F.■ ❳⤙ ◆ ⤚ x ⤚ x ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteᵣ (❲ F.■ ❳⤙ ◆ ⤚ x) x ⟩
+          ❲ F.● ❳⤙ ❲ F.■ ❳⤙ ◆ ⤚ x ⤚ x ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteʳ (❲ F.■ ❳⤙ ◆ ⤚ x) x ⟩
           ❲ F.● ❳⤙ x ⤚ ❲ F.■ ❳⤙ ◆ ⤚ x ≈⟨ ❲❳⤙⤚-◆ᶠ-◆-outer-associate F.● F.■ x x ⟨
           ❲ F.● F.⤙ F.◆ ⤚ F.■ ❳⤙ x ⤚ x ≈⟨ ❲❳⤙⤚-cong (F.●-◆-collapse-sideˡ F.■) refl refl ⟩
           (❲ F.■ ❳⤙ x ⤚ x) ≈⟨ ❲❳⤙⤚-■ᶠ-collapse-dupʳ x ⟩
@@ -449,23 +449,23 @@ module FromFumulaExtrusion where
                 ; ∙-cong = λ x≈ y≈ → ⤙⤚❲❳-cong x≈ y≈ F.refl
                 }
               ; assoc = λ x y z → begin
-                x ⤙ y ⤚❲ F.● ❳ ⤙ z ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-cong (⤙⤚❲❳-●ᶠ-inner-commuteₗ x y) refl F.refl ⟩
-                y ⤙ x ⤚❲ F.● ❳ ⤙ z ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-●ᶠ-inner-commuteₗ (y ⤙ x ⤚❲ F.● ❳) z ⟩
+                x ⤙ y ⤚❲ F.● ❳ ⤙ z ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-cong (⤙⤚❲❳-●ᶠ-inner-commuteˡ x y) refl F.refl ⟩
+                y ⤙ x ⤚❲ F.● ❳ ⤙ z ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-●ᶠ-inner-commuteˡ (y ⤙ x ⤚❲ F.● ❳) z ⟩
                 z ⤙ y ⤙ x ⤚❲ F.● ❳ ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-double-exchange z F.● y F.● x ⟩
-                y ⤙ z ⤙ x ⤚❲ F.● ❳ ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-cong refl (⤙⤚❲❳-●ᶠ-inner-commuteₗ z x) F.refl ⟩
+                y ⤙ z ⤙ x ⤚❲ F.● ❳ ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-cong refl (⤙⤚❲❳-●ᶠ-inner-commuteˡ z x) F.refl ⟩
                 y ⤙ x ⤙ z ⤚❲ F.● ❳ ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-double-exchange y F.● x F.● z ⟩
                 x ⤙ y ⤙ z ⤚❲ F.● ❳ ⤚❲ F.● ❳ ∎
               }
             ; identity = ⤙⤚❲❳-◆-collapse-middleˡ F.● , ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ
             }
-          ; comm = ⤙⤚❲❳-●ᶠ-inner-commuteₗ
+          ; comm = ⤙⤚❲❳-●ᶠ-inner-commuteˡ
           }
         ; isPrerightSemimodule = record
           { *ᵣ-cong = λ x≈ → ⤙⤚❲❳-cong x≈ refl
           ; *ᵣ-zeroʳ = λ x → ⤙⤚❲❳-◆ᶠ-collapse-middleʳ x ◆
           ; *ᵣ-distribˡ = λ x s r → begin
             x ⤙ ◆ ⤚❲ F.● F.⤙ s ⤚ r ❳ ≈⟨ ⤙⤚❲❳-cong refl refl (F.●-inner-commuteʳ s r) ⟩
-            x ⤙ ◆ ⤚❲ F.● F.⤙ r ⤚ s ❳ ≈⟨ ⤙⤚❲❳-◆ᶠ-pulloutᵣ ◆ x F.● s r ⟩
+            x ⤙ ◆ ⤚❲ F.● F.⤙ r ⤚ s ❳ ≈⟨ ⤙⤚❲❳-◆ᶠ-pulloutʳ ◆ x F.● s r ⟩
             x ⤙ x ⤙ ◆ ⤚❲ r ❳ ⤚❲ F.● F.⤙ F.◆ ⤚ s ❳ ≈⟨ ⤙⤚❲❳-cong refl refl (F.●-outer-commute s (F.■ F.⤙ F.■ ⤚ F.■)) ⟨
             x ⤙ x ⤙ ◆ ⤚❲ r ❳ ⤚❲ s F.⤙ F.◆ ⤚ F.● ❳ ≈⟨ ⤙⤚❲❳-◆ᶠ-◆-outer-associate x s F.● (x ⤙ ◆ ⤚❲ r ❳) ⟨
             x ⤙ ◆ ⤚❲ s ❳ ⤙ x ⤙ ◆ ⤚❲ r ❳ ⤚❲ F.● ❳ ∎
@@ -473,17 +473,17 @@ module FromFumulaExtrusion where
           ; *ᵣ-assoc = λ x s r → ⤙⤚❲❳-◆ᶠ-◆-outer-associate x s r ◆
           ; *ᵣ-zeroˡ = λ x → ⤙⤚❲❳-◆-collapse-middleˡ x ◆
           ; *ᵣ-distribʳ = λ s x y → begin
-            x ⤙ y ⤚❲ F.● ❳ ⤙ ◆ ⤚❲ s ❳ ≈⟨ ⤙⤚❲❳-◆-pulloutₗ y x F.● s ◆ ⟩
+            x ⤙ y ⤚❲ F.● ❳ ⤙ ◆ ⤚❲ s ❳ ≈⟨ ⤙⤚❲❳-◆-pulloutˡ y x F.● s ◆ ⟩
             x ⤙ ◆ ⤚❲ F.● ❳ ⤙ y ⤙ ◆ ⤚❲ s ❳ ⤚❲ s ❳ ≈⟨ ⤙⤚❲❳-cong (⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ x) (sym (⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ (y ⤙ ◆ ⤚❲ s ❳))) F.refl ⟩
             x ⤙ y ⤙ ◆ ⤚❲ s ❳ ⤙ ◆ ⤚❲ F.● ❳ ⤚❲ s ❳ ≈⟨ ⤙⤚❲❳-double-exchange x s (y ⤙ ◆ ⤚❲ s ❳) F.● ◆ ⟩
-            ((y ⤙ ◆ ⤚❲ s ❳) ⤙ x ⤙ ◆ ⤚❲ s ❳ ⤚❲ F.● ❳) ≈⟨ ⤙⤚❲❳-●ᶠ-inner-commuteₗ (y ⤙ ◆ ⤚❲ s ❳) (x ⤙ ◆ ⤚❲ s ❳) ⟩
+            ((y ⤙ ◆ ⤚❲ s ❳) ⤙ x ⤙ ◆ ⤚❲ s ❳ ⤚❲ F.● ❳) ≈⟨ ⤙⤚❲❳-●ᶠ-inner-commuteˡ (y ⤙ ◆ ⤚❲ s ❳) (x ⤙ ◆ ⤚❲ s ❳) ⟩
             x ⤙ ◆ ⤚❲ s ❳ ⤙ y ⤙ ◆ ⤚❲ s ❳ ⤚❲ F.● ❳ ∎
           }
         }
       ; -ᴹ‿cong = λ x≈ → ⤙⤚❲❳-cong x≈ refl F.refl
       ; -ᴹ‿inverse =
         (λ x → begin
-          x ⤙ ◆ ⤚❲ F.■ ❳ ⤙ x ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-●ᶠ-inner-commuteₗ (x ⤙ ◆ ⤚❲ F.■ ❳) x ⟩
+          x ⤙ ◆ ⤚❲ F.■ ❳ ⤙ x ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-●ᶠ-inner-commuteˡ (x ⤙ ◆ ⤚❲ F.■ ❳) x ⟩
           x ⤙ x ⤙ ◆ ⤚❲ F.■ ❳ ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-double-exchange x F.● x F.■ ◆ ⟩
           x ⤙ x ⤙ ◆ ⤚❲ F.● ❳ ⤚❲ F.■ ❳ ≈⟨ ⤙⤚❲❳-cong refl (⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ x) F.refl ⟩
           x ⤙ x ⤚❲ F.■ ❳ ≈⟨ ⤙⤚❲❳-■ᶠ-collapse-dupˡ x ⟩
@@ -590,7 +590,7 @@ module FromFumulaExtrusion where
 
         +≈+′ : ∀ x y → (x + y) ≈ (x +′ y)
         +≈+′ x y = begin
-          ❲ Fₗ.● ❳⤙ x ⤚ y ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteᵣ x y ⟩
+          ❲ Fₗ.● ❳⤙ x ⤚ y ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteʳ x y ⟩
           ❲ Fₗ.● ❳⤙ y ⤚ x ≈⟨ ❲❳⤙⤚-cong Fₗ.refl refl (R.⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ x) ⟨
           ❲ Fₗ.● ❳⤙ y ⤚ (x ⤙ ◆ ⤚❲ Fᵣ.● ❳) ≈⟨ ◆-outer-associate Fₗ.● x Fᵣ.● y ⟨
           (❲ Fₗ.● ❳⤙ ◆ ⤚ x) ⤙ y ⤚❲ Fᵣ.● ❳ ≈⟨ ⤙⤚❲❳-cong (L.❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ x) refl Fᵣ.refl ⟩

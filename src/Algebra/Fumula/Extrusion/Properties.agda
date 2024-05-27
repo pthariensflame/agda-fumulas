@@ -22,7 +22,7 @@ module LeftProperties {f fℓ x xℓ} (F : Fumula f fℓ) (X : LeftFumulaExtrusi
 
   ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ : ∀ x → (❲ F.● ❳⤙ ◆ ⤚ x) ≈ x
   ❲❳⤙⤚-●ᶠ-◆-collapse-sideˡ x = begin
-    ❲ F.● ❳⤙ ◆ ⤚ x ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteᵣ ◆ x ⟩
+    ❲ F.● ❳⤙ ◆ ⤚ x ≈⟨ ❲❳⤙⤚-●ᶠ-inner-commuteʳ ◆ x ⟩
     ❲ F.● ❳⤙ x ⤚ ◆ ≈⟨ ❲❳⤙⤚-◆-collapse-middleʳ F.● x ⟩
     x ∎
 
@@ -43,7 +43,7 @@ module RightProperties {f fℓ x xℓ} (F : Fumula f fℓ) (X : RightFumulaExtru
 
   ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ : ∀ x → (x ⤙ ◆ ⤚❲ F.● ❳) ≈ x
   ⤙⤚❲❳-●ᶠ-◆-collapse-sideʳ x = begin
-    x ⤙ ◆ ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-●ᶠ-inner-commuteₗ x ◆ ⟩
+    x ⤙ ◆ ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-●ᶠ-inner-commuteˡ x ◆ ⟩
     ◆ ⤙ x ⤚❲ F.● ❳ ≈⟨ ⤙⤚❲❳-◆-collapse-middleˡ F.● x ⟩
     x ∎
 

@@ -342,9 +342,9 @@ module DirectProduct {x xℓ} where
       ; isLeftFumulaExtrusion = record
         { ❲❳⤙⤚-isLeftAlmostFumulaExtrusion =
           isLeftAlmostFumulaExtrusion (Fumula.almostFumula F) X₁.❲❳⤙⤚-leftAlmostFumulaExtrusion X₂.❲❳⤙⤚-leftAlmostFumulaExtrusion
-        ; ❲❳⤙⤚-●ᶠ-inner-commuteᵣ = λ (x₁ , x₂) (y₁ , y₂) → X₁.❲❳⤙⤚-●ᶠ-inner-commuteᵣ x₁ y₁ , X₂.❲❳⤙⤚-●ᶠ-inner-commuteᵣ x₂ y₂
-        ; ❲❳⤙⤚-◆ᶠ-pulloutₗ = λ v w x (y₁ , y₂) (z₁ , z₂) → X₁.❲❳⤙⤚-◆ᶠ-pulloutₗ v w x y₁ z₁ , X₂.❲❳⤙⤚-◆ᶠ-pulloutₗ v w x y₂ z₂
-        ; ❲❳⤙⤚-◆-pulloutᵣ = λ (v₁ , v₂) w x (y₁ , y₂) (z₁ , z₂) → X₁.❲❳⤙⤚-◆-pulloutᵣ v₁ w x y₁ z₁ , X₂.❲❳⤙⤚-◆-pulloutᵣ v₂ w x y₂ z₂
+        ; ❲❳⤙⤚-●ᶠ-inner-commuteʳ = λ (x₁ , x₂) (y₁ , y₂) → X₁.❲❳⤙⤚-●ᶠ-inner-commuteʳ x₁ y₁ , X₂.❲❳⤙⤚-●ᶠ-inner-commuteʳ x₂ y₂
+        ; ❲❳⤙⤚-◆ᶠ-pulloutˡ = λ v w x (y₁ , y₂) (z₁ , z₂) → X₁.❲❳⤙⤚-◆ᶠ-pulloutˡ v w x y₁ z₁ , X₂.❲❳⤙⤚-◆ᶠ-pulloutˡ v w x y₂ z₂
+        ; ❲❳⤙⤚-◆-pulloutʳ = λ (v₁ , v₂) w x (y₁ , y₂) (z₁ , z₂) → X₁.❲❳⤙⤚-◆-pulloutʳ v₁ w x y₁ z₁ , X₂.❲❳⤙⤚-◆-pulloutʳ v₂ w x y₂ z₂
         ; ❲❳⤙⤚-■ᶠ-collapse-dupʳ = λ (x₁ , x₂) → X₁.❲❳⤙⤚-■ᶠ-collapse-dupʳ x₁ , X₂.❲❳⤙⤚-■ᶠ-collapse-dupʳ x₂
         ; ❲❳⤙⤚-◆ᶠ-collapse-middleˡ = λ (x₁ , x₂) (z₁ , z₂) → X₁.❲❳⤙⤚-◆ᶠ-collapse-middleˡ x₁ z₁ , X₂.❲❳⤙⤚-◆ᶠ-collapse-middleˡ x₂ z₂
         ; ❲❳⤙⤚-◆-collapse-middleʳ = λ x (z₁ , z₂) → X₁.❲❳⤙⤚-◆-collapse-middleʳ x z₁ , X₂.❲❳⤙⤚-◆-collapse-middleʳ x z₂
@@ -368,9 +368,9 @@ module DirectProduct {x xℓ} where
       ; isRightFumulaExtrusion = record
         { ⤙⤚❲❳-isRightAlmostFumulaExtrusion =
           isRightAlmostFumulaExtrusion (Fumula.almostFumula F) X₁.⤙⤚❲❳-rightAlmostFumulaExtrusion X₂.⤙⤚❲❳-rightAlmostFumulaExtrusion
-        ; ⤙⤚❲❳-●ᶠ-inner-commuteₗ = λ (x₁ , x₂) (y₁ , y₂) → X₁.⤙⤚❲❳-●ᶠ-inner-commuteₗ x₁ y₁ , X₂.⤙⤚❲❳-●ᶠ-inner-commuteₗ x₂ y₂
-        ; ⤙⤚❲❳-◆-pulloutₗ = λ (v₁ , v₂) (w₁ , w₂) x y (z₁ , z₂) → X₁.⤙⤚❲❳-◆-pulloutₗ v₁ w₁ x y z₁ , X₂.⤙⤚❲❳-◆-pulloutₗ v₂ w₂ x y z₂
-        ; ⤙⤚❲❳-◆ᶠ-pulloutᵣ = λ (v₁ , v₂) (w₁ , w₂) x y z → X₁.⤙⤚❲❳-◆ᶠ-pulloutᵣ v₁ w₁ x y z , X₂.⤙⤚❲❳-◆ᶠ-pulloutᵣ v₂ w₂ x y z
+        ; ⤙⤚❲❳-●ᶠ-inner-commuteˡ = λ (x₁ , x₂) (y₁ , y₂) → X₁.⤙⤚❲❳-●ᶠ-inner-commuteˡ x₁ y₁ , X₂.⤙⤚❲❳-●ᶠ-inner-commuteˡ x₂ y₂
+        ; ⤙⤚❲❳-◆-pulloutˡ = λ (v₁ , v₂) (w₁ , w₂) x y (z₁ , z₂) → X₁.⤙⤚❲❳-◆-pulloutˡ v₁ w₁ x y z₁ , X₂.⤙⤚❲❳-◆-pulloutˡ v₂ w₂ x y z₂
+        ; ⤙⤚❲❳-◆ᶠ-pulloutʳ = λ (v₁ , v₂) (w₁ , w₂) x y z → X₁.⤙⤚❲❳-◆ᶠ-pulloutʳ v₁ w₁ x y z , X₂.⤙⤚❲❳-◆ᶠ-pulloutʳ v₂ w₂ x y z
         ; ⤙⤚❲❳-■ᶠ-collapse-dupˡ = λ (x₁ , x₂) → X₁.⤙⤚❲❳-■ᶠ-collapse-dupˡ x₁ , X₂.⤙⤚❲❳-■ᶠ-collapse-dupˡ x₂
         ; ⤙⤚❲❳-◆-collapse-middleˡ = λ x (z₁ , z₂) → X₁.⤙⤚❲❳-◆-collapse-middleˡ x z₁ , X₂.⤙⤚❲❳-◆-collapse-middleˡ x z₂
         ; ⤙⤚❲❳-◆ᶠ-collapse-middleʳ = λ (x₁ , x₂) (z₁ , z₂) → X₁.⤙⤚❲❳-◆ᶠ-collapse-middleʳ x₁ z₁ , X₂.⤙⤚❲❳-◆ᶠ-collapse-middleʳ x₂ z₂
@@ -395,16 +395,16 @@ module DirectProduct {x xℓ} where
       ; isDoubleFumulaExtrusion = record
         { isDoubleAlmostFumulaExtrusion =
           isDoubleAlmostFumulaExtrusion (Fumula.almostFumula Fₗ) (Fumula.almostFumula Fᵣ) X₁.doubleAlmostFumulaExtrusion X₂.doubleAlmostFumulaExtrusion
-        ; ❲❳⤙⤚-●ᶠ-inner-commuteᵣ = λ (x₁ , x₂) (y₁ , y₂) → X₁.❲❳⤙⤚-●ᶠ-inner-commuteᵣ x₁ y₁ , X₂.❲❳⤙⤚-●ᶠ-inner-commuteᵣ x₂ y₂
-        ; ❲❳⤙⤚-◆ᶠ-pulloutₗ = λ v w x (y₁ , y₂) (z₁ , z₂) → X₁.❲❳⤙⤚-◆ᶠ-pulloutₗ v w x y₁ z₁ , X₂.❲❳⤙⤚-◆ᶠ-pulloutₗ v w x y₂ z₂
-        ; ❲❳⤙⤚-◆-pulloutᵣ = λ (v₁ , v₂) w x (y₁ , y₂) (z₁ , z₂) → X₁.❲❳⤙⤚-◆-pulloutᵣ v₁ w x y₁ z₁ , X₂.❲❳⤙⤚-◆-pulloutᵣ v₂ w x y₂ z₂
+        ; ❲❳⤙⤚-●ᶠ-inner-commuteʳ = λ (x₁ , x₂) (y₁ , y₂) → X₁.❲❳⤙⤚-●ᶠ-inner-commuteʳ x₁ y₁ , X₂.❲❳⤙⤚-●ᶠ-inner-commuteʳ x₂ y₂
+        ; ❲❳⤙⤚-◆ᶠ-pulloutˡ = λ v w x (y₁ , y₂) (z₁ , z₂) → X₁.❲❳⤙⤚-◆ᶠ-pulloutˡ v w x y₁ z₁ , X₂.❲❳⤙⤚-◆ᶠ-pulloutˡ v w x y₂ z₂
+        ; ❲❳⤙⤚-◆-pulloutʳ = λ (v₁ , v₂) w x (y₁ , y₂) (z₁ , z₂) → X₁.❲❳⤙⤚-◆-pulloutʳ v₁ w x y₁ z₁ , X₂.❲❳⤙⤚-◆-pulloutʳ v₂ w x y₂ z₂
         ; ❲❳⤙⤚-■ᶠ-collapse-dupʳ = λ (x₁ , x₂) → X₁.❲❳⤙⤚-■ᶠ-collapse-dupʳ x₁ , X₂.❲❳⤙⤚-■ᶠ-collapse-dupʳ x₂
         ; ❲❳⤙⤚-◆ᶠ-collapse-middleˡ = λ (x₁ , x₂) (z₁ , z₂) → X₁.❲❳⤙⤚-◆ᶠ-collapse-middleˡ x₁ z₁ , X₂.❲❳⤙⤚-◆ᶠ-collapse-middleˡ x₂ z₂
         ; ❲❳⤙⤚-◆-collapse-middleʳ = λ x (z₁ , z₂) → X₁.❲❳⤙⤚-◆-collapse-middleʳ x z₁ , X₂.❲❳⤙⤚-◆-collapse-middleʳ x z₂
         ; ❲❳⤙⤚-◆ᶠ-◆-outer-associate = λ w x (y₁ , y₂) (z₁ , z₂) → (X₁.❲❳⤙⤚-◆ᶠ-◆-outer-associate w x y₁ z₁) , X₂.❲❳⤙⤚-◆ᶠ-◆-outer-associate w x y₂ z₂
-        ; ⤙⤚❲❳-●ᶠ-inner-commuteₗ = λ (x₁ , x₂) (y₁ , y₂) → X₁.⤙⤚❲❳-●ᶠ-inner-commuteₗ x₁ y₁ , X₂.⤙⤚❲❳-●ᶠ-inner-commuteₗ x₂ y₂
-        ; ⤙⤚❲❳-◆-pulloutₗ = λ (v₁ , v₂) (w₁ , w₂) x y (z₁ , z₂) → X₁.⤙⤚❲❳-◆-pulloutₗ v₁ w₁ x y z₁ , X₂.⤙⤚❲❳-◆-pulloutₗ v₂ w₂ x y z₂
-        ; ⤙⤚❲❳-◆ᶠ-pulloutᵣ = λ (v₁ , v₂) (w₁ , w₂) x y z → X₁.⤙⤚❲❳-◆ᶠ-pulloutᵣ v₁ w₁ x y z , X₂.⤙⤚❲❳-◆ᶠ-pulloutᵣ v₂ w₂ x y z
+        ; ⤙⤚❲❳-●ᶠ-inner-commuteˡ = λ (x₁ , x₂) (y₁ , y₂) → X₁.⤙⤚❲❳-●ᶠ-inner-commuteˡ x₁ y₁ , X₂.⤙⤚❲❳-●ᶠ-inner-commuteˡ x₂ y₂
+        ; ⤙⤚❲❳-◆-pulloutˡ = λ (v₁ , v₂) (w₁ , w₂) x y (z₁ , z₂) → X₁.⤙⤚❲❳-◆-pulloutˡ v₁ w₁ x y z₁ , X₂.⤙⤚❲❳-◆-pulloutˡ v₂ w₂ x y z₂
+        ; ⤙⤚❲❳-◆ᶠ-pulloutʳ = λ (v₁ , v₂) (w₁ , w₂) x y z → X₁.⤙⤚❲❳-◆ᶠ-pulloutʳ v₁ w₁ x y z , X₂.⤙⤚❲❳-◆ᶠ-pulloutʳ v₂ w₂ x y z
         ; ⤙⤚❲❳-■ᶠ-collapse-dupˡ = λ (x₁ , x₂) → X₁.⤙⤚❲❳-■ᶠ-collapse-dupˡ x₁ , X₂.⤙⤚❲❳-■ᶠ-collapse-dupˡ x₂
         ; ⤙⤚❲❳-◆-collapse-middleˡ = λ x (z₁ , z₂) → X₁.⤙⤚❲❳-◆-collapse-middleˡ x z₁ , X₂.⤙⤚❲❳-◆-collapse-middleˡ x z₂
         ; ⤙⤚❲❳-◆ᶠ-collapse-middleʳ = λ (x₁ , x₂) (z₁ , z₂) → X₁.⤙⤚❲❳-◆ᶠ-collapse-middleʳ x₁ z₁ , X₂.⤙⤚❲❳-◆ᶠ-collapse-middleʳ x₂ z₂
