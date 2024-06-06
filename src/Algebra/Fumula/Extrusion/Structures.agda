@@ -94,19 +94,13 @@ module _ (F : ReversibleAlmostFumula f ℓf) (_≈_ : Rel {x} X ℓx)
     module F = ReversibleAlmostFumula F
 
   record IsAlmostFumulaExtrusion : Set (f ⊔ x ⊔ ℓf ⊔ ℓx) where
-    field
-      isDoubleAlmostFumulaExtrusion : IsDoubleAlmostFumulaExtrusion F.almostFumula F.almostFumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
-
-    open IsDoubleAlmostFumulaExtrusion isDoubleAlmostFumulaExtrusion public
-
-  record IsReversibleAlmostFumulaExtrusion : Set (f ⊔ x ⊔ ℓf ⊔ ℓx) where
     open SimultaneousBiDefs ❲_❳⤙_⤚_ _⤙_⤚❲_❳ _≈_
 
     field
-      isAlmostFumulaExtrusion : IsAlmostFumulaExtrusion
+      isDoubleAlmostFumulaExtrusion : IsDoubleAlmostFumulaExtrusion F.almostFumula F.almostFumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
       outer-commute : OuterCommutative
 
-    open IsAlmostFumulaExtrusion isAlmostFumulaExtrusion public
+    open IsDoubleAlmostFumulaExtrusion isDoubleAlmostFumulaExtrusion public
 
 module _ (F : Fumula f ℓf) (_≈_ : Rel {x} X ℓx)
          (❲_❳⤙_⤚_ : Op₃ₗ (Fumula.Carrier F) X) (◆ : X) where
@@ -178,6 +172,9 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel 
       ⤙⤚❲❳-◆-collapse-middleˡ : ∀ x z → (◆ ⤙ z ⤚❲ x ❳) ≈ z
       ⤙⤚❲❳-◆ᶠ-collapse-middleʳ : ∀ x z → (x ⤙ z ⤚❲ Fᵣ.◆ ❳) ≈ z
       ⤙⤚❲❳-◆ᶠ-◆-outer-associate : R.OuterAssociativeWith Fᵣ._⤙_⤚_ Fᵣ.◆ ◆
+      ■ᶠ-outer-commute : OuterCommutativeWithUnderlying Fₗ.■ Fᵣ.■
+      ◆ᶠ-outer-commute : OuterCommutativeWithUnderlying Fₗ.◆ Fᵣ.◆
+      ●ᶠ-outer-commute : OuterCommutativeWithUnderlying Fₗ.● Fᵣ.●
       ◆-outer-associate : OuterAssociativeWith ◆
 
     open IsDoubleAlmostFumulaExtrusion isDoubleAlmostFumulaExtrusion public
@@ -221,33 +218,21 @@ module _ (F : ReversibleFumula f ℓf) (_≈_ : Rel {x} X ℓx)
 
     field
       isDoubleFumulaExtrusion : IsDoubleFumulaExtrusion F.fumula F.fumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
-      ■ᶠ-outer-commute : OuterCommutativeWithUnderlying F.■
-      ◆ᶠ-outer-commute : OuterCommutativeWithUnderlying F.◆
-      ●ᶠ-outer-commute : OuterCommutativeWithUnderlying F.●
-      ◆-outer-commute : OuterCommutativeWith ◆
+      outer-commute : OuterCommutative
 
     open IsDoubleFumulaExtrusion isDoubleFumulaExtrusion public
 
     ●ᶠ-inner-commute : InnerCommutativeWith F.●
     ●ᶠ-inner-commute = ⤙⤚❲❳-●ᶠ-inner-commuteˡ , ❲❳⤙⤚-●ᶠ-inner-commuteʳ
 
+    ◆-outer-commute : OuterCommutativeWith ◆
+    ◆-outer-commute = outer-commute ◆
+
     ◆ᶠ-pullout : PulloutWith F._⤙_⤚_ F.◆
     ◆ᶠ-pullout = ❲❳⤙⤚-◆ᶠ-pulloutˡ , ⤙⤚❲❳-◆ᶠ-pulloutʳ
 
     isAlmostFumulaExtrusion : IsAlmostFumulaExtrusion F.reversibleAlmostFumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
-    isAlmostFumulaExtrusion = record { isDoubleAlmostFumulaExtrusion = isDoubleAlmostFumulaExtrusion }
-
-  record IsReversibleFumulaExtrusion : Set (f ⊔ x ⊔ ℓf ⊔ ℓx) where
-    open SimultaneousBiDefs ❲_❳⤙_⤚_ _⤙_⤚❲_❳ _≈_
-
-    field
-      isFumulaExtrusion : IsFumulaExtrusion
-      outer-commute : OuterCommutative
-
-    open IsFumulaExtrusion isFumulaExtrusion public
-
-    isReversibleAlmostFumulaExtrusion : IsReversibleAlmostFumulaExtrusion F.reversibleAlmostFumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
-    isReversibleAlmostFumulaExtrusion = record
-      { isAlmostFumulaExtrusion = isAlmostFumulaExtrusion
+    isAlmostFumulaExtrusion = record
+      { isDoubleAlmostFumulaExtrusion = isDoubleAlmostFumulaExtrusion
       ; outer-commute = outer-commute
       }

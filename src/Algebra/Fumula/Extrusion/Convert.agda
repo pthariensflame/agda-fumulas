@@ -12,11 +12,11 @@ open import Relation.Binary.Structures using (IsEquivalence)
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open import Algebra.Core
 open import Algebra.Bundles
+import Algebra.Properties.Group as GroupProperties
 import Algebra.Properties.Ring as RingProperties
 open import Algebra.Module.Core
 open import Algebra.Module.Structures
 open import Algebra.Module.Bundles
-import Algebra.Module.Properties as ModuleProperties
 open import Algebra.Module.Morphism.Structures
 import Algebra.Module.Morphism.ModuleHomomorphism as ModuleHomomorphismProperties
 open import Algebra.Fumula.Core using (Op₃)
@@ -258,6 +258,24 @@ module FromModule where
       ; ⤙⤚❲❳-◆-collapse-middleˡ = ⤙⤚❲❳-◆-collapse-middleˡ
       ; ⤙⤚❲❳-◆ᶠ-collapse-middleʳ = ⤙⤚❲❳-◆ᶠ-collapse-middleʳ
       ; ⤙⤚❲❳-◆ᶠ-◆-outer-associate = ⤙⤚❲❳-◆ᶠ-◆-outer-associate
+      ; ■ᶠ-outer-commute = λ x z → +ᴹ-congʳ (begin
+        x *ᵣ (Rᵣ.- Rᵣ.1#) ≈⟨ -ᴹ⇒-‿distribʳ-*ᵣ x Rᵣ.1# ⟨
+        - (x *ᵣ Rᵣ.1#) ≈⟨ -ᴹ‿cong (*ᵣ-identityʳ x) ⟩
+        - x ≈⟨ -ᴹ‿cong (*ₗ-identityˡ x) ⟨
+        - (Rₗ.1# *ₗ x) ≈⟨ -ᴹ⇒-‿distribˡ-*ₗ Rₗ.1# x ⟩
+        (Rₗ.- Rₗ.1#) *ₗ x ∎)
+      ; ◆ᶠ-outer-commute = λ x z → +ᴹ-congʳ (begin
+        x *ᵣ (Rᵣ.- Rᵣ.1# Rᵣ.* Rᵣ.- Rᵣ.1# Rᵣ.+ Rᵣ.- Rᵣ.1#) ≈⟨ *ᵣ-congˡ Rᵣ.0≈-1*-1+-1 ⟨
+        x *ᵣ Rᵣ.0# ≈⟨ *ᵣ-zeroʳ x ⟩
+        0# ≈⟨ *ₗ-zeroˡ x ⟨
+        Rₗ.0# *ₗ x ≈⟨ *ₗ-congʳ Rₗ.0≈-1*-1+-1 ⟩
+        (Rₗ.- Rₗ.1# Rₗ.* Rₗ.- Rₗ.1# Rₗ.+ Rₗ.- Rₗ.1#) *ₗ x ∎)
+      ; ●ᶠ-outer-commute = λ x z → +ᴹ-congʳ (begin
+        x *ᵣ (Rᵣ.- Rᵣ.1# Rᵣ.* Rᵣ.- Rᵣ.1# Rᵣ.+ (Rᵣ.- Rᵣ.1# Rᵣ.* Rᵣ.- Rᵣ.1# Rᵣ.+ Rᵣ.- Rᵣ.1#)) ≈⟨ *ᵣ-congˡ Rᵣ.1≈-1*-1+[-1*-1+-1] ⟨
+        x *ᵣ Rᵣ.1# ≈⟨ *ᵣ-identityʳ x ⟩
+        x ≈⟨ *ₗ-identityˡ x ⟨
+        Rₗ.1# *ₗ x ≈⟨ *ₗ-congʳ Rₗ.1≈-1*-1+[-1*-1+-1] ⟩
+        (Rₗ.- Rₗ.1# Rₗ.* Rₗ.- Rₗ.1# Rₗ.+ (Rₗ.- Rₗ.1# Rₗ.* Rₗ.- Rₗ.1# Rₗ.+ Rₗ.- Rₗ.1#)) *ₗ x ∎)
       ; ◆-outer-associate = λ w x y z → +ᴹ-congʳ (begin
         ((w *ₗ x) + 0#) *ᵣ y ≈⟨ *ᵣ-congʳ (+ᴹ-identityʳ (w *ₗ x)) ⟩
         (w *ₗ x) *ᵣ y ≈⟨ *ₗ-*ᵣ-assoc w x y ⟩
@@ -269,6 +287,29 @@ module FromModule where
         open IsLeftFumulaExtrusion (isLeftFumulaExtrusion Rₗ _≈_ _+_ 0# -_ _*ₗ_ isLeftModule) hiding (isEquivalence)
         open IsRightFumulaExtrusion (isRightFumulaExtrusion Rᵣ _≈_ _+_ 0# -_ _*ᵣ_ isRightModule) hiding (isEquivalence)
         open SetoidReasoning record { isEquivalence = ≈ᴹ-isEquivalence }
+        open IsEquivalence ≈ᴹ-isEquivalence using (sym)
+
+        -ᴹ⇒-‿distribˡ-*ₗ : ∀ x y → (- (x *ₗ y)) ≈ ((Rₗ.- x) *ₗ y)
+        -ᴹ⇒-‿distribˡ-*ₗ x y = sym (begin
+          (Rₗ.- x) *ₗ y ≈⟨ +ᴹ-identityʳ ((Rₗ.- x) *ₗ y) ⟨
+          ((Rₗ.- x) *ₗ y) + 0# ≈⟨ +ᴹ-congˡ (-ᴹ‿inverseʳ (x *ₗ y)) ⟨
+          ((Rₗ.- x) *ₗ y) + ((x *ₗ y) + (- (x *ₗ y))) ≈⟨ +ᴹ-assoc ((Rₗ.- x) *ₗ y) (x *ₗ y) (- (x *ₗ y)) ⟨
+          (((Rₗ.- x) *ₗ y) + (x *ₗ y)) + (- (x *ₗ y)) ≈⟨ +ᴹ-congʳ (*ₗ-distribʳ y (Rₗ.- x) x) ⟨
+          ((((Rₗ.- x) Rₗ.+ x) *ₗ y) + (- (x *ₗ y))) ≈⟨ +ᴹ-congʳ (*ₗ-congʳ (Rₗ.-‿inverseˡ x)) ⟩
+          ((Rₗ.0# *ₗ y) + (- (x *ₗ y))) ≈⟨ +ᴹ-congʳ (*ₗ-zeroˡ y) ⟩
+          (0# + (- (x *ₗ y))) ≈⟨ +ᴹ-identityˡ (- (x *ₗ y)) ⟩
+          - (x *ₗ y) ∎)
+
+        -ᴹ⇒-‿distribʳ-*ᵣ : ∀ x y → (- (x *ᵣ y)) ≈ (x *ᵣ (Rᵣ.- y))
+        -ᴹ⇒-‿distribʳ-*ᵣ x y = sym (begin
+          x *ᵣ (Rᵣ.- y) ≈⟨ +ᴹ-identityˡ (x *ᵣ (Rᵣ.- y)) ⟨
+          0# + (x *ᵣ (Rᵣ.- y)) ≈⟨ +ᴹ-congʳ (-ᴹ‿inverseˡ (x *ᵣ y)) ⟨
+          ((- (x *ᵣ y)) + (x *ᵣ y)) + (x *ᵣ (Rᵣ.- y)) ≈⟨ +ᴹ-assoc (- (x *ᵣ y)) (x *ᵣ y) (x *ᵣ (Rᵣ.- y)) ⟩
+          (- (x *ᵣ y)) + ((x *ᵣ y) + (x *ᵣ (Rᵣ.- y))) ≈⟨ +ᴹ-congˡ (*ᵣ-distribˡ x y (Rᵣ.- y)) ⟨
+          (- (x *ᵣ y)) + (x *ᵣ (y Rᵣ.+ Rᵣ.- y)) ≈⟨ +ᴹ-congˡ (*ᵣ-congˡ (Rᵣ.-‿inverseʳ y)) ⟩
+          (- (x *ᵣ y)) + (x *ᵣ Rᵣ.0#) ≈⟨ +ᴹ-congˡ (*ᵣ-zeroʳ x) ⟩
+          (- (x *ᵣ y)) + 0# ≈⟨ +ᴹ-identityʳ (- (x *ᵣ y)) ⟩
+          - (x *ᵣ y) ∎)
 
   module _ {rₗ rᵣ m rℓₗ rℓᵣ mℓ} (Rₗ : Ring rₗ rℓₗ) (Rᵣ : Ring rᵣ rℓᵣ) where
     private
@@ -304,15 +345,9 @@ module FromModule where
       ◆ : Carrier
       ◆ = 0#
 
-    isReversibleFumulaExtrusion : IsModule R _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_ → IsReversibleFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
-    isReversibleFumulaExtrusion M = record
-      { isFumulaExtrusion = record
-        { isDoubleFumulaExtrusion = iDFE
-        ; ■ᶠ-outer-commute = λ x _ → +ᴹ-congʳ (sym (*ₗ-*ᵣ-coincident F.■ x))
-        ; ◆ᶠ-outer-commute = λ x _ → +ᴹ-congʳ (sym (*ₗ-*ᵣ-coincident F.◆ x))
-        ; ●ᶠ-outer-commute = λ x _ → +ᴹ-congʳ (sym (*ₗ-*ᵣ-coincident F.● x))
-        ; ◆-outer-commute = λ x _ → +ᴹ-congʳ (*ₗ-*ᵣ-coincident x 0#)
-      }
+    isFumulaExtrusion : IsModule R _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_ → IsFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
+    isFumulaExtrusion M = record
+      { isDoubleFumulaExtrusion = iDFE
       ; outer-commute = λ y x _ → +ᴹ-congʳ (*ₗ-*ᵣ-coincident x y)
       }
       where
@@ -320,7 +355,6 @@ module FromModule where
         iDFE : IsDoubleFumulaExtrusion F.fumula F.fumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
         iDFE = isDoubleFumulaExtrusion R.ring R.ring _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_ isBimodule
         open IsDoubleFumulaExtrusion iDFE
-        open IsEquivalence isEquivalence using (sym)
 
 module FromFumulaExtrusion where
 
@@ -640,13 +674,13 @@ module FromFumulaExtrusion where
       _*ᵣ_ : Opᵣ R.Carrier Carrier
       x *ᵣ s = x ⤙ ◆ ⤚❲ s ❳
 
-    isModule : IsReversibleFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆ → IsModule R _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_
+    isModule : IsFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆ → IsModule R _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_
     isModule X = record
       { isBimodule = iB
       ; *ₗ-*ᵣ-coincident = λ x s → outer-commute s x ◆
       }
       where
-        open IsReversibleFumulaExtrusion X
+        open IsFumulaExtrusion X
         iB : IsBimodule R.ring R.ring _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_
         iB = isBimodule F.fumula F.fumula _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆ isDoubleFumulaExtrusion
         open IsBimodule iB
@@ -656,6 +690,6 @@ module FromFumulaExtrusion where
       R : CommutativeRing f fℓ
       R = FromFumula.commutativeRing F
 
-    ‵module : ReversibleFumulaExtrusion F x xℓ → Module R x xℓ
-    ‵module X = record { isModule = isModule F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆ isReversibleFumulaExtrusion }
-      where open ReversibleFumulaExtrusion X
+    ‵module : FumulaExtrusion F x xℓ → Module R x xℓ
+    ‵module X = record { isModule = isModule F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆ isFumulaExtrusion }
+      where open FumulaExtrusion X

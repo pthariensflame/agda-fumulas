@@ -94,24 +94,6 @@ module _ (F : ReversibleAlmostFumula f ℓf) where
     open DoubleAlmostFumulaExtrusion doubleAlmostFumulaExtrusion public
       using (❲❳⤙⤚-leftAlmostFumulaExtrusion; ⤙⤚❲❳-rightAlmostFumulaExtrusion; setoid)
 
-  record ReversibleAlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
-    infix 7 ❲_❳⤙_⤚_
-    infix 7 _⤙_⤚❲_❳
-    infix 4 _≈_
-    field
-      Carrier : Set x
-      _≈_ : Rel Carrier ℓx
-      ❲_❳⤙_⤚_ : Op₃ₗ F.Carrier Carrier
-      _⤙_⤚❲_❳ : Op₃ᵣ F.Carrier Carrier
-      isReversibleAlmostFumulaExtrusion : IsReversibleAlmostFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳
-    open IsReversibleAlmostFumulaExtrusion isReversibleAlmostFumulaExtrusion public
-
-    almostFumulaExtrusion : AlmostFumulaExtrusion x ℓx
-    almostFumulaExtrusion = record { isAlmostFumulaExtrusion = isAlmostFumulaExtrusion }
-    open AlmostFumulaExtrusion almostFumulaExtrusion public
-      using (❲❳⤙⤚-leftAlmostFumulaExtrusion; ⤙⤚❲❳-rightAlmostFumulaExtrusion;
-             doubleAlmostFumulaExtrusion)
-
 module _ (F : Fumula f ℓf) where
   private
     module F = Fumula F
@@ -205,23 +187,3 @@ module _ (F : ReversibleFumula f ℓf) where
 
     almostFumulaExtrusion : AlmostFumulaExtrusion F.reversibleAlmostFumula x ℓx
     almostFumulaExtrusion = record { isAlmostFumulaExtrusion = isAlmostFumulaExtrusion }
-
-  record ReversibleFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
-    infix 7 ❲_❳⤙_⤚_
-    infix 7 _⤙_⤚❲_❳
-    infix 4 _≈_
-    field
-      Carrier : Set x
-      _≈_ : Rel Carrier ℓx
-      ❲_❳⤙_⤚_ : Op₃ₗ F.Carrier Carrier
-      _⤙_⤚❲_❳ : Op₃ᵣ F.Carrier Carrier
-      ◆ : Carrier
-      isReversibleFumulaExtrusion : IsReversibleFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆
-    open IsReversibleFumulaExtrusion isReversibleFumulaExtrusion public
-
-    fumulaExtrusion : FumulaExtrusion x ℓx
-    fumulaExtrusion = record { isFumulaExtrusion = isFumulaExtrusion }
-    open FumulaExtrusion fumulaExtrusion public
-      using (❲❳⤙⤚-leftFumulaExtrusion; ⤙⤚❲❳-rightFumulaExtrusion;
-             ❲❳⤙⤚-leftAlmostFumulaExtrusion; ⤙⤚❲❳-rightAlmostFumulaExtrusion;
-             doubleFumulaExtrusion; doubleAlmostFumulaExtrusion; almostFumulaExtrusion)

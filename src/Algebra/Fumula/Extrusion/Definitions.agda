@@ -59,6 +59,9 @@ module BiDefs {aₗ aᵣ b ℓb} {Aₗ : Set aₗ} {Aᵣ : Set aᵣ} {B : Set b}
   MiddleNestedDoubleExchange : Set _
   MiddleNestedDoubleExchange = ∀ v w x y z → (❲ v ❳⤙ x ⤙ z ⤚❲ y ❳ ⤚ w) ≈ᵇ (x ⤙ ❲ v ❳⤙ z ⤚ w ⤚❲ y ❳)
 
+  OuterCommutativeWithUnderlying : Aₗ → Aᵣ → Set _
+  OuterCommutativeWithUnderlying eₗ eᵣ = ∀ x z → (x ⤙ z ⤚❲ eᵣ ❳) ≈ᵇ (❲ eₗ ❳⤙ z ⤚ x)
+
   OuterAssociativeWith : B → Set _
   OuterAssociativeWith e = ∀ w x y z → ((❲ w ❳⤙ e ⤚ x) ⤙ z ⤚❲ y ❳) ≈ᵇ (❲ w ❳⤙ z ⤚ (x ⤙ e ⤚❲ y ❳))
 
@@ -69,9 +72,10 @@ module SimultaneousBiDefs {a b ℓb} {A : Set a} {B : Set b} (❲_❳⤙_⤚_ : 
   private
     module L = LeftDefs ❲_❳⤙_⤚_ _≈ᵇ_
     module R = RightDefs _⤙_⤚❲_❳ _≈ᵇ_
+    module B = BiDefs ❲_❳⤙_⤚_ _⤙_⤚❲_❳ _≈ᵇ_
 
   OuterCommutativeWithUnderlying : A → Set _
-  OuterCommutativeWithUnderlying e = ∀ x z → (x ⤙ z ⤚❲ e ❳) ≈ᵇ (❲ e ❳⤙ z ⤚ x)
+  OuterCommutativeWithUnderlying e = B.OuterCommutativeWithUnderlying e e
 
   OuterCommutativeWith : B → Set _
   OuterCommutativeWith e = ∀ x z → (❲ x ❳⤙ z ⤚ e) ≈ᵇ (e ⤙ z ⤚❲ x ❳)
