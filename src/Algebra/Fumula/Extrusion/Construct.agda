@@ -459,3 +459,112 @@ module DirectProduct {x xℓ} where
       }
     open ReversibleFumulaExtrusion reversibleFumulaExtrusion public
       using (isReversibleFumulaExtrusion)
+
+module TensorUnit {f fℓ} where
+
+  module _ (F : AlmostFumula f fℓ) where
+    private
+      module F = AlmostFumula F
+
+    doubleAlmostFumulaExtrusion : DoubleAlmostFumulaExtrusion F F f fℓ
+    doubleAlmostFumulaExtrusion = record
+      { Carrier = F.Carrier
+      ; _≈_ = F._≈_
+      ; ❲_❳⤙_⤚_ = F._⤙_⤚_
+      ; _⤙_⤚❲_❳ = F._⤙_⤚_
+      ; isDoubleAlmostFumulaExtrusion = record
+        { isEquivalence = F.isEquivalence
+        ; ❲❳⤙⤚-cong = F.⤙⤚-cong
+        ; ❲❳⤙⤚-double-exchange = F.double-exchange
+        ; ⤙⤚❲❳-cong = F.⤙⤚-cong
+        ; ⤙⤚❲❳-double-exchange = F.double-exchange
+        }
+      }
+    open DoubleAlmostFumulaExtrusion doubleAlmostFumulaExtrusion public
+      using (isDoubleAlmostFumulaExtrusion)
+      renaming (❲❳⤙⤚-leftAlmostFumulaExtrusion to leftAlmostFumulaExtrusion;
+                ❲❳⤙⤚-isLeftAlmostFumulaExtrusion to isLeftAlmostFumulaExtrusion;
+                ⤙⤚❲❳-rightAlmostFumulaExtrusion to rightAlmostFumulaExtrusion;
+                ⤙⤚❲❳-isRightAlmostFumulaExtrusion to isRightAlmostFumulaExtrusion)
+
+  module _ (F : ReversibleAlmostFumula f fℓ) where
+    private
+      module F = ReversibleAlmostFumula F
+
+    reversibleAlmostFumulaExtrusion : ReversibleAlmostFumulaExtrusion F f fℓ
+    reversibleAlmostFumulaExtrusion = record
+      { Carrier = F.Carrier
+      ; _≈_ = F._≈_
+      ; ❲_❳⤙_⤚_ = F._⤙_⤚_
+      ; _⤙_⤚❲_❳ = F._⤙_⤚_
+      ; isReversibleAlmostFumulaExtrusion = record
+        { isAlmostFumulaExtrusion = record
+          { isDoubleAlmostFumulaExtrusion = isDoubleAlmostFumulaExtrusion F.almostFumula
+          }
+        ; outer-commute = F.outer-commute
+        }
+      }
+    open ReversibleAlmostFumulaExtrusion reversibleAlmostFumulaExtrusion public
+      using (almostFumulaExtrusion; isAlmostFumulaExtrusion; isReversibleAlmostFumulaExtrusion)
+
+  module _ (F : Fumula f fℓ) where
+    private
+      module F = Fumula F
+
+    doubleFumulaExtrusion : DoubleFumulaExtrusion F F f fℓ
+    doubleFumulaExtrusion = record
+      { Carrier = F.Carrier
+      ; _≈_ = F._≈_
+      ; ❲_❳⤙_⤚_ = F._⤙_⤚_
+      ; _⤙_⤚❲_❳ = F._⤙_⤚_
+      ; ◆ = F.◆
+      ; isDoubleFumulaExtrusion = record
+        { isDoubleAlmostFumulaExtrusion = isDoubleAlmostFumulaExtrusion F.almostFumula
+        ; ❲❳⤙⤚-●ᶠ-inner-commuteʳ = F.●-inner-commuteʳ
+        ; ❲❳⤙⤚-◆ᶠ-pulloutˡ = F.◆-pulloutˡ
+        ; ❲❳⤙⤚-◆-pulloutʳ = F.◆-pulloutʳ
+        ; ❲❳⤙⤚-■ᶠ-collapse-dupʳ = F.■-collapse-dupˡ
+        ; ❲❳⤙⤚-◆ᶠ-collapse-middleˡ = F.◆-collapse-middleˡ
+        ; ❲❳⤙⤚-◆-collapse-middleʳ = F.◆-collapse-middleʳ
+        ; ❲❳⤙⤚-◆ᶠ-◆-outer-associate = F.◆-outer-associate
+        ; ⤙⤚❲❳-●ᶠ-inner-commuteˡ = F.●-inner-commuteˡ
+        ; ⤙⤚❲❳-◆-pulloutˡ = F.◆-pulloutˡ
+        ; ⤙⤚❲❳-◆ᶠ-pulloutʳ = F.◆-pulloutʳ
+        ; ⤙⤚❲❳-■ᶠ-collapse-dupˡ = F.■-collapse-dupʳ
+        ; ⤙⤚❲❳-◆-collapse-middleˡ = F.◆-collapse-middleˡ
+        ; ⤙⤚❲❳-◆ᶠ-collapse-middleʳ = F.◆-collapse-middleʳ
+        ; ⤙⤚❲❳-◆ᶠ-◆-outer-associate = F.◆-outer-associate
+        ; ◆-outer-associate = F.◆-outer-associate
+        }
+      }
+    open DoubleFumulaExtrusion doubleFumulaExtrusion public
+      using (isDoubleFumulaExtrusion)
+      renaming (❲❳⤙⤚-leftFumulaExtrusion to leftFumulaExtrusion;
+                ❲❳⤙⤚-isLeftFumulaExtrusion to isLeftFumulaExtrusion;
+                ⤙⤚❲❳-rightFumulaExtrusion to rightFumulaExtrusion;
+                ⤙⤚❲❳-isRightFumulaExtrusion to isRightFumulaExtrusion)
+
+  module _ (F : ReversibleFumula f fℓ) where
+    private
+      module F = ReversibleFumula F
+
+    reversibleFumulaExtrusion : ReversibleFumulaExtrusion F f fℓ
+    reversibleFumulaExtrusion = record
+      { Carrier = F.Carrier
+      ; _≈_ = F._≈_
+      ; ❲_❳⤙_⤚_ = F._⤙_⤚_
+      ; _⤙_⤚❲_❳ = F._⤙_⤚_
+      ; ◆ = F.◆
+      ; isReversibleFumulaExtrusion = record
+        { isFumulaExtrusion = record
+          { isDoubleFumulaExtrusion = isDoubleFumulaExtrusion F.fumula
+          ; ■ᶠ-outer-commute = F.■-outer-commute
+          ; ◆ᶠ-outer-commute = F.◆-outer-commute
+          ; ●ᶠ-outer-commute = F.●-outer-commute
+          ; ◆-outer-commute = F.◆-outer-commute
+          }
+        ; outer-commute = F.outer-commute
+        }
+      }
+    open ReversibleFumulaExtrusion reversibleFumulaExtrusion public
+      using (fumulaExtrusion; isFumulaExtrusion; isReversibleFumulaExtrusion)
