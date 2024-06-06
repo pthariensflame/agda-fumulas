@@ -1,4 +1,5 @@
 module Algebra.Fumula.Extrusion.Construct where
+open import Level using (_⊔_)
 open import Data.Empty.Polymorphic
 open import Data.Unit.Polymorphic
 open import Data.Product using (_×_; _,_)
@@ -223,14 +224,14 @@ module Initial {x xℓ} where
     hiding (module 𝕆ne; isEquivalence; leftAlmostFumulaExtrusion; rightAlmostFumulaExtrusion;
             doubleAlmostFumulaExtrusion; almostFumulaExtrusion; reversibleAlmostFumulaExtrusion)
 
-module DirectProduct {x xℓ} where
+module DirectProduct {x₁ xℓ₁ x₂ xℓ₂} where
 
-  module _ {f fℓ} (F : AlmostFumula f fℓ) (X₁ X₂ : LeftAlmostFumulaExtrusion F x xℓ) where
+  module _ {f fℓ} (F : AlmostFumula f fℓ) (X₁ : LeftAlmostFumulaExtrusion F x₁ xℓ₁) (X₂ : LeftAlmostFumulaExtrusion F x₂ xℓ₂) where
     private
       module X₁ = LeftAlmostFumulaExtrusion X₁
       module X₂ = LeftAlmostFumulaExtrusion X₂
 
-    leftAlmostFumulaExtrusion : LeftAlmostFumulaExtrusion F x xℓ
+    leftAlmostFumulaExtrusion : LeftAlmostFumulaExtrusion F (x₁ ⊔ x₂) (xℓ₁ ⊔ xℓ₂)
     leftAlmostFumulaExtrusion = record
       { Carrier = X₁.Carrier × X₂.Carrier
       ; _≈_ = Pointwise X₁._≈_ X₂._≈_
@@ -245,12 +246,12 @@ module DirectProduct {x xℓ} where
     open LeftAlmostFumulaExtrusion leftAlmostFumulaExtrusion public
       using (isLeftAlmostFumulaExtrusion)
 
-  module _ {f fℓ} (F : AlmostFumula f fℓ) (X₁ X₂ : RightAlmostFumulaExtrusion F x xℓ) where
+  module _ {f fℓ} (F : AlmostFumula f fℓ) (X₁ : RightAlmostFumulaExtrusion F x₁ xℓ₁) (X₂ : RightAlmostFumulaExtrusion F x₂ xℓ₂) where
     private
       module X₁ = RightAlmostFumulaExtrusion X₁
       module X₂ = RightAlmostFumulaExtrusion X₂
 
-    rightAlmostFumulaExtrusion : RightAlmostFumulaExtrusion F x xℓ
+    rightAlmostFumulaExtrusion : RightAlmostFumulaExtrusion F (x₁ ⊔ x₂) (xℓ₁ ⊔ xℓ₂)
     rightAlmostFumulaExtrusion = record
       { Carrier = X₁.Carrier × X₂.Carrier
       ; _≈_ = Pointwise X₁._≈_ X₂._≈_
@@ -265,12 +266,12 @@ module DirectProduct {x xℓ} where
     open RightAlmostFumulaExtrusion rightAlmostFumulaExtrusion public
       using (isRightAlmostFumulaExtrusion)
 
-  module _ {fₗ fᵣ fℓₗ fℓᵣ} (Fₗ : AlmostFumula fₗ fℓₗ) (Fᵣ : AlmostFumula fᵣ fℓᵣ) (X₁ X₂ : DoubleAlmostFumulaExtrusion Fₗ Fᵣ x xℓ) where
+  module _ {fₗ fᵣ fℓₗ fℓᵣ} (Fₗ : AlmostFumula fₗ fℓₗ) (Fᵣ : AlmostFumula fᵣ fℓᵣ) (X₁ : DoubleAlmostFumulaExtrusion Fₗ Fᵣ x₁ xℓ₁) (X₂ : DoubleAlmostFumulaExtrusion Fₗ Fᵣ x₂ xℓ₂) where
     private
       module X₁ = DoubleAlmostFumulaExtrusion X₁
       module X₂ = DoubleAlmostFumulaExtrusion X₂
 
-    doubleAlmostFumulaExtrusion : DoubleAlmostFumulaExtrusion Fₗ Fᵣ x xℓ
+    doubleAlmostFumulaExtrusion : DoubleAlmostFumulaExtrusion Fₗ Fᵣ (x₁ ⊔ x₂) (xℓ₁ ⊔ xℓ₂)
     doubleAlmostFumulaExtrusion = record
       { Carrier = X₁.Carrier × X₂.Carrier
       ; _≈_ = Pointwise X₁._≈_ X₂._≈_
@@ -289,12 +290,12 @@ module DirectProduct {x xℓ} where
     open DoubleAlmostFumulaExtrusion doubleAlmostFumulaExtrusion public
       using (isDoubleAlmostFumulaExtrusion)
 
-  module _ {f fℓ} (F : ReversibleAlmostFumula f fℓ) (X₁ X₂ : AlmostFumulaExtrusion F x xℓ) where
+  module _ {f fℓ} (F : ReversibleAlmostFumula f fℓ) (X₁ : AlmostFumulaExtrusion F x₁ xℓ₁) (X₂ : AlmostFumulaExtrusion F x₂ xℓ₂) where
     private
       module X₁ = AlmostFumulaExtrusion X₁
       module X₂ = AlmostFumulaExtrusion X₂
 
-    almostFumulaExtrusion : AlmostFumulaExtrusion F x xℓ
+    almostFumulaExtrusion : AlmostFumulaExtrusion F (x₁ ⊔ x₂) (xℓ₁ ⊔ xℓ₂)
     almostFumulaExtrusion = record
       { Carrier = X₁.Carrier × X₂.Carrier
       ; _≈_ = Pointwise X₁._≈_ X₂._≈_
@@ -309,12 +310,12 @@ module DirectProduct {x xℓ} where
     open AlmostFumulaExtrusion almostFumulaExtrusion public
       using (isAlmostFumulaExtrusion)
 
-  module _ {f fℓ} (F : ReversibleAlmostFumula f fℓ) (X₁ X₂ : ReversibleAlmostFumulaExtrusion F x xℓ) where
+  module _ {f fℓ} (F : ReversibleAlmostFumula f fℓ) (X₁ : ReversibleAlmostFumulaExtrusion F x₁ xℓ₁) (X₂ : ReversibleAlmostFumulaExtrusion F x₂ xℓ₂) where
     private
       module X₁ = ReversibleAlmostFumulaExtrusion X₁
       module X₂ = ReversibleAlmostFumulaExtrusion X₂
 
-    reversibleAlmostFumulaExtrusion : ReversibleAlmostFumulaExtrusion F x xℓ
+    reversibleAlmostFumulaExtrusion : ReversibleAlmostFumulaExtrusion F (x₁ ⊔ x₂) (xℓ₁ ⊔ xℓ₂)
     reversibleAlmostFumulaExtrusion = record
       { Carrier = X₁.Carrier × X₂.Carrier
       ; _≈_ = Pointwise X₁._≈_ X₂._≈_
@@ -328,12 +329,12 @@ module DirectProduct {x xℓ} where
     open ReversibleAlmostFumulaExtrusion reversibleAlmostFumulaExtrusion public
       using (isReversibleAlmostFumulaExtrusion)
 
-  module _ {f fℓ} (F : Fumula f fℓ) (X₁ X₂ : LeftFumulaExtrusion F x xℓ) where
+  module _ {f fℓ} (F : Fumula f fℓ) (X₁ : LeftFumulaExtrusion F x₁ xℓ₁) (X₂ : LeftFumulaExtrusion F x₂ xℓ₂) where
     private
       module X₁ = LeftFumulaExtrusion X₁
       module X₂ = LeftFumulaExtrusion X₂
 
-    leftFumulaExtrusion : LeftFumulaExtrusion F x xℓ
+    leftFumulaExtrusion : LeftFumulaExtrusion F (x₁ ⊔ x₂) (xℓ₁ ⊔ xℓ₂)
     leftFumulaExtrusion = record
       { Carrier = X₁.Carrier × X₂.Carrier
       ; _≈_ = Pointwise X₁._≈_ X₂._≈_
@@ -354,12 +355,12 @@ module DirectProduct {x xℓ} where
     open LeftFumulaExtrusion leftFumulaExtrusion public
       using (isLeftFumulaExtrusion)
 
-  module _ {f fℓ} (F : Fumula f fℓ) (X₁ X₂ : RightFumulaExtrusion F x xℓ) where
+  module _ {f fℓ} (F : Fumula f fℓ) (X₁ : RightFumulaExtrusion F x₁ xℓ₁) (X₂ : RightFumulaExtrusion F x₂ xℓ₂) where
     private
       module X₁ = RightFumulaExtrusion X₁
       module X₂ = RightFumulaExtrusion X₂
 
-    rightFumulaExtrusion : RightFumulaExtrusion F x xℓ
+    rightFumulaExtrusion : RightFumulaExtrusion F (x₁ ⊔ x₂) (xℓ₁ ⊔ xℓ₂)
     rightFumulaExtrusion = record
       { Carrier = X₁.Carrier × X₂.Carrier
       ; _≈_ = Pointwise X₁._≈_ X₂._≈_
@@ -380,12 +381,12 @@ module DirectProduct {x xℓ} where
     open RightFumulaExtrusion rightFumulaExtrusion public
       using (isRightFumulaExtrusion)
 
-  module _ {fₗ fᵣ fℓₗ fℓᵣ} (Fₗ : Fumula fₗ fℓₗ) (Fᵣ : Fumula fᵣ fℓᵣ) (X₁ X₂ : DoubleFumulaExtrusion Fₗ Fᵣ x xℓ) where
+  module _ {fₗ fᵣ fℓₗ fℓᵣ} (Fₗ : Fumula fₗ fℓₗ) (Fᵣ : Fumula fᵣ fℓᵣ) (X₁ : DoubleFumulaExtrusion Fₗ Fᵣ x₁ xℓ₁) (X₂ : DoubleFumulaExtrusion Fₗ Fᵣ x₂ xℓ₂) where
     private
       module X₁ = DoubleFumulaExtrusion X₁
       module X₂ = DoubleFumulaExtrusion X₂
 
-    doubleFumulaExtrusion : DoubleFumulaExtrusion Fₗ Fᵣ x xℓ
+    doubleFumulaExtrusion : DoubleFumulaExtrusion Fₗ Fᵣ (x₁ ⊔ x₂) (xℓ₁ ⊔ xℓ₂)
     doubleFumulaExtrusion = record
       { Carrier = X₁.Carrier × X₂.Carrier
       ; _≈_ = Pointwise X₁._≈_ X₂._≈_
@@ -415,12 +416,12 @@ module DirectProduct {x xℓ} where
     open DoubleFumulaExtrusion doubleFumulaExtrusion public
       using (isDoubleFumulaExtrusion)
 
-  module _ {f fℓ} (F : ReversibleFumula f fℓ) (X₁ X₂ : FumulaExtrusion F x xℓ) where
+  module _ {f fℓ} (F : ReversibleFumula f fℓ) (X₁ : FumulaExtrusion F x₁ xℓ₁) (X₂ : FumulaExtrusion F x₂ xℓ₂) where
     private
       module X₁ = FumulaExtrusion X₁
       module X₂ = FumulaExtrusion X₂
 
-    fumulaExtrusion : FumulaExtrusion F x xℓ
+    fumulaExtrusion : FumulaExtrusion F (x₁ ⊔ x₂) (xℓ₁ ⊔ xℓ₂)
     fumulaExtrusion = record
       { Carrier = X₁.Carrier × X₂.Carrier
       ; _≈_ = Pointwise X₁._≈_ X₂._≈_
@@ -440,12 +441,12 @@ module DirectProduct {x xℓ} where
     open FumulaExtrusion fumulaExtrusion public
       using (isFumulaExtrusion)
 
-  module _ {f fℓ} (F : ReversibleFumula f fℓ) (X₁ X₂ : ReversibleFumulaExtrusion F x xℓ) where
+  module _ {f fℓ} (F : ReversibleFumula f fℓ) (X₁ : ReversibleFumulaExtrusion F x₁ xℓ₁) (X₂ : ReversibleFumulaExtrusion F x₂ xℓ₂) where
     private
       module X₁ = ReversibleFumulaExtrusion X₁
       module X₂ = ReversibleFumulaExtrusion X₂
 
-    reversibleFumulaExtrusion : ReversibleFumulaExtrusion F x xℓ
+    reversibleFumulaExtrusion : ReversibleFumulaExtrusion F (x₁ ⊔ x₂) (xℓ₁ ⊔ xℓ₂)
     reversibleFumulaExtrusion = record
       { Carrier = X₁.Carrier × X₂.Carrier
       ; _≈_ = Pointwise X₁._≈_ X₂._≈_
