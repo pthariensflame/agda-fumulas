@@ -184,6 +184,7 @@ module Initial {x xℓ} where
         ; ❲❳⤙⤚-double-exchange = λ _ ()
         ; ⤙⤚❲❳-cong = ⤙⤚❲❳-cong (AlmostFumula._≈_ Fᵣ)
         ; ⤙⤚❲❳-double-exchange = λ ()
+        ; ❲❳⤙⤚-⤙⤚❲❳-double-exchange = λ _ ()
         }
       }
     open DoubleAlmostFumulaExtrusion doubleAlmostFumulaExtrusion public
@@ -285,6 +286,8 @@ module DirectProduct {x₁ xℓ₁ x₂ xℓ₂} where
         ; ⤙⤚❲❳-cong = λ (x₁≈ , x₂≈) (z₁≈ , z₂≈) s≈ → X₁.⤙⤚❲❳-cong x₁≈ z₁≈ s≈ , X₂.⤙⤚❲❳-cong x₂≈ z₂≈ s≈
         ; ⤙⤚❲❳-double-exchange = λ (v₁ , v₂) w (x₁ , x₂) y (z₁ , z₂) →
           X₁.⤙⤚❲❳-double-exchange v₁ w x₁ y z₁ , X₂.⤙⤚❲❳-double-exchange v₂ w x₂ y z₂
+        ; ❲❳⤙⤚-⤙⤚❲❳-double-exchange = λ v (w₁ , w₂) (x₁ , x₂) y (z₁ , z₂) →
+          X₁.❲❳⤙⤚-⤙⤚❲❳-double-exchange v w₁ x₁ y z₁ , X₂.❲❳⤙⤚-⤙⤚❲❳-double-exchange v w₂ x₂ y z₂
         }
       }
     open DoubleAlmostFumulaExtrusion doubleAlmostFumulaExtrusion public
@@ -479,6 +482,7 @@ module TensorUnit {f fℓ} where
         ; ❲❳⤙⤚-double-exchange = F.double-exchange
         ; ⤙⤚❲❳-cong = F.⤙⤚-cong
         ; ⤙⤚❲❳-double-exchange = F.double-exchange
+        ; ❲❳⤙⤚-⤙⤚❲❳-double-exchange = F.double-exchange
         }
       }
     open DoubleAlmostFumulaExtrusion doubleAlmostFumulaExtrusion public

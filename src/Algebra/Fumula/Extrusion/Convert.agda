@@ -238,6 +238,11 @@ module FromModule where
         ; ❲❳⤙⤚-double-exchange = ❲❳⤙⤚-double-exchange
         ; ⤙⤚❲❳-cong = ⤙⤚❲❳-cong
         ; ⤙⤚❲❳-double-exchange = ⤙⤚❲❳-double-exchange
+        ; ❲❳⤙⤚-⤙⤚❲❳-double-exchange = λ v w x y z → begin
+          (v *ₗ w) + ((x *ᵣ y) + z) ≈⟨ +ᴹ-assoc (v *ₗ w) (x *ᵣ y) z ⟨
+          ((v *ₗ w) + (x *ᵣ y)) + z ≈⟨ +ᴹ-congʳ (+ᴹ-comm (v *ₗ w) (x *ᵣ y)) ⟩
+          ((x *ᵣ y) + (v *ₗ w)) + z ≈⟨ +ᴹ-assoc (x *ᵣ y) (v *ₗ w) z ⟩
+          (x *ᵣ y) + ((v *ₗ w) + z) ∎
         }
       ; ❲❳⤙⤚-●ᶠ-inner-commuteʳ = ❲❳⤙⤚-●ᶠ-inner-commuteʳ
       ; ❲❳⤙⤚-◆ᶠ-pulloutˡ = ❲❳⤙⤚-◆ᶠ-pulloutˡ

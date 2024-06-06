@@ -57,7 +57,7 @@ module BiDefs {aₗ aᵣ b ℓb} {Aₗ : Set aₗ} {Aᵣ : Set aᵣ} {B : Set b}
     module R = RightDefs _⤙_⤚❲_❳ _≈ᵇ_
 
   MiddleNestedDoubleExchange : Set _
-  MiddleNestedDoubleExchange = L.MiddleNestedDoubleExchange × R.MiddleNestedDoubleExchange
+  MiddleNestedDoubleExchange = ∀ v w x y z → (❲ v ❳⤙ x ⤙ z ⤚❲ y ❳ ⤚ w) ≈ᵇ (x ⤙ ❲ v ❳⤙ z ⤚ w ⤚❲ y ❳)
 
   OuterAssociativeWith : B → Set _
   OuterAssociativeWith e = ∀ w x y z → ((❲ w ❳⤙ e ⤚ x) ⤙ z ⤚❲ y ❳) ≈ᵇ (❲ w ❳⤙ z ⤚ (x ⤙ e ⤚❲ y ❳))

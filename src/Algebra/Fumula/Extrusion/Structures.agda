@@ -70,6 +70,7 @@ module _ (Fₗ : AlmostFumula fₗ ℓfₗ) (Fᵣ : AlmostFumula fᵣ ℓfᵣ) (
       ❲❳⤙⤚-double-exchange : L.MiddleNestedDoubleExchange
       ⤙⤚❲❳-cong : R.Congruent₃ Fᵣ._≈_
       ⤙⤚❲❳-double-exchange : R.MiddleNestedDoubleExchange
+      ❲❳⤙⤚-⤙⤚❲❳-double-exchange : MiddleNestedDoubleExchange -- ought to be provable from other axioms, but whatever
 
     ❲❳⤙⤚-isLeftAlmostFumulaExtrusion : IsLeftAlmostFumulaExtrusion Fₗ _≈_ ❲_❳⤙_⤚_
     ❲❳⤙⤚-isLeftAlmostFumulaExtrusion = record
@@ -84,9 +85,6 @@ module _ (Fₗ : AlmostFumula fₗ ℓfₗ) (Fᵣ : AlmostFumula fᵣ ℓfᵣ) (
       ; ⤙⤚❲❳-cong = ⤙⤚❲❳-cong
       ; ⤙⤚❲❳-double-exchange = ⤙⤚❲❳-double-exchange
       }
-
-    double-exchange : MiddleNestedDoubleExchange
-    double-exchange = ❲❳⤙⤚-double-exchange , ⤙⤚❲❳-double-exchange
 
 module _ (F : ReversibleAlmostFumula f ℓf) (_≈_ : Rel {x} X ℓx)
          (❲_❳⤙_⤚_ : Op₃ₗ (ReversibleAlmostFumula.Carrier F) X)
