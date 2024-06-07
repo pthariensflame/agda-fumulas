@@ -51,7 +51,7 @@ module FromModule where
 
     isLeftFumulaExtrusion : IsLeftModule R _≈_ _+_ 0# -_ _*ₗ_ → IsLeftFumulaExtrusion F _≈_ ❲_❳⤙_⤚_ ◆
     isLeftFumulaExtrusion M = record
-      { ❲❳⤙⤚-isLeftAlmostFumulaExtrusion = record
+      { isLeftAlmostFumulaExtrusion = record
         { isEquivalence = ≈ᴹ-isEquivalence
         ; ❲❳⤙⤚-cong = λ s≈ z≈ x≈ → +ᴹ-cong (*ₗ-cong s≈ x≈) z≈
         ; ❲❳⤙⤚-double-exchange = λ v w x y z → begin
@@ -135,7 +135,7 @@ module FromModule where
 
     isRightFumulaExtrusion : IsRightModule R _≈_ _+_ 0# -_ _*ᵣ_ → IsRightFumulaExtrusion F _≈_ _⤙_⤚❲_❳ ◆
     isRightFumulaExtrusion M = record
-      { ⤙⤚❲❳-isRightAlmostFumulaExtrusion = record
+      { isRightAlmostFumulaExtrusion = record
         { isEquivalence = ≈ᴹ-isEquivalence
         ; ⤙⤚❲❳-cong = λ x≈ z≈ s≈ → +ᴹ-cong (*ᵣ-cong x≈ s≈) z≈
         ; ⤙⤚❲❳-double-exchange = λ v w x y z → begin

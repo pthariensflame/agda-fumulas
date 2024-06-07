@@ -303,8 +303,8 @@ module DirectProduct {x₁ xℓ₁ x₂ xℓ₂} where
       ; ❲_❳⤙_⤚_ = λ s (z₁ , z₂) (x₁ , x₂) → (X₁.❲ s ❳⤙ z₁ ⤚ x₁) , (X₂.❲ s ❳⤙ z₂ ⤚ x₂)
       ; ◆ = X₁.◆ , X₂.◆
       ; isLeftFumulaExtrusion = record
-        { ❲❳⤙⤚-isLeftAlmostFumulaExtrusion =
-          isLeftAlmostFumulaExtrusion (Fumula.almostFumula F) X₁.❲❳⤙⤚-leftAlmostFumulaExtrusion X₂.❲❳⤙⤚-leftAlmostFumulaExtrusion
+        { isLeftAlmostFumulaExtrusion =
+          isLeftAlmostFumulaExtrusion (Fumula.almostFumula F) X₁.leftAlmostFumulaExtrusion X₂.leftAlmostFumulaExtrusion
         ; ❲❳⤙⤚-●ᶠ-inner-commuteʳ = λ (x₁ , x₂) (y₁ , y₂) → X₁.❲❳⤙⤚-●ᶠ-inner-commuteʳ x₁ y₁ , X₂.❲❳⤙⤚-●ᶠ-inner-commuteʳ x₂ y₂
         ; ❲❳⤙⤚-◆ᶠ-pulloutˡ = λ v w x (y₁ , y₂) (z₁ , z₂) → X₁.❲❳⤙⤚-◆ᶠ-pulloutˡ v w x y₁ z₁ , X₂.❲❳⤙⤚-◆ᶠ-pulloutˡ v w x y₂ z₂
         ; ❲❳⤙⤚-◆-pulloutʳ = λ (v₁ , v₂) w x (y₁ , y₂) (z₁ , z₂) → X₁.❲❳⤙⤚-◆-pulloutʳ v₁ w x y₁ z₁ , X₂.❲❳⤙⤚-◆-pulloutʳ v₂ w x y₂ z₂
@@ -329,8 +329,8 @@ module DirectProduct {x₁ xℓ₁ x₂ xℓ₂} where
       ; _⤙_⤚❲_❳ = λ (x₁ , x₂) (z₁ , z₂) s → (x₁ X₁.⤙ z₁ ⤚❲ s ❳) , (x₂ X₂.⤙ z₂ ⤚❲ s ❳)
       ; ◆ = X₁.◆ , X₂.◆
       ; isRightFumulaExtrusion = record
-        { ⤙⤚❲❳-isRightAlmostFumulaExtrusion =
-          isRightAlmostFumulaExtrusion (Fumula.almostFumula F) X₁.⤙⤚❲❳-rightAlmostFumulaExtrusion X₂.⤙⤚❲❳-rightAlmostFumulaExtrusion
+        { isRightAlmostFumulaExtrusion =
+          isRightAlmostFumulaExtrusion (Fumula.almostFumula F) X₁.rightAlmostFumulaExtrusion X₂.rightAlmostFumulaExtrusion
         ; ⤙⤚❲❳-●ᶠ-inner-commuteˡ = λ (x₁ , x₂) (y₁ , y₂) → X₁.⤙⤚❲❳-●ᶠ-inner-commuteˡ x₁ y₁ , X₂.⤙⤚❲❳-●ᶠ-inner-commuteˡ x₂ y₂
         ; ⤙⤚❲❳-◆-pulloutˡ = λ (v₁ , v₂) (w₁ , w₂) x y (z₁ , z₂) → X₁.⤙⤚❲❳-◆-pulloutˡ v₁ w₁ x y z₁ , X₂.⤙⤚❲❳-◆-pulloutˡ v₂ w₂ x y z₂
         ; ⤙⤚❲❳-◆ᶠ-pulloutʳ = λ (v₁ , v₂) (w₁ , w₂) x y z → X₁.⤙⤚❲❳-◆ᶠ-pulloutʳ v₁ w₁ x y z , X₂.⤙⤚❲❳-◆ᶠ-pulloutʳ v₂ w₂ x y z

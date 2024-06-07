@@ -111,7 +111,7 @@ module _ (F : Fumula f ℓf) (_≈_ : Rel {x} X ℓx)
     open LeftDefs ❲_❳⤙_⤚_ _≈_
 
     field
-      ❲❳⤙⤚-isLeftAlmostFumulaExtrusion : IsLeftAlmostFumulaExtrusion F.almostFumula _≈_ ❲_❳⤙_⤚_
+      isLeftAlmostFumulaExtrusion : IsLeftAlmostFumulaExtrusion F.almostFumula _≈_ ❲_❳⤙_⤚_
       ❲❳⤙⤚-●ᶠ-inner-commuteʳ : RightInnerCommutativeWith F.●
       ❲❳⤙⤚-◆ᶠ-pulloutˡ : LeftPulloutWith F._⤙_⤚_ F.◆
       ❲❳⤙⤚-◆-pulloutʳ : RightPulloutWith ◆
@@ -120,7 +120,7 @@ module _ (F : Fumula f ℓf) (_≈_ : Rel {x} X ℓx)
       ❲❳⤙⤚-◆-collapse-middleʳ : ∀ x z → (❲ x ❳⤙ z ⤚ ◆) ≈ z
       ❲❳⤙⤚-◆ᶠ-◆-outer-associate : OuterAssociativeWith F._⤙_⤚_ F.◆ ◆
 
-    open IsLeftAlmostFumulaExtrusion ❲❳⤙⤚-isLeftAlmostFumulaExtrusion public
+    open IsLeftAlmostFumulaExtrusion isLeftAlmostFumulaExtrusion public
 
 module _ (F : Fumula f ℓf) (_≈_ : Rel {x} X ℓx)
          (_⤙_⤚❲_❳ : Op₃ᵣ (Fumula.Carrier F) X) (◆ : X) where
@@ -131,7 +131,7 @@ module _ (F : Fumula f ℓf) (_≈_ : Rel {x} X ℓx)
     open RightDefs _⤙_⤚❲_❳ _≈_
 
     field
-      ⤙⤚❲❳-isRightAlmostFumulaExtrusion : IsRightAlmostFumulaExtrusion F.almostFumula _≈_ _⤙_⤚❲_❳
+      isRightAlmostFumulaExtrusion : IsRightAlmostFumulaExtrusion F.almostFumula _≈_ _⤙_⤚❲_❳
       ⤙⤚❲❳-●ᶠ-inner-commuteˡ : LeftInnerCommutativeWith F.●
       ⤙⤚❲❳-◆-pulloutˡ : LeftPulloutWith ◆
       ⤙⤚❲❳-◆ᶠ-pulloutʳ : RightPulloutWith F._⤙_⤚_ F.◆
@@ -140,7 +140,7 @@ module _ (F : Fumula f ℓf) (_≈_ : Rel {x} X ℓx)
       ⤙⤚❲❳-◆ᶠ-collapse-middleʳ : ∀ x z → (x ⤙ z ⤚❲ F.◆ ❳) ≈ z
       ⤙⤚❲❳-◆ᶠ-◆-outer-associate : OuterAssociativeWith F._⤙_⤚_ F.◆ ◆
 
-    open IsRightAlmostFumulaExtrusion ⤙⤚❲❳-isRightAlmostFumulaExtrusion public
+    open IsRightAlmostFumulaExtrusion isRightAlmostFumulaExtrusion public
 
 module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel {x} X ℓx)
          (❲_❳⤙_⤚_ : Op₃ₗ (Fumula.Carrier Fₗ) X)
@@ -189,7 +189,7 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel 
 
     ❲❳⤙⤚-isLeftFumulaExtrusion : IsLeftFumulaExtrusion Fₗ _≈_ ❲_❳⤙_⤚_ ◆
     ❲❳⤙⤚-isLeftFumulaExtrusion = record
-      { ❲❳⤙⤚-isLeftAlmostFumulaExtrusion = ❲❳⤙⤚-isLeftAlmostFumulaExtrusion
+      { isLeftAlmostFumulaExtrusion = ❲❳⤙⤚-isLeftAlmostFumulaExtrusion
       ; ❲❳⤙⤚-●ᶠ-inner-commuteʳ = ❲❳⤙⤚-●ᶠ-inner-commuteʳ
       ; ❲❳⤙⤚-◆ᶠ-pulloutˡ = ❲❳⤙⤚-◆ᶠ-pulloutˡ
       ; ❲❳⤙⤚-◆-pulloutʳ = ❲❳⤙⤚-◆-pulloutʳ
@@ -201,7 +201,7 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel 
 
     ⤙⤚❲❳-isRightFumulaExtrusion : IsRightFumulaExtrusion Fᵣ _≈_ _⤙_⤚❲_❳ ◆
     ⤙⤚❲❳-isRightFumulaExtrusion = record
-      { ⤙⤚❲❳-isRightAlmostFumulaExtrusion = ⤙⤚❲❳-isRightAlmostFumulaExtrusion
+      { isRightAlmostFumulaExtrusion = ⤙⤚❲❳-isRightAlmostFumulaExtrusion
       ; ⤙⤚❲❳-●ᶠ-inner-commuteˡ = ⤙⤚❲❳-●ᶠ-inner-commuteˡ
       ; ⤙⤚❲❳-◆-pulloutˡ = ⤙⤚❲❳-◆-pulloutˡ
       ; ⤙⤚❲❳-◆ᶠ-pulloutʳ = ⤙⤚❲❳-◆ᶠ-pulloutʳ
