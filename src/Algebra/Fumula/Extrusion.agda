@@ -13,3 +13,4 @@ open import Algebra.Fumula.Extrusion.Construct public
 -- open import Algebra.Fumula.Extrusion.Morphism public
 -- open import Algebra.Fumula.Extrusion.Morphism.Construct public
 open import Algebra.Fumula.Extrusion.Convert public
+open import Algebra.Fumula.Construct.Layering public
