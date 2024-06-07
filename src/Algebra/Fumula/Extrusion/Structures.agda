@@ -70,7 +70,7 @@ module _ (Fₗ : AlmostFumula fₗ ℓfₗ) (Fᵣ : AlmostFumula fᵣ ℓfᵣ) (
       ❲❳⤙⤚-double-exchange : L.MiddleNestedDoubleExchange
       ⤙⤚❲❳-cong : R.Congruent₃ Fᵣ._≈_
       ⤙⤚❲❳-double-exchange : R.MiddleNestedDoubleExchange
-      ❲❳⤙⤚-⤙⤚❲❳-double-exchange : MiddleNestedDoubleExchange -- ought to be provable from other axioms, but whatever
+      ❲❳⤙⤚-⤙⤚❲❳-double-exchange : MiddleNestedDoubleExchange -- TODO: ought to be provable from other axioms
 
     ❲❳⤙⤚-isLeftAlmostFumulaExtrusion : IsLeftAlmostFumulaExtrusion Fₗ _≈_ ❲_❳⤙_⤚_
     ❲❳⤙⤚-isLeftAlmostFumulaExtrusion = record
@@ -172,6 +172,8 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel 
       ⤙⤚❲❳-◆-collapse-middleˡ : ∀ x z → (◆ ⤙ z ⤚❲ x ❳) ≈ z
       ⤙⤚❲❳-◆ᶠ-collapse-middleʳ : ∀ x z → (x ⤙ z ⤚❲ Fᵣ.◆ ❳) ≈ z
       ⤙⤚❲❳-◆ᶠ-◆-outer-associate : R.OuterAssociativeWith Fᵣ._⤙_⤚_ Fᵣ.◆ ◆
+      ⤙⤚❲❳-❲❳⤙⤚-◆-pulloutˡ : LeftPulloutAlternatingWith ◆ -- TODO: ought to be provable from other axioms
+      ❲❳⤙⤚-⤙⤚❲❳-◆-pulloutʳ : RightPulloutAlternatingWith ◆ -- TODO: ought to be provable from other axioms
       ■ᶠ-outer-commute : OuterCommutativeWithUnderlying Fₗ.■ Fᵣ.■
       ◆ᶠ-outer-commute : OuterCommutativeWithUnderlying Fₗ.◆ Fᵣ.◆
       ●ᶠ-outer-commute : OuterCommutativeWithUnderlying Fₗ.● Fᵣ.●
@@ -181,6 +183,9 @@ module _ (Fₗ : Fumula fₗ ℓfₗ) (Fᵣ : Fumula fᵣ ℓfᵣ) (_≈_ : Rel 
 
     ◆-pullout : PulloutWith ◆
     ◆-pullout = ⤙⤚❲❳-◆-pulloutˡ , ❲❳⤙⤚-◆-pulloutʳ
+
+    ◆-pullout-alternating : PulloutAlternatingWith ◆
+    ◆-pullout-alternating = ⤙⤚❲❳-❲❳⤙⤚-◆-pulloutˡ , ❲❳⤙⤚-⤙⤚❲❳-◆-pulloutʳ
 
     ❲❳⤙⤚-isLeftFumulaExtrusion : IsLeftFumulaExtrusion Fₗ _≈_ ❲_❳⤙_⤚_ ◆
     ❲❳⤙⤚-isLeftFumulaExtrusion = record

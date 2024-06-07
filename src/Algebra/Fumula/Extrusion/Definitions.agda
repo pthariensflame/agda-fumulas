@@ -68,6 +68,15 @@ module BiDefs {aₗ aᵣ b ℓb} {Aₗ : Set aₗ} {Aᵣ : Set aᵣ} {B : Set b}
   PulloutWith : B → Set _
   PulloutWith e = R.LeftPulloutWith e × L.RightPulloutWith e
 
+  LeftPulloutAlternatingWith : B → Set _
+  LeftPulloutAlternatingWith e = ∀ v w x y z → ((❲ w ❳⤙ v ⤚ x) ⤙ z ⤚❲ y ❳) ≈ᵇ ((❲ w ❳⤙ e ⤚ x) ⤙ v ⤙ z ⤚❲ y ❳ ⤚❲ y ❳)
+
+  RightPulloutAlternatingWith : B → Set _
+  RightPulloutAlternatingWith e = ∀ v w x y z → (❲ w ❳⤙ v ⤚ (x ⤙ z ⤚❲ y ❳)) ≈ᵇ (❲ w ❳⤙ ❲ w ❳⤙ v ⤚ z ⤚ (x ⤙ e ⤚❲ y ❳))
+
+  PulloutAlternatingWith : B → Set _
+  PulloutAlternatingWith e = LeftPulloutAlternatingWith e × RightPulloutAlternatingWith e
+
 module SimultaneousBiDefs {a b ℓb} {A : Set a} {B : Set b} (❲_❳⤙_⤚_ : Op₃ₗ A B) (_⤙_⤚❲_❳ : Op₃ᵣ A B) (_≈ᵇ_ : Rel B ℓb) where
   private
     module L = LeftDefs ❲_❳⤙_⤚_ _≈ᵇ_

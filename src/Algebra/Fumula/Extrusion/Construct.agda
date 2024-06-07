@@ -372,6 +372,8 @@ module DirectProduct {x₁ xℓ₁ x₂ xℓ₂} where
         ; ⤙⤚❲❳-◆-collapse-middleˡ = λ x (z₁ , z₂) → X₁.⤙⤚❲❳-◆-collapse-middleˡ x z₁ , X₂.⤙⤚❲❳-◆-collapse-middleˡ x z₂
         ; ⤙⤚❲❳-◆ᶠ-collapse-middleʳ = λ (x₁ , x₂) (z₁ , z₂) → X₁.⤙⤚❲❳-◆ᶠ-collapse-middleʳ x₁ z₁ , X₂.⤙⤚❲❳-◆ᶠ-collapse-middleʳ x₂ z₂
         ; ⤙⤚❲❳-◆ᶠ-◆-outer-associate = λ (w₁ , w₂) x y (z₁ , z₂) → X₁.⤙⤚❲❳-◆ᶠ-◆-outer-associate w₁ x y z₁ , X₂.⤙⤚❲❳-◆ᶠ-◆-outer-associate w₂ x y z₂
+        ; ⤙⤚❲❳-❲❳⤙⤚-◆-pulloutˡ = λ (v₁ , v₂) w (x₁ , x₂) y (z₁ , z₂) → X₁.⤙⤚❲❳-❲❳⤙⤚-◆-pulloutˡ v₁ w x₁ y z₁ , X₂.⤙⤚❲❳-❲❳⤙⤚-◆-pulloutˡ v₂ w x₂ y z₂
+        ; ❲❳⤙⤚-⤙⤚❲❳-◆-pulloutʳ = λ (v₁ , v₂) w (x₁ , x₂) y (z₁ , z₂) → X₁.❲❳⤙⤚-⤙⤚❲❳-◆-pulloutʳ v₁ w x₁ y z₁ , X₂.❲❳⤙⤚-⤙⤚❲❳-◆-pulloutʳ v₂ w x₂ y z₂
         ; ■ᶠ-outer-commute = λ (x₁ , x₂) (z₁ , z₂) → X₁.■ᶠ-outer-commute x₁ z₁ , X₂.■ᶠ-outer-commute x₂ z₂
         ; ◆ᶠ-outer-commute = λ (x₁ , x₂) (z₁ , z₂) → X₁.◆ᶠ-outer-commute x₁ z₁ , X₂.◆ᶠ-outer-commute x₂ z₂
         ; ●ᶠ-outer-commute = λ (x₁ , x₂) (z₁ , z₂) → X₁.●ᶠ-outer-commute x₁ z₁ , X₂.●ᶠ-outer-commute x₂ z₂
@@ -458,6 +460,8 @@ module TensorUnit {f fℓ} where
         ; ⤙⤚❲❳-◆-collapse-middleˡ = F.◆-collapse-middleˡ
         ; ⤙⤚❲❳-◆ᶠ-collapse-middleʳ = F.◆-collapse-middleʳ
         ; ⤙⤚❲❳-◆ᶠ-◆-outer-associate = F.◆-outer-associate
+        ; ⤙⤚❲❳-❲❳⤙⤚-◆-pulloutˡ = F.◆-pulloutˡ
+        ; ❲❳⤙⤚-⤙⤚❲❳-◆-pulloutʳ = F.◆-pulloutʳ
         ; ■ᶠ-outer-commute = λ x z → F.■-outer-commute x z
         ; ◆ᶠ-outer-commute = λ x z → F.◆-outer-commute x z
         ; ●ᶠ-outer-commute = λ x z → F.●-outer-commute x z

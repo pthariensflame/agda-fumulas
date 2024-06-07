@@ -258,6 +258,16 @@ module FromModule where
       ; ⤙⤚❲❳-◆-collapse-middleˡ = ⤙⤚❲❳-◆-collapse-middleˡ
       ; ⤙⤚❲❳-◆ᶠ-collapse-middleʳ = ⤙⤚❲❳-◆ᶠ-collapse-middleʳ
       ; ⤙⤚❲❳-◆ᶠ-◆-outer-associate = ⤙⤚❲❳-◆ᶠ-◆-outer-associate
+      ; ⤙⤚❲❳-❲❳⤙⤚-◆-pulloutˡ = λ v w x y z → begin
+        (((w *ₗ x) + v) *ᵣ y) + z ≈⟨ +ᴹ-congʳ (*ᵣ-distribʳ y (w *ₗ x) v) ⟩
+        (((w *ₗ x) *ᵣ y) + (v *ᵣ y)) + z ≈⟨ +ᴹ-congʳ (+ᴹ-congʳ (*ᵣ-congʳ (+ᴹ-identityʳ (w *ₗ x)))) ⟨
+        ((((w *ₗ x) + 0#) *ᵣ y) + (v *ᵣ y)) + z ≈⟨ +ᴹ-assoc (((w *ₗ x) + 0#) *ᵣ y) (v *ᵣ y) z ⟩
+        (((w *ₗ x) + 0#) *ᵣ y) + ((v *ᵣ y) + z) ∎
+      ; ❲❳⤙⤚-⤙⤚❲❳-◆-pulloutʳ = λ v w x y z → begin
+        (w *ₗ ((x *ᵣ y) + z)) + v ≈⟨ +ᴹ-congʳ (*ₗ-distribˡ w (x *ᵣ y) z) ⟩
+        ((w *ₗ (x *ᵣ y)) + (w *ₗ z)) + v ≈⟨ +ᴹ-congʳ (+ᴹ-congʳ (*ₗ-congˡ (+ᴹ-identityʳ (x *ᵣ y)))) ⟨
+        ((w *ₗ ((x *ᵣ y) + 0#)) + (w *ₗ z)) + v ≈⟨ +ᴹ-assoc (w *ₗ ((x *ᵣ y) + 0#)) (w *ₗ z) v ⟩
+        (w *ₗ ((x *ᵣ y) + 0#)) + ((w *ₗ z) + v) ∎
       ; ■ᶠ-outer-commute = λ x z → +ᴹ-congʳ (begin
         x *ᵣ (Rᵣ.- Rᵣ.1#) ≈⟨ -ᴹ⇒-‿distribʳ-*ᵣ x Rᵣ.1# ⟨
         - (x *ᵣ Rᵣ.1#) ≈⟨ -ᴹ‿cong (*ᵣ-identityʳ x) ⟩
