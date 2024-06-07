@@ -19,7 +19,7 @@ module _ (F : RawAlmostFumula f ℓf) where
   private
     module F = RawAlmostFumula F
 
-  record RawLeftAlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+  record RawLeftAlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ suc ℓx) where
     infix 7 ❲_❳⤙_⤚_
     infix 4 _≈_
     field
@@ -27,7 +27,7 @@ module _ (F : RawAlmostFumula f ℓf) where
       _≈_ : Rel Carrier ℓx
       ❲_❳⤙_⤚_ : Op₃ₗ F.Carrier Carrier
 
-  record RawRightAlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+  record RawRightAlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ suc ℓx) where
     infix 7 _⤙_⤚❲_❳
     infix 4 _≈_
     field
@@ -40,7 +40,7 @@ module _ (Fₗ : RawAlmostFumula fₗ ℓfₗ) (Fᵣ : RawAlmostFumula fᵣ ℓf
     module Fₗ = RawAlmostFumula Fₗ
     module Fᵣ = RawAlmostFumula Fᵣ
 
-  record RawDoubleAlmostFumulaExtrusion (x ℓx : Level) : Set (fₗ ⊔ fᵣ ⊔ suc x ⊔ ℓfₗ ⊔ ℓfᵣ ⊔ suc ℓx) where
+  record RawDoubleAlmostFumulaExtrusion (x ℓx : Level) : Set (fₗ ⊔ fᵣ ⊔ suc x ⊔ suc ℓx) where
     infix 7 ❲_❳⤙_⤚_
     infix 7 _⤙_⤚❲_❳
     infix 4 _≈_
@@ -68,7 +68,7 @@ module _ (F : RawAlmostFumula f ℓf) where
   private
     module F = RawAlmostFumula F
 
-  record RawAlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+  record RawAlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ suc ℓx) where
     infix 7 ❲_❳⤙_⤚_
     infix 7 _⤙_⤚❲_❳
     infix 4 _≈_
@@ -92,7 +92,7 @@ module _ (F : RawFumula f ℓf) where
   private
     module F = RawFumula F
 
-  record RawLeftFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+  record RawLeftFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ suc ℓx) where
     infix 7 ❲_❳⤙_⤚_
     infix 4 _≈_
     field
@@ -108,7 +108,7 @@ module _ (F : RawFumula f ℓf) where
       ; ❲_❳⤙_⤚_ = ❲_❳⤙_⤚_
       }
 
-  record RawRightFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+  record RawRightFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ suc ℓx) where
     infix 7 _⤙_⤚❲_❳
     infix 4 _≈_
     field
@@ -129,7 +129,7 @@ module _ (Fₗ : RawFumula fₗ ℓfₗ) (Fᵣ : RawFumula fᵣ ℓfᵣ) where
     module Fₗ = RawFumula Fₗ
     module Fᵣ = RawFumula Fᵣ
 
-  record RawDoubleFumulaExtrusion (x ℓx : Level) : Set (fₗ ⊔ fᵣ ⊔ suc x ⊔ ℓfₗ ⊔ ℓfᵣ ⊔ suc ℓx) where
+  record RawDoubleFumulaExtrusion (x ℓx : Level) : Set (fₗ ⊔ fᵣ ⊔ suc x ⊔ suc ℓx) where
     infix 7 ❲_❳⤙_⤚_
     infix 7 _⤙_⤚❲_❳
     infix 4 _≈_
@@ -172,7 +172,7 @@ module _ (F : RawFumula f ℓf) where
   private
     module F = RawFumula F
 
-  record RawFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ ℓf ⊔ suc ℓx) where
+  record RawFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ suc ℓx) where
     infix 7 ❲_❳⤙_⤚_
     infix 7 _⤙_⤚❲_❳
     infix 4 _≈_
