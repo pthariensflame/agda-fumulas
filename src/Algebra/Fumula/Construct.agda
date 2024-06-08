@@ -211,9 +211,9 @@ module Reverse where
     reversibleFumula F = record { isReversibleFumula = isReversibleFumula F.isReversibleFumula }
       where module F = ReversibleFumula F
 
-module DirectProduct {c ℓ} where
+module DirectProduct {c₁ ℓ₁ c₂ ℓ₂} where
 
-  rawAlmostFumula : RawAlmostFumula c ℓ → RawAlmostFumula c ℓ → RawAlmostFumula c ℓ
+  rawAlmostFumula : RawAlmostFumula c₁ ℓ₁ → RawAlmostFumula c₂ ℓ₂ → RawAlmostFumula (c₁ ⊔ c₂) (ℓ₁ ⊔ ℓ₂)
   rawAlmostFumula F₁ F₂ = record
     { Carrier = F₁.Carrier × F₂.Carrier
     ; _≈_ = Pointwise F₁._≈_ F₂._≈_
@@ -223,7 +223,7 @@ module DirectProduct {c ℓ} where
       module F₁ = RawAlmostFumula F₁
       module F₂ = RawAlmostFumula F₂
 
-  rawFumula : RawFumula c ℓ → RawFumula c ℓ → RawFumula c ℓ
+  rawFumula : RawFumula c₁ ℓ₁ → RawFumula c₂ ℓ₂ → RawFumula (c₁ ⊔ c₂) (ℓ₁ ⊔ ℓ₂)
   rawFumula F₁ F₂ = record
     { Carrier = Almost.Carrier
     ; _≈_ = Almost._≈_
@@ -235,7 +235,7 @@ module DirectProduct {c ℓ} where
       module F₂ = RawFumula F₂
       module Almost = RawAlmostFumula (rawAlmostFumula F₁.rawAlmostFumula F₂.rawAlmostFumula)
 
-  almostFumula : AlmostFumula c ℓ → AlmostFumula c ℓ → AlmostFumula c ℓ
+  almostFumula : AlmostFumula c₁ ℓ₁ → AlmostFumula c₂ ℓ₂ → AlmostFumula (c₁ ⊔ c₂) (ℓ₁ ⊔ ℓ₂)
   almostFumula F₁ F₂ = record
     { Carrier = Raw.Carrier
     ; _≈_ = Raw._≈_
@@ -254,7 +254,7 @@ module DirectProduct {c ℓ} where
   module _ F₁ F₂ where
     open AlmostFumula (almostFumula F₁ F₂) public using (isAlmostFumula)
 
-  reversibleAlmostFumula : ReversibleAlmostFumula c ℓ → ReversibleAlmostFumula c ℓ → ReversibleAlmostFumula c ℓ
+  reversibleAlmostFumula : ReversibleAlmostFumula c₁ ℓ₁ → ReversibleAlmostFumula c₂ ℓ₂ → ReversibleAlmostFumula (c₁ ⊔ c₂) (ℓ₁ ⊔ ℓ₂)
   reversibleAlmostFumula F₁ F₂ = record
     { Carrier = Unrev.Carrier
     ; _≈_ = Unrev._≈_
@@ -271,7 +271,7 @@ module DirectProduct {c ℓ} where
   module _ F₁ F₂ where
     open ReversibleAlmostFumula (reversibleAlmostFumula F₁ F₂) public using (isReversibleAlmostFumula)
 
-  fumula : Fumula c ℓ → Fumula c ℓ → Fumula c ℓ
+  fumula : Fumula c₁ ℓ₁ → Fumula c₂ ℓ₂ → Fumula (c₁ ⊔ c₂) (ℓ₁ ⊔ ℓ₂)
   fumula F₁ F₂ = record
     { Carrier = Raw.Carrier
     ; _≈_ = Raw._≈_
@@ -308,7 +308,7 @@ module DirectProduct {c ℓ} where
   module _ F₁ F₂ where
     open Fumula (fumula F₁ F₂) public using (isFumula)
 
-  reversibleFumula : ReversibleFumula c ℓ → ReversibleFumula c ℓ → ReversibleFumula c ℓ
+  reversibleFumula : ReversibleFumula c₁ ℓ₁ → ReversibleFumula c₂ ℓ₂ → ReversibleFumula (c₁ ⊔ c₂) (ℓ₁ ⊔ ℓ₂)
   reversibleFumula F₁ F₂ = record
     { Carrier = Unrev.Carrier
     ; _≈_ = Unrev._≈_
