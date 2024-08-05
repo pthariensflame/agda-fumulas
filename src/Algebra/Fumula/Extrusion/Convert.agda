@@ -17,7 +17,6 @@ import Algebra.Properties.Ring as RingProperties
 open import Algebra.Module.Core
 open import Algebra.Module.Structures
 open import Algebra.Module.Bundles
-open import Algebra.Module.Morphism.Structures
 import Algebra.Module.Morphism.ModuleHomomorphism as ModuleHomomorphismProperties
 open import Algebra.Fumula.Core using (Op₃)
 open import Algebra.Fumula.Bundles
@@ -29,6 +28,21 @@ open import Algebra.Fumula.Extrusion.Bundles
 open import Algebra.Fumula.Extrusion.Properties
 
 module FromModule where
+
+  module _ {r m rℓ mℓ} (R : RawRing r rℓ) where
+    private
+      module R = RawRing R
+      F : RawFumula r rℓ
+      F = FromRing.rawFumula R
+
+    rawLeftFumulaExtrusion : RawLeftModule R.Carrier m mℓ → RawLeftFumulaExtrusion F m mℓ
+    rawLeftFumulaExtrusion M = record
+      { Carrier = Carrierᴹ
+      ; _≈_ = _≈ᴹ_
+      ; ❲_❳⤙_⤚_ = λ s z x → (s *ₗ x) +ᴹ z
+      ; ◆ = 0ᴹ
+      }
+      where open RawLeftModule M
 
   module _ {r m rℓ mℓ} (R : Ring r rℓ) {Carrier : Set m} (_≈_ : Rel Carrier mℓ)
            (_+_ : Op₂ Carrier) (0# : Carrier) (-_ : Op₁ Carrier) (_*ₗ_ : Opₗ (Ring.Carrier R) Carrier) where
@@ -114,6 +128,21 @@ module FromModule where
     leftFumulaExtrusion M = record { isLeftFumulaExtrusion = isLeftFumulaExtrusion R _≈ᴹ_ _+ᴹ_ 0ᴹ -ᴹ_ _*ₗ_ isLeftModule }
       where open LeftModule M
 
+  module _ {r m rℓ mℓ} (R : RawRing r rℓ) where
+    private
+      module R = RawRing R
+      F : RawFumula r rℓ
+      F = FromRing.rawFumula R
+
+    rawRightFumulaExtrusion : RawRightModule R.Carrier m mℓ → RawRightFumulaExtrusion F m mℓ
+    rawRightFumulaExtrusion M = record
+      { Carrier = Carrierᴹ
+      ; _≈_ = _≈ᴹ_
+      ; _⤙_⤚❲_❳ = λ x z s → (x *ᵣ s) +ᴹ z
+      ; ◆ = 0ᴹ
+      }
+      where open RawRightModule M
+
   module _ {r m rℓ mℓ} (R : Ring r rℓ) {Carrier : Set m} (_≈_ : Rel Carrier mℓ)
            (_+_ : Op₂ Carrier) (0# : Carrier) (-_ : Op₁ Carrier) (_*ᵣ_ : Opᵣ (Ring.Carrier R) Carrier) where
     private
@@ -197,6 +226,24 @@ module FromModule where
     rightFumulaExtrusion : RightModule R m mℓ → RightFumulaExtrusion F m mℓ
     rightFumulaExtrusion M = record { isRightFumulaExtrusion = isRightFumulaExtrusion R _≈ᴹ_ _+ᴹ_ 0ᴹ -ᴹ_ _*ᵣ_ isRightModule }
       where open RightModule M
+
+  module _ {rₗ rᵣ m rℓₗ rℓᵣ mℓ} (Rₗ : RawRing rₗ rℓₗ) (Rᵣ : RawRing rᵣ rℓᵣ) where
+    private
+      module Rₗ = RawRing Rₗ
+      module Rᵣ = RawRing Rᵣ
+      Fₗ : RawFumula rₗ rℓₗ
+      Fₗ = FromRing.rawFumula Rₗ
+      Fᵣ : RawFumula rᵣ rℓᵣ
+      Fᵣ = FromRing.rawFumula Rᵣ
+
+    rawDoubleFumulaExtrusion : RawBimodule Rₗ.Carrier Rᵣ.Carrier m mℓ → RawDoubleFumulaExtrusion Fₗ Fᵣ m mℓ
+    rawDoubleFumulaExtrusion M = record
+      { Carrier = Carrierᴹ
+      ; _≈_ = _≈ᴹ_
+      ; ❲_❳⤙_⤚_ = λ s z x → (s *ₗ x) +ᴹ z
+      ; _⤙_⤚❲_❳ = λ x z s → (x *ᵣ s) +ᴹ z
+      ; ◆ = 0ᴹ }
+      where open RawBimodule M
 
   module _ {rₗ rᵣ m rℓₗ rℓᵣ mℓ} (Rₗ : Ring rₗ rℓₗ) (Rᵣ : Ring rᵣ rℓᵣ) {Carrier : Set m}
            (_≈_ : Rel Carrier mℓ) (_+_ : Op₂ Carrier) (0# : Carrier) (-_ : Op₁ Carrier)
@@ -332,6 +379,21 @@ module FromModule where
     doubleFumulaExtrusion M = record { isDoubleFumulaExtrusion = isDoubleFumulaExtrusion Rₗ Rᵣ _≈ᴹ_ _+ᴹ_ 0ᴹ -ᴹ_ _*ₗ_ _*ᵣ_ isBimodule }
       where open Bimodule M
 
+  module _ {r m rℓ mℓ} (R : RawRing r rℓ) where
+    private
+      module R = RawRing R
+      F : RawFumula r rℓ
+      F = FromRing.rawFumula R
+
+    rawFumulaExtrusion : RawModule R.Carrier m mℓ → RawFumulaExtrusion F m mℓ
+    rawFumulaExtrusion M = record
+      { Carrier = Carrierᴹ
+      ; _≈_ = _≈ᴹ_
+      ; ❲_❳⤙_⤚_ = λ s z x → (s *ₗ x) +ᴹ z
+      ; _⤙_⤚❲_❳ = λ x z s → (x *ᵣ s) +ᴹ z
+      ; ◆ = 0ᴹ }
+      where open RawModule M
+
   module _ {r m rℓ mℓ} (R : CommutativeRing r rℓ) {Carrier : Set m} (_≈_ : Rel Carrier mℓ)
            (_+_ : Op₂ Carrier) (0# : Carrier) (-_ : Op₁ Carrier)
            (_*ₗ_ : Opₗ (CommutativeRing.Carrier R) Carrier) (_*ᵣ_ : Opᵣ (CommutativeRing.Carrier R) Carrier) where
@@ -366,7 +428,31 @@ module FromModule where
         iDFE = isDoubleFumulaExtrusion R.ring R.ring _≈_ _+_ 0# -_ _*ₗ_ _*ᵣ_ isBimodule
         open IsDoubleFumulaExtrusion iDFE
 
+  module _ {r m rℓ mℓ} (R : CommutativeRing r rℓ) where
+    private
+      F : ReversibleFumula r rℓ
+      F = FromRing.reversibleFumula R
+
+    fumulaExtrusion : Module R m mℓ → FumulaExtrusion F m mℓ
+    fumulaExtrusion M = record { isFumulaExtrusion = isFumulaExtrusion R _≈ᴹ_ _+ᴹ_ 0ᴹ -ᴹ_ _*ₗ_ _*ᵣ_ isModule }
+      where open Module M
+
 module FromFumulaExtrusion where
+
+  module _ {f x fℓ xℓ} (F : RawFumula f fℓ) where
+    private
+      module F = RawFumula F
+
+    rawLeftModule : RawLeftFumulaExtrusion F x xℓ → RawLeftModule F.Carrier x xℓ
+    rawLeftModule X = record
+      { Carrierᴹ = Carrier
+      ; _≈ᴹ_ = _≈_
+      ; _+ᴹ_ = λ x y → ❲ F.● ❳⤙ x ⤚ y
+      ; _*ₗ_ = λ s x → ❲ s ❳⤙ ◆ ⤚ x
+      ; 0ᴹ = ◆
+      ; -ᴹ_ = λ x → ❲ F.■ ❳⤙ ◆ ⤚ x
+      }
+      where open RawLeftFumulaExtrusion X
 
   module _ {f x fℓ xℓ} (F : Fumula f fℓ) {Carrier : Set x} (_≈_ : Rel Carrier xℓ)
            (❲_❳⤙_⤚_ : Op₃ₗ (Fumula.Carrier F) Carrier) (◆ : Carrier) where
@@ -461,6 +547,21 @@ module FromFumulaExtrusion where
     leftModule : LeftFumulaExtrusion F x xℓ → LeftModule R x xℓ
     leftModule X = record { isLeftModule = isLeftModule F _≈_ ❲_❳⤙_⤚_ ◆ isLeftFumulaExtrusion }
       where open LeftFumulaExtrusion X
+
+  module _ {f x fℓ xℓ} (F : RawFumula f fℓ) where
+    private
+      module F = RawFumula F
+
+    rawRightModule : RawRightFumulaExtrusion F x xℓ → RawRightModule F.Carrier x xℓ
+    rawRightModule X = record
+      { Carrierᴹ = Carrier
+      ; _≈ᴹ_ = _≈_
+      ; _+ᴹ_ = λ x y → x ⤙ y ⤚❲ F.● ❳
+      ; _*ᵣ_ = λ x s → x ⤙ ◆ ⤚❲ s ❳
+      ; 0ᴹ = ◆
+      ; -ᴹ_ = λ x → x ⤙ ◆ ⤚❲ F.■ ❳
+      }
+      where open RawRightFumulaExtrusion X
 
   module _ {f x fℓ xℓ} (F : Fumula f fℓ) {Carrier : Set x} (_≈_ : Rel Carrier xℓ)
            (_⤙_⤚❲_❳ : Op₃ᵣ (Fumula.Carrier F) Carrier) (◆ : Carrier) where
@@ -557,6 +658,23 @@ module FromFumulaExtrusion where
     rightModule : RightFumulaExtrusion F x xℓ → RightModule R x xℓ
     rightModule X = record { isRightModule = isRightModule F _≈_ _⤙_⤚❲_❳ ◆ isRightFumulaExtrusion }
       where open RightFumulaExtrusion X
+
+  module _ {fₗ fᵣ x fℓₗ fℓᵣ xℓ} (Fₗ : RawFumula fₗ fℓₗ) (Fᵣ : RawFumula fᵣ fℓᵣ) where
+    private
+      module Fₗ = RawFumula Fₗ
+      module Fᵣ = RawFumula Fᵣ
+
+    rawBimodule : RawDoubleFumulaExtrusion Fₗ Fᵣ x xℓ → RawBimodule Fₗ.Carrier Fᵣ.Carrier x xℓ
+    rawBimodule X = record
+      { Carrierᴹ = Carrier
+      ; _≈ᴹ_ = _≈_
+      ; _+ᴹ_ = λ x y → ❲ Fₗ.● ❳⤙ x ⤚ y
+      ; _*ₗ_ = λ s x → ❲ s ❳⤙ ◆ ⤚ x
+      ; _*ᵣ_ = λ x s → x ⤙ ◆ ⤚❲ s ❳
+      ; 0ᴹ = ◆
+      ; -ᴹ_ = λ x → ❲ Fₗ.■ ❳⤙ ◆ ⤚ x
+      }
+      where open RawDoubleFumulaExtrusion X
 
   module _ {fₗ fᵣ x fℓₗ fℓᵣ xℓ} (Fₗ : Fumula fₗ fℓₗ) (Fᵣ : Fumula fᵣ fℓᵣ) {Carrier : Set x} (_≈_ : Rel Carrier xℓ)
            (❲_❳⤙_⤚_ : Op₃ₗ (Fumula.Carrier Fₗ) Carrier) (_⤙_⤚❲_❳ : Op₃ᵣ (Fumula.Carrier Fᵣ) Carrier) (◆ : Carrier) where
@@ -655,6 +773,22 @@ module FromFumulaExtrusion where
     bimodule : DoubleFumulaExtrusion Fₗ Fᵣ x xℓ → Bimodule Rₗ Rᵣ x xℓ
     bimodule X = record { isBimodule = isBimodule Fₗ Fᵣ _≈_ ❲_❳⤙_⤚_ _⤙_⤚❲_❳ ◆ isDoubleFumulaExtrusion }
       where open DoubleFumulaExtrusion X
+
+  module _ {f x fℓ xℓ} (F : RawFumula f fℓ) where
+    private
+      module F = RawFumula F
+
+    rawModule : RawFumulaExtrusion F x xℓ → RawModule F.Carrier x xℓ
+    rawModule X = record
+      { Carrierᴹ = Carrier
+      ; _≈ᴹ_ = _≈_
+      ; _+ᴹ_ = λ x y → ❲ F.● ❳⤙ x ⤚ y
+      ; _*ₗ_ = λ s x → ❲ s ❳⤙ ◆ ⤚ x
+      ; _*ᵣ_ = λ x s → x ⤙ ◆ ⤚❲ s ❳
+      ; 0ᴹ = ◆
+      ; -ᴹ_ = λ x → ❲ F.■ ❳⤙ ◆ ⤚ x
+      }
+      where open RawFumulaExtrusion X
 
   module _ {f x fℓ xℓ} (F : ReversibleFumula f fℓ) {Carrier : Set x} (_≈_ : Rel Carrier xℓ)
            (❲_❳⤙_⤚_ : Op₃ₗ (ReversibleFumula.Carrier F) Carrier) (_⤙_⤚❲_❳ : Op₃ᵣ (ReversibleFumula.Carrier F) Carrier) (◆ : Carrier) where
