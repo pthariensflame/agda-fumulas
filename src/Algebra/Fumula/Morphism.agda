@@ -10,12 +10,11 @@ open import Level using (_⊔_)
 open import Function.Definitions
 open import Relation.Binary.Core using (Rel)
 open import Relation.Binary.Morphism.Structures
+import Algebra.Morphism.Definitions
 open import Algebra.Fumula.Core
 open import Algebra.Fumula.Bundles.Raw
 
 module MorphismDefinitions {a b ℓ} (A : Set a) (B : Set b) (_≈_ : Rel B ℓ) where
-
-  open import Algebra.Morphism.Definitions A B _≈_ public
 
   Homomorphic₃ : (A → B) → Op₃ A → Op₃ B → Set _
   Homomorphic₃ ⟦_⟧ _⤙_⤚_ _⟪_⟫_ = ∀ x y z → ⟦ x ⤙ y ⤚ z ⟧ ≈ (⟦ x ⟧ ⟪ ⟦ y ⟧ ⟫ ⟦ z ⟧)
@@ -66,6 +65,7 @@ module FumulaMorphisms {a b ℓ₁ ℓ₂} (F₁ : RawFumula a ℓ₁) (F₂ : R
   private
     open module F₁ = RawFumula F₁ using () renaming (Carrier to A; _≈_ to _≈₁_; _⤙_⤚_ to _⤙_⤚_; ■ to ■)
     open module F₂ = RawFumula F₂ using () renaming (Carrier to B; _≈_ to _≈₂_; _⤙_⤚_ to _⟪_⟫_; ■ to □)
+    open Algebra.Morphism.Definitions A B _≈₂_
     open MorphismDefinitions A B _≈₂_
     open AlmostFumulaMorphisms F₁.rawAlmostFumula F₂.rawAlmostFumula
 
