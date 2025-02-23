@@ -195,3 +195,11 @@ module _ (F : RawFumula f ℓf) where
       using (❲❳⤙⤚-rawLeftFumulaExtrusion; ❲❳⤙⤚-rawLeftAlmostFumulaExtrusion;
              ⤙⤚❲❳-rawRightFumulaExtrusion; ⤙⤚❲❳-rawRightAlmostFumulaExtrusion;
              rawDoubleAlmostFumulaExtrusion)
+
+    rawAlmostFumulaExtrusion : RawAlmostFumulaExtrusion F.rawAlmostFumula x ℓx
+    rawAlmostFumulaExtrusion = record
+      { Carrier = Carrier
+      ; _≈_ = _≈_
+      ; ❲_❳⤙_⤚_ = ❲_❳⤙_⤚_
+      ; _⤙_⤚❲_❳ = _⤙_⤚❲_❳
+      }
