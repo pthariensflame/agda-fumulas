@@ -14,3 +14,4 @@ open import Algebra.Fumula.Construct public
 open import Algebra.Fumula.Morphism public
 open import Algebra.Fumula.Morphism.Construct public
 open import Algebra.Fumula.Convert public
+open import Algebra.Fumula.Morphism.Convert public
