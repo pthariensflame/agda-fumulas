@@ -20,6 +20,7 @@ open import Data.Product.Base using (_×_; _,_; proj₁; proj₂)
 open import Level using (_⊔_)
 open import Relation.Binary.Structures using (IsEquivalence)
 open import Relation.Binary.Bundles using (Setoid)
+open import Algebra.Structures using (IsSuccessorSet)
 open import Algebra.Fumula.Definitions _≈_ _⤙_⤚_
 open import Algebra.Fumula.Bundles.Raw
 
@@ -114,6 +115,30 @@ record IsFumula (■ : A) : Set (a ⊔ ℓ) where
 
   ◆-pulloutʳ : RightPulloutWith ◆
   ◆-pulloutʳ = proj₂ ◆-pullout
+
+  isSuccessorSet-↑ : ∀ x → IsSuccessorSet _≈_ _↑ x
+  isSuccessorSet-↑ _ = record
+    { isEquivalence = isEquivalence
+    ; suc#-cong = ↑-cong
+    }
+
+  isSuccessorSet-↓ : ∀ x → IsSuccessorSet _≈_ _↓ x
+  isSuccessorSet-↓ _ = record
+    { isEquivalence = isEquivalence
+    ; suc#-cong = ↓-cong
+    }
+
+  isSuccessorSet-↑′ : ∀ x → IsSuccessorSet _≈_ _↑′ x
+  isSuccessorSet-↑′ _ = record
+    { isEquivalence = isEquivalence
+    ; suc#-cong = ↑′-cong
+    }
+
+  isSuccessorSet-↓′ : ∀ x → IsSuccessorSet _≈_ _↓′ x
+  isSuccessorSet-↓′ _ = record
+    { isEquivalence = isEquivalence
+    ; suc#-cong = ↓′-cong
+    }
 
 record IsReversibleFumula (■ : A) : Set (a ⊔ ℓ) where
   field

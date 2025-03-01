@@ -70,12 +70,7 @@ module FromFumulaMorphism {ac bc ae be} {Fᵃ : RawFumula ac ae} (Fᵇ : Fumula 
       open IsFumulaHomomorphism ⟦⟧-isFumulaHomo
       open module Fᵃ = RawFumula Fᵃ using (■)
       open module Fᵇ = Fumula Fᵇ using (_≈_; trans; refl; ⤙⤚-cong)
-
-      ◆-homo : ⟦ Fᵃ.◆ ⟧ ≈ Fᵇ.◆
-      ◆-homo = trans (⤙⤚-homo ■ ■ ■) (⤙⤚-cong ■-homo ■-homo ■-homo)
-
-      ●-homo : ⟦ Fᵃ.● ⟧ ≈ Fᵇ.●
-      ●-homo = trans (⤙⤚-homo ■ Fᵃ.◆ ■) (⤙⤚-cong ■-homo ◆-homo ■-homo)
+      open HeartlineHomo Fᵇ.isFumula
  
   isRingMonomorphism : IsFumulaMonomorphism Fᵃ (Fumula.rawFumula Fᵇ) ⟦_⟧ →
     IsRingMonomorphism (FromFumula.rawRing Fᵃ) (FromFumula.rawRing (Fumula.rawFumula Fᵇ)) ⟦_⟧

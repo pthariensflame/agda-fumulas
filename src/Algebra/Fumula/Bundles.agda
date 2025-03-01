@@ -8,6 +8,7 @@ module Algebra.Fumula.Bundles where
 
 open import Level using (suc; _⊔_)
 open import Relation.Binary.Core using (Rel)
+open import Algebra.Bundles using (SuccessorSet)
 open import Algebra.Fumula.Core
 open import Algebra.Fumula.Structures
 open import Algebra.Fumula.Bundles.Raw public
@@ -64,10 +65,26 @@ record Fumula c ℓ : Set (suc (c ⊔ ℓ)) where
           ; invert
           ; _↑′
           ; _↓′
+          ; rawSuccessorSet-↑
+          ; rawSuccessorSet-↓
+          ; rawSuccessorSet-↑′
+          ; rawSuccessorSet-↓′
           )
 
   almostFumula : AlmostFumula c ℓ
   almostFumula = record { isAlmostFumula = isAlmostFumula }
+
+  successorSet-↑ : (x : Carrier) → SuccessorSet c ℓ
+  successorSet-↑ x = record { isSuccessorSet = isSuccessorSet-↑ x }
+
+  successorSet-↓ : (x : Carrier) → SuccessorSet c ℓ
+  successorSet-↓ x = record { isSuccessorSet = isSuccessorSet-↓ x }
+
+  successorSet-↑′ : (x : Carrier) → SuccessorSet c ℓ
+  successorSet-↑′ x = record { isSuccessorSet = isSuccessorSet-↑′ x }
+
+  successorSet-↓′ : (x : Carrier) → SuccessorSet c ℓ
+  successorSet-↓′ x = record { isSuccessorSet = isSuccessorSet-↓′ x }
 
 record ReversibleFumula c ℓ : Set (suc (c ⊔ ℓ)) where
   infix 7 _⤙_⤚_
@@ -90,13 +107,22 @@ record ReversibleFumula c ℓ : Set (suc (c ⊔ ℓ)) where
           ; invert
           ; _↑′
           ; _↓′
+          ; rawSuccessorSet-↑
+          ; rawSuccessorSet-↓
+          ; rawSuccessorSet-↑′
+          ; rawSuccessorSet-↓′
           )
 
   fumula : Fumula c ℓ
   fumula = record { isFumula = isFumula }
 
   open Fumula fumula public
-    using (almostFumula)
+    using ( almostFumula
+          ; successorSet-↑
+          ; successorSet-↑′
+          ; successorSet-↓
+          ; successorSet-↓′
+          )
 
   reversibleAlmostFumula : ReversibleAlmostFumula c ℓ
   reversibleAlmostFumula = record { isReversibleAlmostFumula = isReversibleAlmostFumula }

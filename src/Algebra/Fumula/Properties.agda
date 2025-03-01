@@ -12,12 +12,13 @@ open import Function.Definitions using (Inverseˡ; Inverseʳ; Inverseᵇ)
 open import Data.Product.Base using (_×_; _,_)
 open import Data.Nat.Base using (zero; suc) renaming (_+_ to _ℕ+_)
 open import Data.Nat.Properties using (+-comm)
-open import Data.Integer.Base using (ℤ; +_; -[1+_]; -1ℤ; 0ℤ; 1ℤ; _+_; _-_)
+open import Data.Integer.Base using (+_; -[1+_]; -1ℤ; 0ℤ; 1ℤ; _+_; _-_)
 open Fumula F
 open import Algebra.Definitions _≈_ using (Involutive)
 open import Relation.Binary.PropositionalEquality using (_≡_) renaming (cong to ≡-cong)
 open import Relation.Binary.Reasoning.Setoid setoid
 open import Algebra.Fumula.Definitions _≈_ _⤙_⤚_ using (OuterCommutativeWith)
+open import Algebra.Fumula.Properties.Raw rawFumula public
 
 ------------------------------------------------------------------------
 -- The "side collapse" property: the "missing" collapse form,
@@ -142,12 +143,6 @@ invert-involutive x = begin
 ------------------------------------------------------------------------
 -- The heartline of a fumula: the shadow of the integers
 ------------------------------------------------------------------------
-
-heartline : ℤ → Carrier
-heartline (+ zero) = ◆ -- ≈ ■ ↑
-heartline (+ suc n) = heartline (+ n) ↑
-heartline -[1+ zero ] = ■
-heartline -[1+ suc n ] = heartline -[1+ n ] ↓
 
 heartline-cong : ∀{i j} → i ≡ j → heartline i ≈ heartline j
 heartline-cong i≡j = reflexive (≡-cong heartline i≡j)

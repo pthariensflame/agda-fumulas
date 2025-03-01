@@ -10,6 +10,7 @@ open import Level using (suc; _⊔_)
 open import Relation.Binary.Core using (Rel)
 open import Relation.Nullary.Negation.Core using (¬_)
 open import Algebra.Core using (Op₁)
+open import Algebra.Bundles.Raw using (RawSuccessorSet)
 open import Algebra.Fumula.Core using (Op₃)
 
 ------------------------------------------------------------------------
@@ -74,3 +75,35 @@ record RawFumula c ℓ : Set (suc (c ⊔ ℓ)) where
 
   open RawAlmostFumula rawAlmostFumula public
     using (_≉_)
+
+  rawSuccessorSet-↑ : (x : Carrier) → RawSuccessorSet c ℓ
+  rawSuccessorSet-↑ x = record
+    { Carrier = Carrier
+    ; _≈_ = _≈_
+    ; suc# = _↑
+    ; zero# = x
+    }
+
+  rawSuccessorSet-↓ : (x : Carrier) → RawSuccessorSet c ℓ
+  rawSuccessorSet-↓ x = record
+    { Carrier = Carrier
+    ; _≈_ = _≈_
+    ; suc# = _↓
+    ; zero# = x
+    }
+
+  rawSuccessorSet-↑′ : (x : Carrier) → RawSuccessorSet c ℓ
+  rawSuccessorSet-↑′ x = record
+    { Carrier = Carrier
+    ; _≈_ = _≈_
+    ; suc# = _↑′
+    ; zero# = x
+    }
+
+  rawSuccessorSet-↓′ : (x : Carrier) → RawSuccessorSet c ℓ
+  rawSuccessorSet-↓′ x = record
+    { Carrier = Carrier
+    ; _≈_ = _≈_
+    ; suc# = _↓′
+    ; zero# = x
+    }
