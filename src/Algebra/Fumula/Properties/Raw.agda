@@ -10,6 +10,10 @@ open import Data.Nat.Base using (zero; suc)
 open import Data.Integer.Base using (ℤ; +_; -[1+_])
 open RawFumula F
 
+------------------------------------------------------------------------
+-- The heartline of a fumula: the shadow of the integers
+------------------------------------------------------------------------
+
 heartline : ℤ → Carrier
 heartline (+ zero) = ◆ -- ≈ ■ ↑
 heartline (+ suc n) = heartline (+ n) ↑

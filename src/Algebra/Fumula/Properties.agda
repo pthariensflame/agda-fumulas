@@ -64,6 +64,13 @@ open import Algebra.Fumula.Properties.Raw rawFumula public
 -- Properties of the successor and predecessor operations.
 ------------------------------------------------------------------------
 
+↓-↑≈↑-↓ : ∀ x → x ↑ ↓ ≈ x ↓ ↑
+↓-↑≈↑-↓ x = begin
+  x ↑ ↓ ≡⟨⟩
+  ■ ⤙ ■ ⤙ x ⤚ ■ ⤚ ● ≈⟨ double-exchange ■ ● ■ ■ x ⟩
+  ■ ⤙ ■ ⤙ x ⤚ ● ⤚ ■ ≡⟨⟩
+  x ↓ ↑ ∎
+
 ↑-↓-inverseˡ : Inverseˡ _≈_ _≈_ _↑ _↓
 ↑-↓-inverseˡ {x} {y} y≈x↓ = begin
   y ↑ ≈⟨ ↑-cong y≈x↓ ⟩
@@ -77,9 +84,8 @@ open import Algebra.Fumula.Properties.Raw rawFumula public
 ↑-↓-inverseʳ : Inverseʳ _≈_ _≈_ _↑ _↓
 ↑-↓-inverseʳ {x} {y} y≈x↑ = begin
   y ↓ ≈⟨ ↓-cong y≈x↑ ⟩
-  x ↑ ↓ ≡⟨⟩
-  ■ ⤙ ■ ⤙ x ⤚ ■ ⤚ ● ≈⟨ double-exchange ■ ● ■ ■ x ⟩
-  ■ ⤙ ■ ⤙ x ⤚ ● ⤚ ■ ≈⟨ ↑-↓-inverseˡ refl ⟩
+  x ↑ ↓ ≈⟨ ↓-↑≈↑-↓ x ⟩
+  x ↓ ↑ ≈⟨ ↑-↓-inverseˡ refl ⟩
   x ∎
 
 ↑-↓-inverse : Inverseᵇ _≈_ _≈_ _↑ _↓
@@ -140,8 +146,23 @@ invert-involutive x = begin
   ● ⤙ ◆ ⤚ x ≈⟨ ●-◆-collapse-sideˡ x ⟩
   x ∎
 
+invert-↑≈↓-invert : ∀ x → invert (x ↑) ≈ invert x ↓
+invert-↑≈↓-invert x = begin
+  invert (x ↑) ≡⟨⟩
+  ■ ⤙ ◆ ⤚ (■ ⤙ x ⤚ ■) ≈⟨ ◆-pulloutʳ ◆ ■ ■ ■ x ⟩
+  ■ ⤙ ■ ⤙ ◆ ⤚ x ⤚ ● ≡⟨⟩
+  invert x ↓ ∎
+
+invert-↓≈↑-invert : ∀ x → invert (x ↓) ≈ invert x ↑
+invert-↓≈↑-invert x = begin
+  invert (x ↓) ≡⟨⟩
+  ■ ⤙ ◆ ⤚ (■ ⤙ x ⤚ ●) ≈⟨ ◆-pulloutʳ ◆ ■ ■ ● x ⟩
+  ■ ⤙ ■ ⤙ ◆ ⤚ x ⤚ (■ ⤙ ◆ ⤚ ●) ≈⟨ ⤙⤚-cong refl refl (●-◆-collapse-sideʳ ■) ⟩
+  ■ ⤙ ■ ⤙ ◆ ⤚ x ⤚ ■ ≡⟨⟩
+  invert x ↑ ∎
+
 ------------------------------------------------------------------------
--- The heartline of a fumula: the shadow of the integers
+-- Properties of a fumula's heartline
 ------------------------------------------------------------------------
 
 heartline-cong : ∀{i j} → i ≡ j → heartline i ≈ heartline j
