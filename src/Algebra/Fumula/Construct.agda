@@ -57,7 +57,7 @@ module Initial {c ℓ} where
     Carrier : Set c
     Carrier = ⊥
 
-    infix  4 _≈_
+    infix 4 _≈_
     _≈_ : Rel Carrier ℓ
     _≈_ ()
 
@@ -71,22 +71,16 @@ module Initial {c ℓ} where
     sym : Symmetric _≈_
     sym {x = ()}
 
-    trans : Transitive _≈_
-    trans {i = ()}
-
-    ⤙⤚-cong : Congruent₃ _≈_ _⤙_⤚_
-    ⤙⤚-cong {x = ()}
-
   open ℤero
 
   rawAlmostFumula : RawAlmostFumula c ℓ
   rawAlmostFumula = record { ℤero }
 
   isEquivalence : IsEquivalence _≈_
-  isEquivalence = record { ℤero }
+  isEquivalence = record { ℤero ; trans = λ {i = i} → ⊥-elim i }
 
   isAlmostFumula : IsAlmostFumula _≈_ _⤙_⤚_
-  isAlmostFumula = record { isEquivalence = isEquivalence ; ⤙⤚-cong = ⤙⤚-cong ; double-exchange = λ () }
+  isAlmostFumula = record { isEquivalence = isEquivalence ; ⤙⤚-cong = λ {x = x} → ⊥-elim x ; double-exchange = λ () }
 
   isReversibleAlmostFumula : IsReversibleAlmostFumula _≈_ _⤙_⤚_
   isReversibleAlmostFumula = record { isAlmostFumula = isAlmostFumula ; outer-commute = λ () }

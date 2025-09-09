@@ -98,37 +98,20 @@ module Initial {x xℓ} where
     sym : Symmetric _≈_
     sym {x = ()}
 
-    trans : Transitive _≈_
-    trans {i = ()}
-
     module _ {f} {F : Set f} where
 
       infix 7 ❲_❳⤙_⤚_
       ❲_❳⤙_⤚_ : Op₃ₗ F Carrier
       ❲_❳⤙_⤚_ _ ()
 
-      module _ {fℓ} (_≈ᶠ_ : Rel F fℓ) where
-        private
-          module L = LeftDefs ❲_❳⤙_⤚_ _≈_
-
-        ❲❳⤙⤚-cong : L.Congruent₃ _≈ᶠ_
-        ❲❳⤙⤚-cong {u = ()}
-
       infix 7 _⤙_⤚❲_❳
       _⤙_⤚❲_❳ : Op₃ᵣ F Carrier
       _⤙_⤚❲_❳ ()
 
-      module _ {fℓ} (_≈ᶠ_ : Rel F fℓ) where
-        private
-          module R = RightDefs _⤙_⤚❲_❳ _≈_
-          
-        ⤙⤚❲❳-cong :  R.Congruent₃ _≈ᶠ_
-        ⤙⤚❲❳-cong {x = ()}
-
   open ℤero
 
   isEquivalence : IsEquivalence _≈_
-  isEquivalence = record { ℤero }
+  isEquivalence = record { ℤero; trans = λ {i = i} → ⊥-elim i }
 
   module _ {f fℓ} (F : AlmostFumula f fℓ) where
 
@@ -139,7 +122,7 @@ module Initial {x xℓ} where
       ; ❲_❳⤙_⤚_ = ❲_❳⤙_⤚_
       ; isLeftAlmostFumulaExtrusion = record
         { isEquivalence = isEquivalence
-        ; ❲❳⤙⤚-cong = ❲❳⤙⤚-cong (AlmostFumula._≈_ F)
+        ; ❲❳⤙⤚-cong = λ {u = u} → ⊥-elim u
         ; ❲❳⤙⤚-double-exchange = λ _ ()
         }
       }
@@ -153,7 +136,7 @@ module Initial {x xℓ} where
       ; _⤙_⤚❲_❳ = _⤙_⤚❲_❳
       ; isRightAlmostFumulaExtrusion = record
         { isEquivalence = isEquivalence
-        ; ⤙⤚❲❳-cong = ⤙⤚❲❳-cong (AlmostFumula._≈_ F)
+        ; ⤙⤚❲❳-cong = λ {x = x} → ⊥-elim x
         ; ⤙⤚❲❳-double-exchange = λ ()
         }
       }
@@ -170,9 +153,9 @@ module Initial {x xℓ} where
       ; _⤙_⤚❲_❳ = _⤙_⤚❲_❳
       ; isDoubleAlmostFumulaExtrusion = record
         { isEquivalence = isEquivalence
-        ; ❲❳⤙⤚-cong = ❲❳⤙⤚-cong (AlmostFumula._≈_ Fₗ)
+        ; ❲❳⤙⤚-cong = λ {u = u} → ⊥-elim u
         ; ❲❳⤙⤚-double-exchange = λ _ ()
-        ; ⤙⤚❲❳-cong = ⤙⤚❲❳-cong (AlmostFumula._≈_ Fᵣ)
+        ; ⤙⤚❲❳-cong = λ {x = x} → ⊥-elim x
         ; ⤙⤚❲❳-double-exchange = λ ()
         ; ❲❳⤙⤚-⤙⤚❲❳-double-exchange = λ _ ()
         }
