@@ -35,6 +35,14 @@ module _ (F : RawAlmostFumula f ℓf) where
       _≈_ : Rel Carrier ℓx
       _⤙_⤚❲_❳ : Op₃ᵣ F.Carrier Carrier
 
+  record RawCentralAlmostFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ suc ℓx) where
+    infix 7 _⤙❲_❳⤚_
+    infix 4 _≈_
+    field
+      Carrier : Set x
+      _≈_ : Rel Carrier ℓx
+      _⤙❲_❳⤚_ : Op₃ₘ F.Carrier Carrier
+
 module _ (Fₗ : RawAlmostFumula fₗ ℓfₗ) (Fᵣ : RawAlmostFumula fᵣ ℓfᵣ) where
   private
     module Fₗ = RawAlmostFumula Fₗ
@@ -123,6 +131,22 @@ module _ (F : RawFumula f ℓf) where
       ; _≈_ = _≈_
       ; _⤙_⤚❲_❳ = _⤙_⤚❲_❳
       }
+
+  record RawCentralFumulaExtrusion (x ℓx : Level) : Set (f ⊔ suc x ⊔ suc ℓx) where
+    infix 7 _⤙❲_❳⤚_
+    infix 4 _≈_
+    field
+      Carrier : Set x
+      _≈_ : Rel Carrier ℓx
+      _⤙❲_❳⤚_ : Op₃ₘ F.Carrier Carrier
+      ◆ : Carrier
+
+    rawCentralAlmostFumulaExtrusion : RawCentralAlmostFumulaExtrusion F.rawAlmostFumula x ℓx
+    rawCentralAlmostFumulaExtrusion = record
+     { Carrier = Carrier
+     ; _≈_ = _≈_
+     ; _⤙❲_❳⤚_ = _⤙❲_❳⤚_
+     }
 
 module _ (Fₗ : RawFumula fₗ ℓfₗ) (Fᵣ : RawFumula fᵣ ℓfᵣ) where
   private

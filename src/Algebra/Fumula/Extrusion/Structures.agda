@@ -65,6 +65,26 @@ module _ (F : AlmostFumula f ℓf) (_≈_ : Rel {x} X ℓx)
       ; _⤙_⤚❲_❳ = _⤙_⤚❲_❳
       }
 
+module _ (F : AlmostFumula f ℓf) (_≈_ : Rel {x} X ℓx)
+         (_⤙❲_❳⤚_ : Op₃ₘ (AlmostFumula.Carrier F) X)
+         where
+  private
+    module F = AlmostFumula F
+
+  record IsCentralAlmostFumulaExtrusion : Set (f ⊔ x ⊔ ℓf ⊔ ℓx) where
+    open CentralDefs _⤙❲_❳⤚_ _≈_
+
+    field
+      isEquivalence : IsEquivalence _≈_
+      ⤙❲❳⤚-cong : Congruent₃ F._≈_
+
+    rawCentralAlmostFumulaExtrusion : RawCentralAlmostFumulaExtrusion F.rawAlmostFumula x ℓx
+    rawCentralAlmostFumulaExtrusion = record
+      { Carrier = X
+      ; _≈_ = _≈_
+      ; _⤙❲_❳⤚_ = _⤙❲_❳⤚_
+      }
+
 module _ (Fₗ : AlmostFumula fₗ ℓfₗ) (Fᵣ : AlmostFumula fᵣ ℓfᵣ) (_≈_ : Rel {x} X ℓx)
          (❲_❳⤙_⤚_ : Op₃ₗ (AlmostFumula.Carrier Fₗ) X)
          (_⤙_⤚❲_❳ : Op₃ᵣ (AlmostFumula.Carrier Fᵣ) X)

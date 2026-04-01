@@ -51,6 +51,11 @@ module RightDefs {a b ℓb} {A : Set a} {B : Set b} (_⤙_⤚❲_❳ : Op₃ᵣ 
   RightPulloutWith : Op₃ A → A → Set _
   RightPulloutWith _⤙_⤚_ e = ∀ v w x y z → (w ⤙ v ⤚❲ x ⤙ z ⤚ y ❳) ≈ᵇ (w ⤙ w ⤙ v ⤚❲ z ❳ ⤚❲ x ⤙ e ⤚ y ❳)
 
+module CentralDefs {a b ℓb} {A : Set a} {B : Set b} (_⤙❲_❳⤚_ : Op₃ₘ A B) (_≈ᵇ_ : Rel B ℓb) where
+
+  Congruent₃ : ∀{ℓa} → Rel A ℓa → Set _
+  Congruent₃ _≈ᵃ_ = _⤙❲_❳⤚_ Preserves₃ _≈ᵇ_ ⟶ _≈ᵃ_ ⟶ _≈ᵇ_ ⟶ _≈ᵇ_
+
 module BiDefs {aₗ aᵣ b ℓb} {Aₗ : Set aₗ} {Aᵣ : Set aᵣ} {B : Set b} (❲_❳⤙_⤚_ : Op₃ₗ Aₗ B) (_⤙_⤚❲_❳ : Op₃ᵣ Aᵣ B) (_≈ᵇ_ : Rel B ℓb) where
   private
     module L = LeftDefs ❲_❳⤙_⤚_ _≈ᵇ_
